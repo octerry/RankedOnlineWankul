@@ -132,19 +132,27 @@ h1,h2,h3{
     margin-top: 12px;
 }
 
-#section_carte #searchbar{
+#section_carte #filter{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: -10px;
+}
+
+#section_carte #filter #searchbar{
     display: flex;
     background-color: #00000030;
     border-radius: 10px;
 }
 
-#section_carte #searchbar svg{
+#section_carte #filter #searchbar svg{
     width: 15px;
     height: auto;
     margin-right: 10px;
 }
 
-#section_carte #searchbar input{
+#section_carte #filter #searchbar input{
     border: none;
     background-color: #00000000;
     font-family: "Barlow";
@@ -155,10 +163,34 @@ h1,h2,h3{
     margin-left: 5px;
 }
 
-#section_carte #sort_bar{
+#section_carte #filter #sort_bar{
     display: flex;
+    align-items: center;
+    margin-left: 10px;
+    height: 20px;
+    background-color: #464951;
+    border-radius: 5px;
 }
 
-#section_carte #sort_bar h3{
+#section_carte #filter #sort_bar h3{
     font-family: "Barlow";
+    font-weight: 100;
+    font-size: 15px;
+    margin-left: 5px;
+}
+
+#section_carte #filter #sort_bar #sort_selection{
+    background-color: #464951;
+    border: none;
+    margin-right: 5px;
+}
+
+
+@media (max-width: 400px) { /* Ne modifie que les éléments sur telephone */
+    
+    #section_carte #filter #sort_bar{
+        margin-top: 10px;
+        margin-left: -10px;
+    }
+    
 }
