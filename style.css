@@ -19,6 +19,8 @@ h1,h2,h3{
 /* Barre tout en haut de la page principale */
 #top_bar{
     display: flex;
+    position: fixed;
+    width: 90vw;
     align-items: center;
     justify-content: space-between;
     margin-top: 4vw;
@@ -47,7 +49,6 @@ h1,h2,h3{
 /* Logo et titre sur la page principale*/
 #title_div{
     display: flex;
-    posi
     flex-direction: column;
     align-items: center;
     text-align: center;
@@ -68,6 +69,7 @@ h1,h2,h3{
 /* Fenetre des booster sur la page principale */
 #onglet_booster{
     display: flex;
+    position: fixed;
     background: linear-gradient(
         .25turn,
         #404C7D77,
@@ -114,8 +116,8 @@ h1,h2,h3{
     align-items: center;
     backdrop-filter: blur(4px);
     background-color: #00000080;
-    margin-top: 10vw;
-    width: 100%;
+    margin-top: 80vw;
+    padding-bottom: 100vh;
     left: -10px;
     border-top-left-radius: 5vh;
     border-top-right-radius: 5vh;
