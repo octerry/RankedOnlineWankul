@@ -34,6 +34,7 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    text-decoration:none;
 }
 
 body{
@@ -48,6 +49,7 @@ main{
 
 h1,h2,h3{
     color: rgb(255, 255, 255);
+    text-decoration: none;
 }
 
 /* Barre tout en haut de la page principale */
@@ -84,25 +86,25 @@ h1,h2,h3{
     z-index: 1000;
     display: flex;
     position: sticky;
-    top: -8vh;
+    top: calc(-10vh + -2vw);
     flex-direction: column;
     align-items: center;
     text-align: center;
 }
 
 #title_div #resizable_title_div{
-    width: 80vw;
+    width: auto;
 }
 
 #title_div img{
-    margin-top: 80px;
+    margin-top: 15vh;
     height: auto;
     width: 100%;
 }
 
 #title_div h2{
     margin-top: -1vw;
-    font-size:4.8vw;
+    font-size: 4vw;
     font-family: "Hind";
     opacity: 100%;
 }
@@ -112,7 +114,10 @@ h1,h2,h3{
 #onglet_booster{
     display: flex;
     position: sticky;
-    top: 10vw;
+    top: 100vw;
+    align-items: center;
+    align-self: center;
+    flex-direction: column;
     background: linear-gradient(
         .25turn,
         #404C7D77,
@@ -124,9 +129,6 @@ h1,h2,h3{
     margin-left: 3vw;
     margin-right: 3vw;
     margin-top: 30px;
-    align-items: center;
-    align-self: center;
-    flex-direction: column;
     border-radius: clamp(1vw,6vw,6vh);
     box-shadow: inset 10px 10px 4vw #00000070;
     max-width: 1000px;
@@ -151,9 +153,17 @@ h1,h2,h3{
 
 #onglet_booster img{
     margin-top: -6%;
+    margin-left: 3vw;
+    margin-right: 5vw;
     width: clamp(10vw,80vw,100vh);
     height: auto;
     filter: drop-shadow(0 0 1vh #00000080);
+    transition: transform 200ms ease;
+}
+
+#onglet_booster:hover img{
+    transform: scale(1.03);
+    transition: transform 200ms ease;
 }
 
 /* Section referencement des cartes sur la page principale*/
@@ -163,7 +173,7 @@ h1,h2,h3{
     align-items: center;
     backdrop-filter: blur(4px);
     background-color: #00000080;
-    margin-top: 10vw;
+    margin-top: calc(3vw + 5vh);
     left: -10px;
     border-top-left-radius: 5vh;
     border-top-right-radius: 5vh;
