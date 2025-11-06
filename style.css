@@ -131,7 +131,7 @@ h1,h2,h3{
     margin-top: 30px;
     border-radius: clamp(1vw,6vw,6vh);
     box-shadow: inset 10px 10px 4vw #00000070;
-    max-width: 1000px;
+    max-width: 100vh;
 }
 
 #onglet_booster div{
@@ -181,12 +181,12 @@ h1,h2,h3{
 
 #section_carte #selection_categorie{
     display: flex;
-    margin-top: 5px;
-    margin-bottom: 10px;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
 }
 
 #section_carte #selection_categorie h3{
-    font-size: 15px;
+    font-size: 3vh;
     font-family: "Barlow";
     font-weight: 100;
 }
@@ -205,19 +205,19 @@ h1,h2,h3{
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    margin-top: -10px;
+    margin-top: -1vh;
 }
 
 #section_carte #filter #searchbar{
     display: flex;
     background-color: #FFFFFF20;
-    border-radius: 10px;
+    border-radius: 1.5vh;
 }
 
 #section_carte #filter #searchbar svg{
-    width: 15px;
+    width: 2vh;
     height: auto;
-    margin-right: 10px;
+    margin-right: 1vh;
 }
 
 #section_carte #filter #searchbar input{
@@ -226,9 +226,10 @@ h1,h2,h3{
     font-family: "Barlow";
     font-weight: 300;
     color: white;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    margin-left: 5px;
+    font-size: 3vh;
+    margin-top: .2vh;
+    margin-bottom: .2vh;
+    margin-left: 1vh;
 }
 
 #section_carte #filter #searchbar input::placeholder{
@@ -238,17 +239,17 @@ h1,h2,h3{
 #section_carte #filter #sort_bar{
     display: flex;
     align-items: center;
-    margin-left: 10px;
-    height: 20px;
+    margin-left: 2vw;
+    height: 4vh;
     background-color: #FFFFFF40;
-    border-radius: 7px;
+    border-radius: 2vh;
 }
 
 #section_carte #filter #sort_bar h3{
     font-family: "Barlow";
     font-weight: 100;
-    font-size: 15px;
-    margin-left: 5px;
+    font-size: 2vh;
+    margin-left: 1vh;
 }
 
 #section_carte #filter #sort_bar #sort_selection{
@@ -256,8 +257,10 @@ h1,h2,h3{
     color: white;
     font-family: "Barlow";
     font-weight: 200;
+    font-size: 2vh;
     border: none;
-    margin-right: 5px;
+    margin-right: 1vh;
+    margin-left: .5vh;
 }
 
 #section_carte #filter #sort_bar #sort_selection:focus{
@@ -275,6 +278,7 @@ h1,h2,h3{
 #card_displate img{
     padding: 20px;
     max-width: 300px;
+    min-width: 10vw;
     border-radius: 40px;
 }
 
