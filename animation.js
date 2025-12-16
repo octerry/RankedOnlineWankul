@@ -8,33 +8,34 @@
 // console renvoie : CORS
 
 function changeWidth() {
-    var ratio = window.innerWidth / window.innerHeight *10 //Ratio de la fenetre
+    var ratio = window.innerWidth / window.innerHeight //Ratio de la fenetre
     var scroll = window.pageYOffset;
     
-    if (ratio <= 10) { // SUR MOBILE
-        var width = 70 - (scroll/2);
-        var opacity = 100 - (scroll*5)
+    var opacity = 100 - (scroll*5)
+    if (opacity < 0){
+        opacity = 0
+    }
+    
+    if (ratio <= 1) { // SUR MOBILE
+        var width = 60 - (scroll/2);
 
-        if (opacity < 0){
-            opacity = 0
-        }
 
-        if (width > 40) {
+        if (width > 15) {
             document.getElementById('resizable_title_div').style.width = width + 'vw';
-            document.getElementById('title_h2').style.fontSize = width/17 + 'vw'
+            document.getElementById('title_h2').style.fontSize = width/10 + 'vw';
             document.getElementById('title_h2').style.opacity = opacity + '%'
         }
         else {
-            document.getElementById('resizable_title_div').style.width = '40vw';
+            document.getElementById('resizable_title_div').style.width = '15vw';
+            document.getElementById('title_h2').style.fontSize = width/10 + 'vw';
             document.getElementById('title_h2').style.opacity = '0%'
-            document.getElementById('title_h2').style.fontSize = width/17 + 'vw'
         }
     }
     else {
-            document.getElementById('title_div').style.position = 'relative';
-            document.getElementById('title_div').style.top = '0';
-            document.getElementById('title_div').style.zIndex = '0';
-            document.getElementById('resizable_title_div').style.width = '50vw';
+            document.getElementById('title_div').style.position = 'sticky';
+            document.getElementById('title_div').style.top = '-13vh';
+            document.getElementById('resizable_title_div').style.width = '15vh';
+            document.getElementById('title_h2').style.opacity = opacity + '%'
     }
 
     // -------ANCIENNE VERSION CASSEE SUR PC-------
