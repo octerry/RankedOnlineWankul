@@ -133,7 +133,7 @@ h1,h2,h3{
     mask-image: url(sources/Logo.svg);
     transition: 500ms ease;
     width: 10vh;
-    height: 8vh;
+    height: 5vh;
     right: 4vh;
 }
 
