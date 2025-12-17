@@ -1,0 +1,636 @@
+/* Polices Google Fonts*/
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Shade&display=swap'); /* Bungee Shade */
+@import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Bayon&family=Bowlby+One+SC&family=Hind:wght@300;400;500;600;700&display=swap'); /* Barlow, Bayon, Hind & Bowlby One SC */
+
+
+/* ↓ TRUC TROUVES SUR INTERNET ↓ */
+
+/* source : https://www.unclebigbay.com/blog/10-custom-scrollbar-samples-for-your-next-project */
+/* On modifie la barre de scroll d'origine parce qu'elle est moche :3 */
+body::-webkit-scrollbar {
+    width: 6px;
+    background-color: #000000;
+}
+body::-webkit-scrollbar-thumb{
+    height: 5px;
+    background-color: #4f5d8a;
+    border-radius: 5px;
+}
+body {
+    overflow-x: hidden;
+}
+
+/* Source : https://iamvdo.me/blog/animer-les-couleurs-d-une-interface */
+@keyframes wheelHueColor {
+    from, to { color: #253766; }
+    25%      { color: #4F6625; }
+    50%      { color: #662B25; }
+    75%      { color: #422566; }
+}
+
+/* ↑ TRUC TROUVES SUR INTERNET ↑ */
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration:none;
+}
+
+body{
+    background-image: linear-gradient(.1turn, #9a98ff30 30%, #40265e8c 30%, #40265e62 7%, #9a98ff30 70%);
+    background-color: #191d5a;
+    transition: all 500ms ease;
+}
+
+.light body{
+    background-color: #ffffff;
+    transition: all 500ms ease;
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1,h2,h3{
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    transition: color 500ms ease;
+}
+
+.light h1,h2,h3{
+    color: #191936;
+    transition: color 500ms ease;
+}
+
+/* Barre tout en haut de la page principale */
+#top_bar{
+    z-index: 5;
+    display: flex;
+    position: fixed;
+    width: 100%;
+    align-items:center;
+    justify-content: space-between;
+    padding-top: 2vh;
+    padding-left: 4vw;
+    padding-right: 4vw;
+    padding-bottom: 2vh;
+    backdrop-filter: blur(15px);
+    background-color: #00001040;
+}
+
+.light #top_bar {
+    background-color: #05050520;
+}
+
+#top_bar #left_bar{
+    display: flex;
+    align-items: center;
+}
+
+.amburger_menu{
+    margin-top: 0;
+    height: 4vh;
+    width: auto;
+    fill: #fff;
+    transition: 500ms ease;
+}
+
+.light.amburger_menu{
+    fill: #191936;
+    transition: 500ms ease;
+}
+
+#darkmodeButton{
+    width: 4vh;
+    height: 4vh;
+    margin-left: 3vh;
+    background-color: #ffffff;
+    mask-image: url(sources/darkTheme.svg);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    transition: 500ms ease;
+}
+
+.light #darkmodeButton {
+    background-color: #191936;
+    transition: 500ms ease;
+}
+
+#darkmodeButton:hover{
+    cursor: pointer; 
+}
+
+#top_bar #resizable_title_div{
+    position: relative;
+    background-color: #ffffff;
+    -webkit-mask-image: url(sources/Logo.svg);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: bottom;
+    mask-image: url(sources/Logo.svg);
+    transition: 500ms ease;
+    width: 10vh;
+    height: 5vh;
+    right: 4vh;
+}
+
+.light #top_bar #resizable_title_div{
+    background-color: #191936;
+}
+
+#top_bar .logo{
+    opacity: 0;
+}
+
+.light #top_bar .logo{
+    background-color: #191936;
+    transition: 500ms ease;
+}
+
+#top_bar .icon{
+    margin-top: 0;
+    height: 4vh;
+    width: auto;
+    border-radius: 100%;
+}
+
+/* Logo et titre sur la page principale*/
+#title_div{
+    z-index: 4;
+    display: flex;
+    position: sticky;
+    top: calc(-13vh + 1vw);
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#title_div h2{
+    margin-top: 13vh;
+    font-size: 3vh;
+    font-family: "Hind";
+    opacity: 100%;
+    color: #fff;
+    transition: 500ms ease;
+}
+
+.light #title_div h2{
+    color: #191936;
+    transition: 500ms ease;
+}
+
+
+/* Fenetre des booster sur la page principale */
+#onglet_booster{
+    display: flex;
+    position: sticky;
+    top: 100vw;
+    align-items: center;
+    align-self: center;
+    flex-direction: column;
+    background-color: #000;
+    background-image: 
+    radial-gradient(
+        #00000000, #00000040
+    )
+    ,linear-gradient(
+        .25turn,
+        #26367490,
+        #92262890,
+        #47288a90,
+        #2a913690,
+        #00000000
+    );
+    margin-left: 3vw;
+    margin-right: 3vw;
+    margin-top: 2vw;
+    border-radius: clamp(1vw,6vw,6vh);
+    box-shadow: inset 10px 10px 4vw #00000070;
+    max-width: 100vh;
+    transition: 500ms ease;
+}
+
+.light #onglet_booster {
+    background-color: #d1eaff;
+    box-shadow: inset 10px 10px 4vw #00000070;
+    transition: 500ms ease;
+    
+}
+
+#onglet_booster div{
+    text-align: center;
+}
+
+#onglet_booster h1{
+    font-family: "Bowlby One SC";
+    font-size: clamp(1vw,4.5vw,5.8vh);
+    margin-top: 10px;
+    transition: 500ms ease;
+}
+
+.light #onglet_booster h1{
+    background-image: linear-gradient(
+        .25turn,
+        #040e35,
+        #440506,
+        #180541,
+        #05440c,
+        #000000
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    transition: 500ms ease;
+}
+
+#onglet_booster h2{
+    font-family: "Bayon";
+    font-size: 4vw;
+    font-size: clamp(1vw,3.6vw,4.6vh);
+    margin-top: -5%;
+    color: #fff;
+    transition: 500ms ease;
+}
+
+.light #onglet_booster h2{
+    background-image: linear-gradient(
+        .25turn,
+        #01071f,
+        #270203,
+        #0f032b,
+        #022c07,
+        #000000
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    transition: 500ms ease;
+}
+
+#onglet_booster img{
+    margin-top: -6%;
+    margin-left: 3vw;
+    margin-right: 5vw;
+    width: clamp(10vw,80vw,100vh);
+    height: auto;
+    filter: drop-shadow(0 0 1vh #00000080);
+    transition: transform 200ms ease;
+}
+
+#onglet_booster:hover img{
+    transform: scale(1.03);
+    transition: transform 200ms ease;
+}
+
+/* Section referencement des cartes sur la page principale*/
+#section_carte{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    backdrop-filter: blur(4px);
+    background-color: #00000080;
+    margin-top: calc(1vw + 5vh);
+    left: -10px;
+    border-top-left-radius: 5vh;
+    border-top-right-radius: 5vh;
+    transition: 500ms ease;
+}
+
+.light #section_carte{
+    background-color: #05050520;
+    transition: 500ms ease;
+}
+
+#section_carte #selection_categorie{
+    display: flex;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+}
+
+#section_carte #selection_categorie h3{
+    font-size: 3vh;
+    font-family: "Barlow";
+    font-weight: 100;
+}
+
+#section_carte #selection_categorie #tout{
+    color: white;
+    font-weight: 500;
+    transition: 500ms ease;
+}
+
+.light #section_carte #selection_categorie #tout{
+    color: black;
+    transition: 500ms ease;
+}
+
+#section_carte #selection_categorie #vos_cartes{
+    color: white;
+    transition: 500ms ease;
+}
+
+.light #section_carte #selection_categorie #vos_cartes{
+    color: rgb(0, 0, 0);
+    transition: 500ms ease;
+}
+
+#section_carte #selection_categorie svg{
+    margin-top: -4px;
+    fill: #ffffff;
+    transition: 500ms ease;
+}
+
+.light #section_carte #selection_categorie svg{
+    fill: black;
+    transition: 500ms ease;
+}
+
+#section_carte #filter{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: -1vh;
+}
+
+#section_carte #filter #searchbar{
+    display: flex;
+    background-color: #FFFFFF20;
+    border-radius: 1.5vh;
+    transition: 500ms ease;
+}
+
+.light #section_carte #filter #searchbar{
+    background-color: #5c5c5c60;
+    transition: 500ms ease;
+}
+
+#section_carte #filter #searchbar svg{
+    width: 2vh;
+    height: auto;
+    margin-right: 1vh;
+}
+
+#section_carte #filter #searchbar input{
+    border: none;
+    background-color: #00000000;
+    font-family: "Barlow";
+    font-weight: 300;
+    color: white;
+    font-size: 3vh;
+    margin-top: .2vh;
+    margin-bottom: .2vh;
+    margin-left: 1vh;
+}
+
+#section_carte #filter #searchbar input::placeholder{
+    color: #F0F0F0;
+}
+
+#section_carte #filter #sort_bar{
+    display: flex;
+    align-items: center;
+    margin-left: 2vw;
+    height: 4vh;
+    background-color: #FFFFFF40;
+    border-radius: 2vh;
+}
+
+#section_carte #filter #sort_bar h3{
+    font-family: "Barlow";
+    font-weight: 100;
+    font-size: 2vh;
+    margin-left: 1vh;
+    color: white;
+    transition: 500ms ease;
+}
+
+.light #section_carte #filter #sort_bar h3{
+    color: black;
+    font-weight: 300;
+    transition: 500ms ease;
+}
+
+#section_carte #filter #sort_bar #sort_selection{
+    background-color: #D0D0D000;
+    color: white;
+    font-family: "Barlow";
+    font-weight: 200;
+    font-size: 2vh;
+    border: none;
+    margin-right: 1vh;
+    margin-left: .5vh;
+    transition: 500ms ease;
+}
+
+.light #section_carte #filter #sort_bar #sort_selection{
+    color: #000000;
+    transition: 500ms ease;
+}
+
+#section_carte #filter #sort_bar #sort_selection:focus{
+    background-color: #121822;
+    outline: 2px solid #5b9dd9;
+}
+
+#card_displate{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 20px;
+}
+
+#card_displate img{
+    padding: 20px;
+    max-width: 300px;
+    min-width: 10vw;
+    border-radius: 40px;
+}
+
+footer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: #101010A0;
+    padding-top: 3vh;
+    padding-bottom: 5vh;
+    transition: 500ms ease;
+}
+
+.light footer{
+    background-color: #ffffff;
+    transition: 500ms ease;
+}
+
+footer h1{
+    font-family: "Barlow";
+    font-weight: 400;
+    font-size: clamp(1vw,2.5vh,6vh);
+}
+
+
+footer h2{
+    font-family: "Barlow";
+    font-weight: 400;
+    font-size: clamp(1vw,1.8vh,2vh);
+    color: #fff;
+    margin-top: 1vh;
+    padding-left: 5vw;
+    padding-right: 5vw;
+    transition: 500ms ease;
+}
+
+.light footer h2{
+    color: #000;
+    transition: 500ms ease;
+}
+
+footer div .footer_svg{
+    width: calc(10vh - 2vw);
+    margin: 1vh;
+    margin-top: 0;
+    fill: #6c4f80;
+}
+
+
+/* Page Booster Opening */
+#booster_body{
+    overflow: hidden;
+}
+
+.booster_opening{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 15vh;
+    padding-bottom: 30vh;
+}
+
+/* -----------↓ A MODIFIER PLUS TARD ↓----------- */
+#booster_aleatoire{
+    color: #253766;
+    animation: wheelHueColor 10s infinite; /* wheelHueColor défini dans la section tout en haut */
+    background-color: currentColor;
+}
+
+@supports (background-blend-mode: overlay) {
+    #booster_aleatoire{
+        background-image: radial-gradient(
+            #858585 20%,
+            #505050,
+            #1d1d1d
+        );
+        background-blend-mode: overlay;
+    }
+}
+
+#s1{
+    background: radial-gradient(
+            #253766 20%,
+            #1E1A32,
+            #1C1520
+        );
+}
+
+#s2{
+    background: radial-gradient(
+            #4F6625 20%,
+            #294024,
+            #1E2B20
+        );
+}
+
+#s3{
+    background: radial-gradient(
+            #662B25 20%,
+            #321A1A,
+            #201515
+        );
+}
+
+#s4{
+    background: radial-gradient(
+            #422566 20%,
+            #221A32,
+            #1A1520
+        );
+}
+/* ------------↑ A MODIFIER PLUS TARD ↑------------- */
+
+.booster_opening h1{
+    font-family: "Bowlby One SC";
+    font-size: 3.5vh;
+}
+
+.booster_opening h2{
+    font-family: "Barlow";
+    font-weight: 200;
+    font-size: 3.5vh;
+    padding: 1vh;
+    background-color: #00000040;
+    border-radius: 2vh;
+}
+
+.booster_opening #logo_img{
+    height: 8vh;
+    width: auto;
+    margin-bottom: 2vh;
+}
+
+.booster_opening #selection_booster{
+    display: flex;
+}
+
+.booster_opening #selection_booster a{
+    display: flex;
+}
+
+.booster_opening #selection_booster #booster_img{
+    margin-top: 5vh;
+    height: 30vh;
+    width: auto;
+}
+
+.booster_opening #selection_booster #left_arrow{
+    align-self: center;
+    width: 10vh;
+    height: 15vh;
+    margin-right: 2vh;
+    rotate: 0.25turn;
+}
+
+.booster_opening #selection_booster #right_arrow{
+    align-self: center;
+    width: 10vh;
+    height: 15vh;
+    margin-left: 2vh;
+    rotate: -0.25turn;
+}
+
+/* POUR TOUS LES OBJETS TEMPORAIREMENTS TRANSPARENTS */
+.dead{
+    opacity: 0;
+}
+
+@media (max-width: 400px) { /* Ne modifie que pour ceux qui sont trop petit */
+    
+    #section_carte #filter #sort_bar{
+        margin-top: 10px;
+        margin-left: 0;
+    }
+    
+}
+
+@media (max-width: 600px) { /* Ne modifie que les éléments sur telephone */
+
+    #onglet_booster{
+        top: 25vw;
+    }
+
+}

@@ -40,7 +40,13 @@ body {
 body{
     background-image: linear-gradient(.1turn, #9a98ff30 30%, #40265e8c 30%, #40265e62 7%, #9a98ff30 70%);
     background-color: #191d5a;
+    min-height: 100vh;
     transition: all 500ms ease;
+}
+
+main{
+    min-height: 50vh;
+    padding-bottom: 5vh;
 }
 
 .light body{
@@ -60,7 +66,7 @@ h1,h2,h3{
     transition: color 500ms ease;
 }
 
-.light h1,h2,h3{
+.light h1,.light h2,.light h3{
     color: #191936;
     transition: color 500ms ease;
 }
@@ -289,7 +295,7 @@ h1,h2,h3{
 
 /* Section referencement des cartes sur la page principale*/
 #section_carte{
-    display: flex;
+    display: none; /*De base c'est flex*/
     flex-direction: column;
     align-items: center;
     backdrop-filter: blur(4px);
@@ -452,14 +458,67 @@ h1,h2,h3{
     border-radius: 40px;
 }
 
+/*BOTTOM BUTTONS*/
+.bottom_buttons{
+    display: flex;
+    position: absolute;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-around;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 10vh;
+    background-color: #302d5a90;
+    transition: 500ms ease;
+}
+
+.light .bottom_buttons{
+    background-color: #D9DCF5;
+    transition: 500ms ease;
+}
+
+.home_button,.deck_button,.profil_button {
+    background-color: #9f84c2;
+    mask-size: contain;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    width: 5vh;
+    height: 5vh;
+}
+
+.light .home_button,.light .deck_button,.light .profil_button{
+    background-color: #495CA8;
+}
+
+.home_button:hover,.deck_button:hover,.profil_button:hover{
+    filter: brightness(1.5);
+    cursor: pointer;
+}
+
+.home_button{
+    mask-image: url(sources/fist.svg);
+}
+
+.deck_button{
+    mask-image: url(sources/deck.svg);
+}
+
+.profil_button{
+    mask-image: url(sources/user.svg);
+}
+
+/*FOOTER*/
 footer{
     display: flex;
+    bottom: 0;
     flex-direction: column;
     align-items: center;
     text-align: center;
     background-color: #101010A0;
+    height: 50vh;
     padding-top: 3vh;
-    padding-bottom: 5vh;
+    padding-bottom: 20vh;
     transition: 500ms ease;
 }
 
@@ -473,7 +532,6 @@ footer h1{
     font-weight: 400;
     font-size: clamp(1vw,2.5vh,6vh);
 }
-
 
 footer h2{
     font-family: "Barlow";
