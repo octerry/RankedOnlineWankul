@@ -123,11 +123,8 @@ h1,h2,h3{
     cursor: pointer; 
 }
 
-#resizable_title_div img{
-    opacity: 0;
-}
-
-#top_bar .logo{
+#top_bar #resizable_title_div{
+    position: relative;
     background-color: #ffffff;
     -webkit-mask-image: url(sources/Logo.svg);
     mask-size: contain;
@@ -135,7 +132,17 @@ h1,h2,h3{
     mask-position: bottom;
     mask-image: url(sources/Logo.svg);
     transition: 500ms ease;
+    width: 10vh;
     height: 8vh;
+    right: 4vh;
+}
+
+.light #top_bar #resizable_title_div{
+    background-color: #191936;
+}
+
+#top_bar .logo{
+    opacity: 0;
 }
 
 .light #top_bar .logo{
@@ -287,7 +294,7 @@ h1,h2,h3{
     align-items: center;
     backdrop-filter: blur(4px);
     background-color: #00000080;
-    margin-top: calc(3vw + 5vh);
+    margin-top: calc(1vw + 5vh);
     left: -10px;
     border-top-left-radius: 5vh;
     border-top-right-radius: 5vh;
