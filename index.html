@@ -6,23 +6,26 @@
     <link rel="icon" type="image/x-icon" href="sources/banana_fruit_food_icon.ico">
     <title>Wankuldex</title>
     <link rel="stylesheet" href="style.css">
-    <script defer src="animation.js"></script>
     <script defer src="darkmode.js"></script>
 </head>
 <body>
     <header> <!-- Barre tout en haut de la page -->
         <div id="top_bar">
-            <svg class="amburger_menu" viewBox="0 0 512 512">
-                <path d="M32 96v64h448V96H32zm0 128v64h448v-64H32zm0 128v64h448v-64H32z" fill="#fff" fill-opacity="1"></path>
-            </svg>
-            <img src="https://cdn-images.dzcdn.net/images/artist/b79300f435dadf122aba45769ee7b7e0/500x500-000000-80-0-0.jpg" alt="Image de profil" title="Profil">
+            <div id="left_bar">
+                <svg class="amburger_menu" viewBox="0 0 512 512" >
+                    <path d="M32 96v64h448V96H32zm0 128v64h448v-64H32zm0 128v64h448v-64H32z" fill-opacity="1"></path>
+                </svg>
+                
+                <div id="darkmodeButton" title="darkmode"></div>
+            </div>
+            <div id="resizable_title_div">
+                <img class="logo" src="sources/Logo.svg" alt="Logo Wankul">
+            </div>
+            <img class="icon" src="https://cdn-images.dzcdn.net/images/artist/b79300f435dadf122aba45769ee7b7e0/500x500-000000-80-0-0.jpg" alt="Image de profil" title="Profil">
         </div>
     </header>
     <main>
         <div id="title_div"> <!-- Grand logo avec le texte juste en dessous -->
-            <div id="resizable_title_div">
-                <img src="sources/Logo.svg" alt="Logo Wankul">
-            </div>
             <h2 id="title_h2">Ranked Online Wankul</h2>
         </div>
         <a href="boosterOpeningAleatoire.html">
@@ -37,7 +40,7 @@
         <div id="section_carte"> <!-- Wankuldex où toutes les cartes sont affichées -->
             <div id="selection_categorie"> <!-- Boutons de selection pour passer de général à personnel -->
                 <h3 id="tout">TOUT</h3>
-                <svg width="5vh" height="5vh" viewBox="0 0 49 56" fill="#D8D8D8">
+                <svg width="5vh" height="5vh" viewBox="0 0 49 56">
                     <circle cx="25" cy="25" r="7" />
                 </svg>
                 <h3 id="vos_cartes">VOS CARTES</h3>
@@ -120,7 +123,7 @@
             </div>
         </div>
         <div>
-            <h2>Projet étudiant à but non-lucratif fait en une semaine à partir du 03/11/2025</h2>
+            <h2>Projet étudiant à but non-lucratif pour le projet d'année de la spécialité coding & digital innovation commencé à partir du 03/11/2025</h2>
             <h2>Site non officiel, tous les droits reviennet à <a href="https://www.youtube.com/@wankilfr" style="color: #8b58ad" title="Chaine youtube">wankilstudio</a> et à <a href="https://wankul.fr/" style="color: #8b58ad" title="Site officiel">wankul.fr</a></h2>
         </div>
     </footer>
