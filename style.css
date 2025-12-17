@@ -35,10 +35,16 @@ body {
     padding: 0;
     box-sizing: border-box;
     text-decoration:none;
+    transition: 50ms ease;
 }
 
 body{
     background: linear-gradient(#172647, #382C50);
+    transition: 50ms ease;
+}
+
+.light body{
+    background: linear-gradient(#BBC9E8, #F1EAFF);
 }
 
 main{
@@ -50,6 +56,10 @@ main{
 h1,h2,h3{
     color: rgb(255, 255, 255);
     text-decoration: none;
+}
+
+.light h1,h2,h3{
+    color: #191936;
 }
 
 /* Barre tout en haut de la page principale */
@@ -102,6 +112,13 @@ h1,h2,h3{
     width: 100%;
 }
 
+#title_div .light img{
+    margin-top: 15vh;
+    height: auto;
+    width: 100%;
+    filter: brightness(0);
+}
+
 #title_div h2{
     margin-top: -.5vw;
     font-size: 2vw;
@@ -132,6 +149,18 @@ h1,h2,h3{
     border-radius: clamp(1vw,6vw,6vh);
     box-shadow: inset 10px 10px 4vw #00000070;
     max-width: 100vh;
+}
+
+.light #onglet_booster {
+    background: linear-gradient(
+        .25turn,
+        #acbcff,
+        #ff9c9e,
+        #b895ff,
+        #98ffa4,
+        #b1a5ff
+    );
+    box-shadow: inset 10px 10px 4vw #92929270;
 }
 
 #onglet_booster div{
