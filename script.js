@@ -57,8 +57,17 @@ friendsButton.addEventListener('click', function () {
 // Pour le menu popup
 amburgerButton1.addEventListener('click', function () {
     menuPopup.style.display = 'block';
+    document.body.style.overflow = 'hidden'
 })
 
 amburgerButton2.addEventListener('click', function () {
     menuPopup.style.display = 'none';
+    document.body.style.overflow = 'visible'
 })
+
+window.onclick = (event) => { // Si on clique en dehors du menu ça le ferme
+    if(!event.target.matches('#inner_menu') && event.target.matches('#menu_popup')) {
+        menuPopup.style.display = 'none';
+        document.body.style.overflow = 'visible'
+    }
+}
