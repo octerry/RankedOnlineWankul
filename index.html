@@ -6,13 +6,13 @@
     <link rel="icon" type="image/x-icon" href="sources/banana_fruit_food_icon.ico">
     <title>Wankuldex</title>
     <link rel="stylesheet" href="style.css">
-    <script defer src="darkmode.js"></script>
+    <script defer src="interraction.js"></script>
 </head>
 <body>
     <header> <!-- Barre tout en haut de la page -->
         <div id="top_bar">
             <div id="left_bar">
-                <svg class="amburger_menu" viewBox="0 0 512 512" >
+                <svg class="amburger_menu" id="amburger1" viewBox="0 0 512 512" >
                     <path d="M32 96v64h448V96H32zm0 128v64h448v-64H32zm0 128v64h448v-64H32z" fill-opacity="1"></path>
                 </svg>
                 
@@ -27,18 +27,20 @@
         </div>
     </header>
     <main>
-        <div id="title_div"> <!-- Grand logo avec le texte juste en dessous -->
-            <h2 id="title_h2">Ranked Online Wankul</h2>
-        </div>
-        <a href="boosterOpeningAleatoire.html">
-            <div id="onglet_booster" > <!-- Onglet Booster -->
-                <div> <!-- Partie texte -->
-                    <h1>Ouvrir un booster de cartes</h1>
-                    <h2>Et collectionner les cartes des differentes saisons</h2>
-                </div>
-                <img src="sources/booster.png" alt="booster">
+        <div id="section_home">
+            <div id="title_div"> <!-- Grand logo avec le texte juste en dessous -->
+                <h2 id="title_h2">Ranked Online Wankul</h2>
             </div>
-        </a>
+            <a href="boosterOpeningAleatoire.html">
+                <div id="onglet_booster" > <!-- Onglet Booster -->
+                    <div> <!-- Partie texte -->
+                        <h1>Ouvrir un booster de cartes</h1>
+                        <h2>Et collectionner les cartes des differentes saisons</h2>
+                    </div>
+                    <img src="sources/booster.png" alt="booster">
+                </div>
+            </a>
+        </div>
         <div id="section_carte"> <!-- Wankuldex où toutes les cartes sont affichées -->
             <div id="selection_categorie"> <!-- Boutons de selection pour passer de général à personnel -->
                 <h3 id="tout">TOUT</h3>
@@ -83,12 +85,22 @@
                 <img src="https://cdn.shopify.com/s/files/1/0683/2055/9412/files/Wankul_S4_179_bhixes4teejqeafn3v3prir1.webp?v=1740131559" alt="CarteLaJeuneFilleALaPerle">
             </div>
         </div>
-        <div class="bottom_buttons">
-            <div class="home_button"><div class="icon"></div></div>
-            <div class="deck_button"><div class="icon"></div></div>
-            <div class="profil_button"><div class="icon"></div></div>
+        <div id="section_friends">
+
         </div>
     </main>
+    <div class="bottom_buttons">
+        <div id="home_button"><div class="icon"></div></div>
+        <div id="deck_button"><div class="icon"></div></div>
+        <div id="friends_button"><div class="icon"></div></div>
+    </div>
+    <div id="menu_popup">
+        <div id="inner_menu">
+            <svg class="amburger_menu" id="amburger2" viewBox="0 0 512 512" >
+                <path d="M32 96v64h448V96H32zm0 128v64h448v-64H32zm0 128v64h448v-64H32z" fill-opacity="1"></path>
+            </svg>
+        </div>
+    </div>
     <footer>
         <div>
         <h1>Code et design par Terry Segaunes</h1>

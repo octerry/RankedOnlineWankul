@@ -46,7 +46,6 @@ body{
 
 main{
     min-height: 50vh;
-    padding-bottom: 5vh;
 }
 
 .light body{
@@ -104,7 +103,11 @@ h1,h2,h3{
     transition: 500ms ease;
 }
 
-.light.amburger_menu{
+.amburger_menu:hover{
+    cursor: pointer;
+}
+
+.light .amburger_menu{
     fill: #191936;
     transition: 500ms ease;
 }
@@ -300,7 +303,8 @@ h1,h2,h3{
     align-items: center;
     backdrop-filter: blur(4px);
     background-color: #00000080;
-    margin-top: calc(1vw + 5vh);
+    margin-top: 10vh;
+    padding-bottom: 10vh;
     left: -10px;
     border-top-left-radius: 5vh;
     border-top-right-radius: 5vh;
@@ -461,15 +465,17 @@ h1,h2,h3{
 /*BOTTOM BUTTONS*/
 .bottom_buttons{
     display: flex;
-    position: absolute;
+    position: fixed;
     align-items: center;
     flex-direction: row;
     justify-content: space-around;
+    z-index: 5;
     bottom: 0;
     left: 0;
     width: 100vw;
     height: 10vh;
     background-color: #302d5a90;
+    backdrop-filter: blur(.5vw);
     transition: 500ms ease;
 }
 
@@ -478,7 +484,7 @@ h1,h2,h3{
     transition: 500ms ease;
 }
 
-.home_button,.deck_button,.profil_button {
+#home_button,#deck_button,#friends_button {
     background-color: #9f84c2;
     mask-size: contain;
     mask-position: center;
@@ -487,25 +493,48 @@ h1,h2,h3{
     height: 5vh;
 }
 
-.light .home_button,.light .deck_button,.light .profil_button{
+.light #home_button,.light #deck_button,.light #friends_button{
     background-color: #495CA8;
 }
 
-.home_button:hover,.deck_button:hover,.profil_button:hover{
+#home_button:hover,#deck_button:hover,#friends_button:hover{
     filter: brightness(1.5);
     cursor: pointer;
 }
 
-.home_button{
+#home_button{
     mask-image: url(sources/fist.svg);
 }
 
-.deck_button{
+#deck_button{
     mask-image: url(sources/deck.svg);
 }
 
-.profil_button{
+#friends_button{
     mask-image: url(sources/user.svg);
+}
+
+/*MENU POPUP*/
+#menu_popup {
+    display: none;
+    position: fixed;
+    z-index: 6;
+    backdrop-filter: blur(2vh);
+    background-color: #00000070;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+}
+
+#inner_menu {
+    height: 70vh;
+    width: 40vh;
+    background-color: #352b47;
+    padding: 1vh;
+    margin-top: 1.5vh;
+    margin-left: 3.2vw;
+    border-radius: 2vh;
 }
 
 /*FOOTER*/
@@ -516,9 +545,11 @@ footer{
     align-items: center;
     text-align: center;
     background-color: #101010A0;
+    backdrop-filter: blur(.5vw);
     height: 50vh;
     padding-top: 3vh;
     padding-bottom: 20vh;
+    z-index: 1;
     transition: 500ms ease;
 }
 
