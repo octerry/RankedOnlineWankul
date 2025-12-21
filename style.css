@@ -1,3 +1,11 @@
+/* Coucou toi qui regarde dans le code
+/‾‾‾‾‾\ /‾‾‾‾‾] [‾‾‾‾‾‾‾‾] |‾‾‾‾‾] |‾‾‾‾‾\ |‾‾‾‾‾\ |‾| /‾/
+| |‾| | | |‾‾‾   ‾‾|  |‾‾  | |‾‾‾  |     | |     | | |/ /
+| | | | | |        |  |    |  ___] |     / |     / |  _/
+| |_| | | |___     |  |    | |___  | |\ \  | |\ \  | |
+\_____/ \_____]    |__|    |_____] |_| \_\ |_| \_\ |_|
+MADE ON EARTH BY HUMANS */
+
 /* Polices Google Fonts*/
 @import url('https://fonts.googleapis.com/css2?family=Bungee+Shade&display=swap'); /* Bungee Shade */
 @import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Bayon&family=Bowlby+One+SC&family=Hind:wght@300;400;500;600;700&display=swap'); /* Barlow, Bayon, Hind & Bowlby One SC */
@@ -22,10 +30,10 @@ body {
 
 /* Source : https://iamvdo.me/blog/animer-les-couleurs-d-une-interface */
 @keyframes wheelHueColor {
-    from, to { color: #253766; }
-    25%      { color: #4F6625; }
-    50%      { color: #662B25; }
-    75%      { color: #422566; }
+    from, to { color: #183272; }
+    25%      { color: #1b5f12; }
+    50%      { color: #791e1e; }
+    75%      { color: #6e499b; }
 }
 
 /* ↑ TRUC TROUVES SUR INTERNET ↑ */
@@ -590,27 +598,21 @@ footer div .footer_svg{
 
 
 /* Page Booster Opening */
-#booster_body{
-    overflow: hidden;
-}
-
-.booster_opening{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 15vh;
-    padding-bottom: 30vh;
-}
-
 /* -----------↓ A MODIFIER PLUS TARD ↓----------- */
-#booster_aleatoire{
+#booster_bg{
+    z-index: -1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
     color: #253766;
     animation: wheelHueColor 10s infinite; /* wheelHueColor défini dans la section tout en haut */
     background-color: currentColor;
 }
 
 @supports (background-blend-mode: overlay) {
-    #booster_aleatoire{
+    #booster_bg{
         background-image: radial-gradient(
             #858585 20%,
             #505050,
@@ -653,12 +655,32 @@ footer div .footer_svg{
 }
 /* ------------↑ A MODIFIER PLUS TARD ↑------------- */
 
-.booster_opening h1{
+
+#superior_body{
+    display: flex;
+    position: fixed;
+    align-items: center;
+    justify-content: baseline; 
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    padding-top: 5vh;
+    z-index: 2;
+    pointer-events: none;
+}
+
+#superior_body #logo_img{
+    height: 8vh;
+    width: auto;
+    margin-bottom: 2vh;
+}
+
+#superior_body h1{
     font-family: "Bowlby One SC";
     font-size: 3.5vh;
 }
 
-.booster_opening h2{
+#superior_body h2{
     font-family: "Barlow";
     font-weight: 200;
     font-size: 3.5vh;
@@ -666,47 +688,43 @@ footer div .footer_svg{
     background-color: #00000040;
     border-radius: 2vh;
 }
-
-.booster_opening #logo_img{
-    height: 8vh;
-    width: auto;
-    margin-bottom: 2vh;
-}
-
-.booster_opening #selection_booster{
+#booster_opening{
     display: flex;
+    flex-direction: row;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    overflow-y: auto; 
+    padding-top: 50vh;
+    padding-bottom: 50vh;
+    height: 100vh;
+    min-width: 100vw;
+    scroll-snap-type: y mandatory;
 }
 
-.booster_opening #selection_booster a{
+#booster_opening div{
     display: flex;
+    justify-content: center;
+    align-items: center;
+    scroll-snap-align: center;
 }
 
-.booster_opening #selection_booster #booster_img{
-    margin-top: 5vh;
-    height: 30vh;
+#booster_opening .booster_img{
+    margin: 3vh;
+    height: 40vh;
     width: auto;
+    transition: 300ms ease;
+    box-sizing: border-box;
 }
 
-.booster_opening #selection_booster #left_arrow{
-    align-self: center;
-    width: 10vh;
-    height: 15vh;
-    margin-right: 2vh;
-    rotate: 0.25turn;
+.booster_img:hover {
+    cursor: pointer;
+    transform: scale(1.1);
 }
 
-.booster_opening #selection_booster #right_arrow{
-    align-self: center;
-    width: 10vh;
-    height: 15vh;
-    margin-left: 2vh;
-    rotate: -0.25turn;
+#booster_opening::-webkit-scrollbar { /*On enlève la scrollbar*/
+    background-color: transparent;
 }
 
-/* POUR TOUS LES OBJETS TEMPORAIREMENTS TRANSPARENTS */
-.dead{
-    opacity: 0;
-}
 
 @media (max-width: 400px) { /* Ne modifie que pour ceux qui sont trop petit */
     

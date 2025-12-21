@@ -1,3 +1,11 @@
+// Coucou toi qui regarde dans le code
+// /‾‾‾‾‾\ /‾‾‾‾‾] [‾‾‾‾‾‾‾‾] |‾‾‾‾‾] |‾‾‾‾‾\ |‾‾‾‾‾\ |‾| /‾/
+// | |‾| | | |‾‾‾   ‾‾|  |‾‾  | |‾‾‾  |     | |     | | |/ /
+// | | | | | |        |  |    |  ___] |     / |     / |  _/
+// | |_| | | |___     |  |    | |___  | |\ \  | |\ \  | |
+// \_____/ \_____]    |__|    |_____] |_| \_\ |_| \_\ |_|
+// MADE ON EARTH BY HUMANS
+
 //On récupère tous les elements de la page et on défini les élements nécéssaires
 // Pour le darkmode
 let col = document.querySelectorAll('*')
