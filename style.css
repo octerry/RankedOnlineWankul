@@ -600,6 +600,9 @@ footer div .footer_svg{
 /* Page Booster Opening */
 /* -----------↓ A MODIFIER PLUS TARD ↓----------- */
 #booster_bg{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     z-index: -1;
     position: fixed;
     top: 0;
@@ -609,6 +612,7 @@ footer div .footer_svg{
     color: #253766;
     animation: wheelHueColor 10s infinite; /* wheelHueColor défini dans la section tout en haut */
     background-color: currentColor;
+    transition: 500ms ease;
 }
 
 @supports (background-blend-mode: overlay) {
@@ -685,6 +689,7 @@ footer div .footer_svg{
     font-weight: 200;
     font-size: 3.5vh;
     padding: 1vh;
+    backdrop-filter: blur(.2vh);
     background-color: #00000040;
     border-radius: 2vh;
 }
