@@ -625,38 +625,6 @@ footer div .footer_svg{
         background-blend-mode: overlay;
     }
 }
-
-#s1{
-    background: radial-gradient(
-            #253766 20%,
-            #1E1A32,
-            #1C1520
-        );
-}
-
-#s2{
-    background: radial-gradient(
-            #4F6625 20%,
-            #294024,
-            #1E2B20
-        );
-}
-
-#s3{
-    background: radial-gradient(
-            #662B25 20%,
-            #321A1A,
-            #201515
-        );
-}
-
-#s4{
-    background: radial-gradient(
-            #422566 20%,
-            #221A32,
-            #1A1520
-        );
-}
 /* ------------↑ A MODIFIER PLUS TARD ↑------------- */
 
 
