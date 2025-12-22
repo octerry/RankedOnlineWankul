@@ -17,7 +17,10 @@ for (const booster of boosters) {
     booster.style.transform = "scale(.8)"
 }
 
-boosterOpening.addEventListener('scroll', function () {
+window.addEventListener('onload', updateBoosters)
+boosterOpening.addEventListener('scroll', updateBoosters)
+
+function updateBoosters () {
     console.log(boosterOpening.scrollTop/window.innerHeight)
     if ((boosterOpening.scrollTop/window.innerHeight) < .4) {
         seasonTitle.innerHTML = "Saison Aléatoire"
@@ -54,4 +57,4 @@ boosterOpening.addEventListener('scroll', function () {
             }
         }
     }
-})
+}
