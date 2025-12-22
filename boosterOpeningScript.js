@@ -13,6 +13,10 @@ let boosterOpening = document.getElementById('booster_opening')
 let seasonTitle = document.getElementById('season_title')
 let boosterBackground = document.getElementById('booster_bg')
 
+for (const booster of boosters) {
+    booster.style.transform = "scale(.8)"
+}
+
 boosterOpening.addEventListener('scroll', function () {
     console.log(boosterOpening.scrollTop/window.innerHeight)
     if ((boosterOpening.scrollTop/window.innerHeight) < .4) {
