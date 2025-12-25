@@ -95,7 +95,7 @@ h1,h2,h3{
 }
 
 .light #top_bar {
-    background-color: #05050520;
+    background-color: #ffffff80;
 }
 
 #top_bar #left_bar{
@@ -174,31 +174,64 @@ h1,h2,h3{
     border-radius: 100%;
 }
 
-/* Logo et titre sur la page principale*/
-#title_div{
-    z-index: 4;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+#top_bar .icon:hover{
+    cursor: pointer;
 }
-
-#title_div h2{
-    margin-top: calc(10vh - 2vw);
-    font-size: calc(3vw + 1vh);
-    font-family: "Rock Salt";
-    opacity: 100%;
-    color: #fff;
-    transition: 500ms ease;
-}
-
-.light #title_div h2{
-    color: #191936;
-    transition: 500ms ease;
-}
-
 
 /* Fenetre des booster sur la page principale */
+#fight_section {
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    height: 30vh;
+    background-image: url(sources/buttonOverlayBorders.svg), url(sources/buttonOverlay.svg), url(sources/stellarIllustration.png);
+    background-size: 36vh, 36vh, 110vw;
+    background-position: bottom, bottom, -8vw calc(20vh - 30vw);
+    background-repeat: no-repeat, no-repeat, repeat;
+    width: 100vw;
+    box-shadow: inset 0 -1vh 2vh #00000090;
+}
+
+@supports (background-blend-mode: overlay) {
+    #fight_section {
+        background-blend-mode: overlay;
+    }
+}
+
+#fight_section #fight_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 12vh;
+    width: 35vh;
+    color: #fff;
+    font-family: 'Bowlby One SC';
+    text-align: center;
+    text-shadow: 0 0 2vh #000;
+    font-size: 2.5vh;
+    line-height: 4vh;
+    transition: 200ms ease;
+}
+
+#fight_section #fight_button:hover {
+    cursor: pointer;
+    width: 50vh;
+    font-size: 3vh;
+    line-height: 5vh;
+}
+
+
+#fight_section #fight_button .light {
+    color: #fff;
+}
+
+#booster_section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+}
+
 #onglet_booster{
     display: flex;
     align-items: center;
@@ -219,7 +252,7 @@ h1,h2,h3{
     );
     margin-left: 3vw;
     margin-right: 3vw;
-    margin-top: calc(1vh - 1vw);
+    margin-top: 3vw;
     margin-bottom: 3vw;
     border-radius: clamp(1vw,6vw,6vh);
     box-shadow: inset 10px 10px 4vw #00000070;
@@ -467,6 +500,41 @@ h1,h2,h3{
     border-radius: 40px;
 }
 
+/*SECTION FRIENDS*/
+#section_friends {
+    display: none;
+    flex-direction: row;
+    margin-top: 10vh;
+}
+
+#section_friends #subtext {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 5vh;
+    width: 100vw;
+}
+
+#section_friends #subtext h2 {
+    font-family: 'Jost';
+    font-size: 3vh;
+    font-weight: .1;
+}
+
+#section_friends #subtext #side_buttons {
+    position: absolute;
+    right: 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 12vh;
+}
+
+#section_friends #subtext #side_buttons svg {
+    height: 3vh;
+}
+
 /*BOTTOM BUTTONS*/
 .bottom_buttons{
     display: flex;
@@ -556,11 +624,35 @@ h1,h2,h3{
     right: 0;
     background-color: #1B1927;
     overflow-y: auto;
-    /* transform: translateX(50vh); */
+    margin-right: -50vh;
+    transition: 300ms ease;
+    box-shadow: -1vh 0 2vh #00000060;
+}
+
+#profil.open{
+    transform: translateX(-50vh);
 }
 
 #profil::-webkit-scrollbar {
     width: 0;
+}
+
+#profil #backarrow {
+    transform: rotate(.5turn);
+    height: 5vh;
+    top: 2vh;
+    left: 0;
+    z-index: 2;
+    position: absolute;
+    transition: 200ms;
+}
+
+#profil.open #backarrow {
+    transform: rotate(1turn);;
+}
+
+#profil #backarrow:hover {
+    cursor: pointer;
 }
 
 #profil #bannier{

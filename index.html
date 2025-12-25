@@ -26,7 +26,6 @@ MADE ON EARTH BY HUMANS
                 <svg class="amburger_menu" id="amburger1" viewBox="0 0 512 512" >
                     <path d="M32 96v64h448V96H32zm0 128v64h448v-64H32zm0 128v64h448v-64H32z" fill-opacity="1"></path>
                 </svg>
-                
                 <div id="darkmodeButton" title="darkmode"></div>
             </div>
             <div id="resizable_title_div">
@@ -34,23 +33,27 @@ MADE ON EARTH BY HUMANS
                     <img class="logo" src="sources/Logo.svg" alt="Logo Wankul">
                 </a>
             </div>
-            <img class="icon" src="https://cdn-images.dzcdn.net/images/artist/b79300f435dadf122aba45769ee7b7e0/500x500-000000-80-0-0.jpg" alt="Image de profil" title="Profil">
+            <img class="icon" id="profil_icon" src="https://cdn-images.dzcdn.net/images/artist/b79300f435dadf122aba45769ee7b7e0/500x500-000000-80-0-0.jpg" alt="Image de profil" title="Profil">
         </div>
     </header>
     <main>
         <div id="section_home">
-            <div id="title_div"> <!-- Grand logo avec le texte juste en dessous -->
-                <h2 id="title_h2">Ranked Online Wankul</h2>
-            </div>
-            <a href="boosterOpening.html">
-                <div id="onglet_booster" > <!-- Onglet Booster -->
-                    <div> <!-- Partie texte -->
-                        <h1>Ouvrir un booster de cartes</h1>
-                        <h2>Et collectionner les cartes des differentes saisons</h2>
-                    </div>
-                    <img src="sources/booster.png" alt="booster">
+            <div id="fight_section">
+                <div id="fight_button">
+                    <h2>Rentrer dans l'arène</h2>
                 </div>
-            </a>
+            </div>
+            <div id="booster_section">
+                <a href="boosterOpening.html">
+                    <div id="onglet_booster" > <!-- Onglet Booster -->
+                        <div> <!-- Partie texte -->
+                            <h1>Ouvrir un booster de cartes</h1>
+                            <h2>Et collectionner les cartes des differentes saisons</h2>
+                        </div>
+                        <img src="sources/booster.png" alt="booster">
+                    </div>
+                </a>
+            </div>
         </div>
         <div id="section_carte"> <!-- Wankuldex où toutes les cartes sont affichées -->
             <div id="selection_categorie"> <!-- Boutons de selection pour passer de général à personnel -->
@@ -97,7 +100,22 @@ MADE ON EARTH BY HUMANS
             </div>
         </div>
         <div id="section_friends">
+            <div id="subtext">
+                <h2>Amis</h2>
+                <div id="side_buttons">
+                    <svg width="39" height="47" viewBox="0 0 39 47" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M28 32.8316L35.8564 43.7907M35.5 19C35.5 28.1127 28.1127 35.5 19 35.5C9.8873 35.5 2.5 28.1127 2.5 19C2.5 9.8873 9.8873 2.5 19 2.5C28.1127 2.5 35.5 9.8873 35.5 19Z" stroke="white" stroke-width="5" stroke-linecap="round"/>
+                    </svg>
+                    <svg width="53" height="47" viewBox="0 0 53 47" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1.75 46.75C1.75 38.5648 6.28061 29.75 19.1173 29.75C31.9541 29.75 37.9949 34.787 38.75 46.75M35.75 21.25H52.75M44.25 12.75V29.75M32.25 12.75C32.25 19.9297 27.9297 23.75 20.75 23.75C13.5703 23.75 9.75 19.9297 9.75 12.75C9.75 5.5703 13.5703 1.75 20.75 1.75C27.9297 1.75 32.25 5.5703 32.25 12.75Z" stroke="white" stroke-width="3.5"/>
+                    </svg>
+                </div>
+            </div>
+            <div id="content_list">
+                <div class="friends_list_element">
 
+                </div>
+            </div>
         </div>
     </main>
     <div class="bottom_buttons">
@@ -113,6 +131,9 @@ MADE ON EARTH BY HUMANS
         </div>
     </div>
     <div id="profil">
+        <svg id="backarrow" width="93" height="150" viewBox="0 0 93 150" fill="white" fill-opacity="0.5" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2.46668 69.1707L70.6677 2.41469C73.957 -0.804897 79.2897 -0.804897 82.5786 2.41469L90.5331 10.2007C93.8168 13.4148 93.8231 18.6239 90.5472 21.8456L36.4967 75.0002L90.5472 128.154C93.8231 131.376 93.8168 136.585 90.5331 139.799L82.5786 147.585C79.2894 150.805 73.9566 150.805 70.6677 147.585L2.46668 80.8296C-0.82223 77.6101 -0.82223 72.3903 2.46668 69.1707Z"/>
+        </svg>
         <div id="bannier"></div>
         <div id="rank_under_bannier">
             <h2>GOLD</h2>

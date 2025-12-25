@@ -21,11 +21,14 @@ let homeSection = document.getElementById('section_home')
 let deckSection = document.getElementById('section_carte')
 let friendsSection = document.getElementById('section_friends')
 
-// Pour le menu popup
+// Pour les menu popup
 let menuPopup = document.getElementById('menu_popup')
 let amburgerButton1 = document.getElementById('amburger1')
 let amburgerButton2 = document.getElementById('amburger2')
 
+let profilPopup = document.getElementById('profil')
+let profilButton = document.getElementById('profil_icon')
+let profilBackbutton = document.getElementById('backarrow')
 
 //DEBUT DU CODE
 // Pour le darkmode
@@ -78,4 +81,13 @@ window.onclick = (event) => { // Si on clique en dehors du menu ça le ferme
         menuPopup.style.display = 'none';
         document.body.style.overflow = 'visible'
     }
+}
+
+profilButton.addEventListener('click', openProfilPopup)
+
+profilBackbutton.addEventListener('click', openProfilPopup)
+
+function openProfilPopup () {
+    profilPopup.classList.toggle('open')
+    console.log(profilPopup.classList)
 }
