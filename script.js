@@ -17,6 +17,8 @@ let homeButton = document.getElementById('home_button')
 let deckButton = document.getElementById('deck_button')
 let friendsButton = document.getElementById('friends_button')
 
+let indexMenu = document.getElementById('index_main')
+
 let homeSection = document.getElementById('section_home')
 let deckSection = document.getElementById('section_carte')
 let friendsSection = document.getElementById('section_friends')
@@ -48,21 +50,42 @@ darkmodeButton.addEventListener('click', function () {
 
 // Pour les tabs
 homeButton.addEventListener('click', function () {
-    homeSection.style.display = 'block'
-    deckSection.style.display = 'none'
-    friendsSection.style.display = 'none'
+    if (indexMenu) {
+        indexMenu.scrollTo({
+            left: 0,
+            behavior: "smooth",
+        })
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        })
+    }
 })
 
 deckButton.addEventListener('click', function () {
-    homeSection.style.display = 'none'
-    deckSection.style.display = 'flex'
-    friendsSection.style.display = 'none'
+    if (indexMenu) {
+        indexMenu.scrollTo({
+            left: window.innerWidth,
+            behavior: "smooth",
+        })
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        })
+    }
 })
 
 friendsButton.addEventListener('click', function () {
-    homeSection.style.display = 'none'
-    deckSection.style.display = 'none'
-    friendsSection.style.display = 'block'
+    if (indexMenu) {
+        indexMenu.scrollTo({
+            left: window.innerWidth*2,
+            behavior: "smooth",
+        })
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        })
+    }
 })
 
 // Pour le menu popup
