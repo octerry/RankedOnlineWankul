@@ -6,31 +6,39 @@
 // \_____/ \_____]    |__|    |_____] |_| \_\ |_| \_\ |_|
 // MADE ON EARTH BY HUMANS
 
+// L'API de Wankul -> https://wankul.fr/apps/proxy/api/wankuldex/cards
+//
+//fetch("https://wankul.fr/apps/proxy/api/wankuldex/cards")
+//   .then(response => console.log(response))
+//    .catch(error => console.error(error))
+//
+// console renvoie : CORS
+
 //On récupère tous les elements de la page et on défini les élements nécéssaires
 // Pour le darkmode
-let col = document.querySelectorAll('*')
-let darkmodeButton = document.getElementById('darkmodeButton')
-let isDarkmodeActivate = true
+let col = document.querySelectorAll('*');
+let darkmodeButton = document.getElementById('darkmodeButton');
+let isDarkmodeActivate = true;
 
 // Pour les tabs
-let homeButton = document.getElementById('home_button')
-let deckButton = document.getElementById('deck_button')
-let friendsButton = document.getElementById('friends_button')
+let homeButton = document.getElementById('home_button');
+let deckButton = document.getElementById('deck_button');
+let friendsButton = document.getElementById('friends_button');
 
-let indexMenu = document.getElementById('index_main')
+let indexMenu = document.getElementById('index_main');
 
-let homeSection = document.getElementById('section_home')
-let deckSection = document.getElementById('section_carte')
-let friendsSection = document.getElementById('section_friends')
+let homeSection = document.getElementById('section_home');
+let deckSection = document.getElementById('section_carte');
+let friendsSection = document.getElementById('section_friends');
 
 // Pour les menu popup
-let menuPopup = document.getElementById('menu_popup')
-let amburgerButton1 = document.getElementById('amburger1')
-let amburgerButton2 = document.getElementById('amburger2')
+let menuPopup = document.getElementById('menu_popup');
+let amburgerButton1 = document.getElementById('amburger1');
+let amburgerButton2 = document.getElementById('amburger2');
 
-let profilPopup = document.getElementById('profil')
-let profilButton = document.getElementById('profil_icon')
-let profilBackbutton = document.getElementById('backarrow')
+let profilPopup = document.getElementById('profil');
+let profilButton = document.getElementById('profil_icon');
+let profilBackbutton = document.getElementById('backarrow');
 
 //DEBUT DU CODE
 // Pour le darkmode
