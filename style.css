@@ -524,10 +524,6 @@ h1,h2,h3{
     width: 100vw;
 }
 
-.light #inner_menu {
-    background-color: #e1daec;
-}
-
 #inner_menu {
     height: 70vh;
     width: 40vh;
@@ -536,6 +532,11 @@ h1,h2,h3{
     margin-top: 1.5vh;
     margin-left: 3.2vw;
     border-radius: 2vh;
+    transition: left 500ms ease;
+}
+
+.light #inner_menu {
+    background-color: #e1daec;
 }
 
 /*FOOTER*/
