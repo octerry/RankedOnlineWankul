@@ -170,7 +170,8 @@ h1,h2,h3{
 #top_bar .icon{
     margin-top: 0;
     height: 4vh;
-    width: auto;
+    width: 4vh;
+    object-fit: cover;
     border-radius: 100%;
 }
 
@@ -225,7 +226,7 @@ h1,h2,h3{
     color: #fff;
     font-family: 'Bowlby One SC';
     text-align: center;
-    text-shadow: 0 0 2vh #000;
+    text-shadow: 0 0 2vh #646464;
     font-size: 2.5vh;
     line-height: 4vh;
     transition: 200ms ease;
@@ -238,9 +239,86 @@ h1,h2,h3{
     line-height: 5vh;
 }
 
-
 #fight_section #fight_button .light {
     color: #fff;
+}
+
+#fight_selection {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 50%;
+    top: 5vh;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.fight_choice{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: transform .2s;
+    border-radius: 20px;
+    height: 30%;
+    width: fit-content;
+    padding: 30px;
+    box-shadow: 10px 10px 20px #000;
+    pointer-events: all;
+
+    &:hover{
+        cursor: pointer;
+        border: 5px #fff solid !important;
+        transform: scale(1.3);
+    }
+}
+
+.fight_choice:nth-child(1){
+    transform: scale(0);
+    border: 5px solid #4684a8;
+    background-color: #244457;
+    color: #fff;
+    font-size: 30px;
+    font-family: "Bayon";
+
+    /* animation: choiceAppear 1s;
+    animation-fill-mode: forwards; */
+}
+.fight_choice:nth-child(2){
+    transform: scale(0);
+    border: 5px solid #5846a8;
+    background-color: #2d2457;
+    color: #fff;
+    font-size: 30px;
+    font-family: "Bayon";
+
+    /* animation: choiceAppear 1s;
+    animation-delay: .2s;
+    animation-fill-mode: forwards; */
+}
+.fight_choice:nth-child(3){
+    transform: scale(0);
+    border: 5px solid #a84646;
+    background-color: #6b2e2e;
+    color: #fff;
+    font-size: 50px;
+    font-family: "Bayon";
+
+    /* animation: choiceAppear 1s;
+    animation-delay: .4s;
+    animation-fill-mode: forwards; */
+}
+
+.wankul {
+    height: 300px;
+    width: 300px;
+    object-fit: contain;
+}
+
+#wankul_gauche {
+    transform: scaleX(-1);
 }
 
 #booster_section {
@@ -357,7 +435,6 @@ h1,h2,h3{
     display: flex;
     flex-direction: column;
     align-items: center;
-    backdrop-filter: blur(4px);
     background-color: #00000080;
     margin-top: 10vh;
     padding-bottom: 10vh;
@@ -1312,6 +1389,16 @@ footer div .footer_svg{
     #onglet_booster{
         top: 25vw;
     }
+
+    .wankul{
+        display: none;
+    }
+
+    
+    #fight_selection {
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
 }
 
 @keyframes appear {
@@ -1332,5 +1419,17 @@ footer div .footer_svg{
     }
     100% {
         transform: scale(0);
+    }
+}
+
+@keyframes choiceAppear {
+    0% {
+        transform: scale(.1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
     }
 }

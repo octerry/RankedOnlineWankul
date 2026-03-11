@@ -13,10 +13,14 @@ MADE ON EARTH BY HUMANS
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:title" content="Ranked Online Wankul">
     <meta property="og:description" content="Collection et combat de cartes Wankul en ligne multijoueur">
-    <meta property="og:url" content="https://terrysegaunes.fr/hors-site/rowViewportLink.png">
+    
     <link rel="icon" type="image/x-icon" href="sources/banana_fruit_food_icon.ico">
     <title>ROW : Wankul en ligne</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" /> <!--GLIGHTBOX-->
     <link rel="stylesheet" href="style.css">
+    
+    <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script> <!--GLIGHTBOX-->
     <script defer src="script.js"></script>
 </head>
 <body>
@@ -33,9 +37,14 @@ MADE ON EARTH BY HUMANS
                     <img class="logo" src="sources/Logo.svg" alt="Logo Wankul">
                 </a>
             </div>
-            <img class="icon" id="profil_icon" src="https://cdn-images.dzcdn.net/images/artist/b79300f435dadf122aba45769ee7b7e0/500x500-000000-80-0-0.jpg" alt="Image de profil" title="Profil">
+            <img class="icon" id="profil_icon" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDP0mKW3JAsjeUqO9T4NJ8_-vpGo0gixz1Bw&s" alt="Image de profil" title="Profil">
         </div>
     </header>
+    <div id="fight_selection">
+        <div class="fight_choice">En ligne classique</div>
+        <div class="fight_choice">En ligne classe</div>
+        <div class="fight_choice">Hors ligne</div>
+    </div>
     <main id="index_main">
         <div id="section_home">
             <div id="fight_section">
@@ -44,6 +53,7 @@ MADE ON EARTH BY HUMANS
                 </div>
             </div>
             <div id="booster_section">
+                <img src="sources/wankul1.png" alt="Wankul" class="wankul" id="wankul_gauche">
                 <a href="boosterOpening.html">
                     <div id="onglet_booster" > <!-- Onglet Booster -->
                         <div> <!-- Partie texte -->
@@ -53,6 +63,7 @@ MADE ON EARTH BY HUMANS
                         <img src="sources/booster.png" alt="booster">
                     </div>
                 </a>
+                <img src="sources/wankul1.png" alt="Wankul" class="wankul">
             </div>
         </div>
         <div id="section_carte"> <!-- Wankuldex où toutes les cartes sont affichées -->
@@ -84,7 +95,9 @@ MADE ON EARTH BY HUMANS
                 </div>
             </div>
             <div id="card_displate"> <!-- AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA MODIFIER PLUS TARD !!!!!!!!!!!!!!!!!!!!! -->
-                <img src="https://cdn.shopify.com/s/files/1/0683/2055/9412/files/Wankul_S4_179_bhixes4teejqeafn3v3prir1.webp?v=1740131559" alt="CarteLaJeuneFilleALaPerle">
+                <a href="https://cdn.shopify.com/s/files/1/0683/2055/9412/files/Wankul_S4_179_bhixes4teejqeafn3v3prir1.webp?v=1740131559" class="glightbox4" data-glightbox="title: La jeune fille à la perele; description: Ajouter la Force de la carte du dessus de votre defausse à ce Personnage.; descPosition: left;type: image; effect: fade; width: 900px; height: auto; zoomable: true; draggable: true;">
+                    <img src="https://cdn.shopify.com/s/files/1/0683/2055/9412/files/Wankul_S4_179_bhixes4teejqeafn3v3prir1.webp?v=1740131559" alt="image" />
+                </a>            
                 <img src="https://cdn.shopify.com/s/files/1/0683/2055/9412/files/Wankul_S4_179_bhixes4teejqeafn3v3prir1.webp?v=1740131559" alt="CarteLaJeuneFilleALaPerle">
                 <img src="https://cdn.shopify.com/s/files/1/0683/2055/9412/files/Wankul_S4_179_bhixes4teejqeafn3v3prir1.webp?v=1740131559" alt="CarteLaJeuneFilleALaPerle">
                 <img src="https://cdn.shopify.com/s/files/1/0683/2055/9412/files/Wankul_S4_179_bhixes4teejqeafn3v3prir1.webp?v=1740131559" alt="CarteLaJeuneFilleALaPerle">

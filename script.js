@@ -14,6 +14,9 @@
 //
 // console renvoie : CORS
 
+//On  prends les deux wankuls
+let wankuls = document.getElementsByClassName('wankul');
+
 //On récupère tous les elements de la page et on défini les élements nécéssaires
 // Pour le darkmode
 let col = document.querySelectorAll('*');
@@ -40,7 +43,20 @@ let profilPopup = document.getElementById('profil');
 let profilButton = document.getElementById('profil_icon');
 let profilBackbutton = document.getElementById('backarrow');
 
+let fightButton = document.getElementById('fight_button');
+let fightChoices = document.getElementsByClassName('fight_choice')
+
 //DEBUT DU CODE
+// Pour les wankuls aleatoires
+let chosen = Math.floor(Math.random() * 21) + 1
+wankuls[0].src = "sources/wankul" + chosen + ".png" 
+let chosen2 = Math.floor(Math.random() * 21) + 1
+if (chosen === chosen2) {
+    if(chosen2 === 21) {chosen2--}
+    else {chosen2++}
+}
+wankuls[1].src = "sources/wankul" + chosen2 + ".png"
+
 // Pour le darkmode
 darkmodeButton.addEventListener('click', function () {
     if (isDarkmodeActivate) {
@@ -112,13 +128,32 @@ window.onclick = (event) => { // Si on clique en dehors du menu ça le ferme
         menuPopup.style.display = 'none';
         document.body.style.overflow = 'visible'
     }
+
+    if(!event.target.matches('.fight_choice') && !event.target.matches('h2')) {
+        console.log(fightChoices[0].style.animation)
+        if(fightChoices[0].style.animation.includes("choiceAppear")) {
+            for (const element of fightChoices) {
+                element.style.animation = "disappear .5s"
+            }
+        }
+    }
 }
 
-profilButton.addEventListener('click', openProfilPopup)
+profilButton.addEventListener('click', openProfilPopup) // En appuyant sur le profil
 
-profilBackbutton.addEventListener('click', openProfilPopup)
+profilBackbutton.addEventListener('click', openProfilPopup) // En appuyant sur le bouton pour fermer le profil
 
-function openProfilPopup () {
+function openProfilPopup () { // Ouverture de la page de profil
     profilPopup.classList.toggle('open')
     console.log(profilPopup.classList)
 }
+
+fightButton.addEventListener('click', function(){ // Bouton "rentrer dans l'arene"
+    for (const element of fightChoices) {
+        element.style.animation = "choiceAppear 1s"
+        element.style.animationFillMode = "forwards"
+    }
+    fightChoices[1].style.animationDelay = ".2s"
+    fightChoices[2].style.animationDelay = ".4s"
+})
+

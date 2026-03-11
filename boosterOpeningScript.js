@@ -198,7 +198,6 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
         let boosterOpening = document.querySelector('#booster_opening')
         let booster = document.querySelector('.booster')
         canvasParticles()
-        
 
         if(selected === 0) {
             selected = Math.floor(Math.random() * 4) + 1
