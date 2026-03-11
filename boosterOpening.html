@@ -14,6 +14,9 @@ MADE ON EARTH BY HUMANS<
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="sources/banana_fruit_food_icon.ico">
     <title>Opening Booster Wankul</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/Draggable.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/ScrollTrigger.min.js"></script>
     <link rel="stylesheet" href="style.css">
     <script defer src="boosterOpeningScript.js"></script>
 </head>
@@ -25,14 +28,36 @@ MADE ON EARTH BY HUMANS<
         <h1>Ouvrir un booster</h1>
         <h2 id="season_title">Saison Aléatoire</h2>
     </div>
-    <div id="booster_opening">
-        <div><img src="sources/BoosterAleatoire.png" alt="Booster aleatoire" class="booster_img"></div>
-        <div><img src="sources/BoosterS1 ORIGINS.png" alt="Booster aleatoire" class="booster_img"></div>
-        <div><img src="sources/BoosterS2 CAMPUS.png" alt="Booster aleatoire" class="booster_img"></div>
-        <div><img src="sources/BoosterS3 BATTLE.png" alt="Booster aleatoire" class="booster_img"></div>
-        <div><img src="sources/BoosterS4 STELLAR.png" alt="Booster aleatoire" class="booster_img"></div>
+    <div class="gallery">
+        <ul class="cards">
+            <li style="background-image: url(sources/BoosterAleatoire.png)"></li>
+            <li style="background-image: url(sources/BoosterS1\ ORIGINS.png)"></li>
+            <li style="background-image: url(sources/BoosterS2\ CAMPUS.png)"></li>
+            <li style="background-image: url(sources/BoosterS3\ BATTLE.png)"></li>
+            <li style="background-image: url(sources/BoosterS4\ STELLAR.png)"></li>
+            <li style="background-image: url(sources/BoosterAleatoire.png)"></li>
+            <li style="background-image: url(sources/BoosterS1\ ORIGINS.png)"></li>
+            <li style="background-image: url(sources/BoosterS2\ CAMPUS.png)"></li>
+            <li style="background-image: url(sources/BoosterS3\ BATTLE.png)"></li>
+            <li style="background-image: url(sources/BoosterS4\ STELLAR.png)"></li>
+        </ul>
+        <div class="actions">
+            <div class="actions-inner">
+                <button class="prev">&#60</button>
+                <button class="next">&#62</button>
+            </div>
+            <button id="open_button">Ouvrir un booster aléatoire</button>
+        </div>
     </div>
+    <div class="drag-proxy"></div>
     <div id="booster_bg">
+    </div>
+    <div id="booster_opening">
+        <canvas></canvas>
+        <div id="back_button">Annuler</div>
+        <div id="booster_animation">
+            <img src="sources/BoosterS1 ORIGINS.png" alt="booster" class="booster">
+        </div>
     </div>
 </body>
 </html>

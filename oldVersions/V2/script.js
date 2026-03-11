@@ -10,7 +10,7 @@
 //
 //fetch("https://wankul.fr/apps/proxy/api/wankuldex/cards")
 //   .then(response => console.log(response))
-//   .catch(error => console.error(error))
+//    .catch(error => console.error(error))
 //
 // console renvoie : CORS
 
