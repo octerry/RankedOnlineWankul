@@ -122,7 +122,6 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
     function changeBg(scroll) {
         // CHANGEMENT DES FONDS SELON LA CARTE AU MILIEU DE L'ECRAN
         newScroll = parseInt(String(scroll).slice(-3))
-        console.log(scroll)
         if(newScroll<200) {
             boosterBackground.style.backgroundColor = 'currentColor'
             seasonTitle.innerHTML = "Saison Aleatoire"
@@ -195,6 +194,7 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
 
     openButton.addEventListener("click", function(){
         let boosterOpening = document.querySelector('#booster_opening')
+        let boosterAnimation = document.getElementById('booster_animation')
         let booster = document.querySelector('.booster')
         let quickOpeningButton = document.getElementById('quick_opening_button')
         let swiperSwaper = document.querySelector('.swiper-wrapper')
@@ -209,8 +209,6 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
             tempSelect = selected
         }
 
-        console.log("selected " + selected)
-
         if(tempSelect === 1) {booster.src = "sources/BoosterS1 ORIGINS.png"}
         if(tempSelect === 2) {booster.src = "sources/BoosterS2 CAMPUS.png"}
         if(tempSelect === 3) {booster.src = "sources/BoosterS3 BATTLE.png"}
@@ -223,33 +221,39 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
         
         fetch("cards.json")
             .then((res) => res.json())
-            .then((text) => {chosenCards = cardsChoice(tempSelect,text)})
+            .then((text) => {
+                chosenCards = cardsChoice(tempSelect,text)
+                
+                for(let i=0; i<swiperSwaper.children.length; i++) {
+                    swiperSwaper = document.querySelector('.swiper-wrapper')
+                    // swiperSwaper.children[i].backgroundColor = "#000"
+                    swiperSwaper.children[i].background = `url(${chosenCards[i].image})`
+                    console.log("couleur carte : " + swiperSwaper.backgroundColor, chosenCards[i])
+                }
+
+                quickOpeningButton.addEventListener('click', function(){
+                    booster.style.animation = "boosterOpening 2s"
+                    cardReveal.style.animation = "cardReveal 2s"
+                    cardReveal.style.animationFillMode = "forwards"
+
+                    let temp = 5
+                    for (const element of swiperSwaper.children) {
+                        temp += 1
+                        element.style.opacity = "0"
+                        element.style.animation = "opacityAppear .3s"
+                        element.style.animationDelay = temp/10 + "s"
+                        element.style.animationFillMode = "forwards"
+                        boosterAnimation.style.backgroundColor = "#000000B0"
+                    }
+                })
+            })
             .catch((e) => console.error(e));
-
-        quickOpeningButton.addEventListener('click', function(){
-            for(let i=0; i<swiperSwaper.children.length; i++) {
-                swiperSwaper.children[i].background = `url(${chosenCards[i].image})`
-                console.log(swiperSwaper.children[i].background)
-            }
-
-            booster.style.animation = "boosterOpening 2s"
-            cardReveal.style.animation = "cardReveal 2s"
-            cardReveal.style.animationFillMode = "forwards"
-
-            let temp = 5
-            for (const element of swiperSwaper.children) {
-                temp += 1
-                element.style.opacity = "0"
-                element.style.animation = "opacityAppear .3s"
-                element.style.animationDelay = temp/10 + "s"
-                element.style.animationFillMode = "forwards"
-            }
-        })
     })
 
-    backButton.addEventListener("click", function(){
+    backButton.addEventListener("click", function(){ // Bouton pour annuler le booster opening
         let boosterOpening = document.querySelector('#booster_opening')
         let booster = document.querySelector('.booster')
+        let cardReveal = document.getElementById('card_reveal')
 
         boosterOpening.style.transform = "rotateX(.25turn)"
         booster.style.animation = "disappear 1s"
@@ -338,10 +342,10 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
         if (cardDico) {
             for (let i=0; i<10; i++) {
                 let actualCard = randomCard(season, cardDico)
-                let n = 30
+                let n = 300
                 for (let i=0; i<n; i++) {
                     if (final.includes(actualCard)) {
-                        let actualCard = randomCard(season, cardDico)
+                        actualCard = randomCard(season, cardDico)
                     } else {
                         n = 0;
                     }
@@ -349,6 +353,7 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
                 final.push(actualCard)
             }
         }
+        console.log(final)
 
         return final
     }

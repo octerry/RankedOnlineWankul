@@ -28,6 +28,8 @@ let wankuls = document.getElementsByClassName('wankul');
 let col = document.querySelectorAll('*');
 let darkmodeButton = document.getElementById('darkmodeButton');
 let isDarkmodeActivate = true;
+if (localStorage.getItem('dark')) {isDarkmodeActivate = localStorage.getItem('dark')} // On défini le darkmode comme l'utilisateur l'avait demandé
+else (isDarkmodeActivate = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)')) // Et si il est jamais venu on lui donne son état de navigateur
 
 // Pour les tabs
 let homeButton = document.getElementById('home_button');
@@ -81,6 +83,7 @@ darkmodeButton.addEventListener('click', function () {
             isDarkmodeActivate = true
         }
     }
+    localStorage.setItem('dark',isDarkmodeActivate)
 })
 
 // Pour les tabs

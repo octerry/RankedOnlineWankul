@@ -92,6 +92,8 @@ h1,h2,h3{
     padding-bottom: 2vh;
     backdrop-filter: blur(15px);
     background-color: #00001040;
+
+    animation: topAppear 1s;
 }
 
 .light #top_bar {
@@ -209,6 +211,8 @@ h1,h2,h3{
     background-repeat: no-repeat, no-repeat, repeat;
     width: 100vw;
     box-shadow: inset 0 -1vh 2vh #00000090;
+
+    animation: topAppear 1s;
 }
 
 @supports (background-blend-mode: overlay) {
@@ -315,10 +319,12 @@ h1,h2,h3{
     height: 300px;
     width: 300px;
     object-fit: contain;
+    animation: wankulAppear 2s;
 }
 
 #wankul_gauche {
     transform: scaleX(-1);
+    animation: leftWankulAppear 2s;
 }
 
 #booster_section {
@@ -353,7 +359,11 @@ h1,h2,h3{
     border-radius: clamp(1vw,6vw,6vh);
     box-shadow: inset 10px 10px 4vw #00000070;
     max-width: 100vh;
+
+    transform: scale(0);
     transition: 500ms ease;
+    animation: boosterAppear .4s ease-out;
+    animation-fill-mode: forwards;
 }
 
 .light #onglet_booster {
@@ -807,6 +817,8 @@ input[type="number"]::-webkit-inner-spin-button {
     background-color: #302d5a90;
     backdrop-filter: blur(.5vw);
     transition: 500ms ease;
+
+    animation: bottomAppear .8s;
 }
 
 .light .bottom_buttons{
@@ -1183,6 +1195,8 @@ footer div .footer_svg{
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+    animation: slideshowAppear .5s;
 }
 
 .cards li {
@@ -1212,6 +1226,8 @@ footer div .footer_svg{
     justify-content: center;
     flex-direction: column;
     gap: 10px;
+
+    animation: actionsAppear .5s ease-out;
 }
 
 #open_button {
@@ -1299,12 +1315,16 @@ footer div .footer_svg{
     padding-top: 5vh;
     z-index: 2;
     pointer-events: none;
+
+    animation: topAppear .5s ease-out;
 }
 
 #superior_body #logo_img{
     height: 8vh;
     width: auto;
-    margin-bottom: 2vh;
+    margin-bottom: 2vh; 
+    
+    pointer-events: all;
 }
 
 #superior_body h1{
@@ -1369,6 +1389,7 @@ footer div .footer_svg{
     background-color: #00000050;
     width: 100%;
     height: 100%;
+    transition: background-color 2s;
 }
 
 #booster_animation .booster {
@@ -1381,15 +1402,15 @@ footer div .footer_svg{
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 65vh;
-    width: 40vh;
+    height: 60vh;
+    width: 35vh;
     border-radius: 10px;
     transition: .2s;
 
     &:hover {
         cursor: pointer;
         color: #fff;
-        border: 1px #fff solid;
+        background-color: #ffffff30;
     }
 
     &:hover div {
@@ -1491,6 +1512,69 @@ transform: scale(0);
     }
     100% {
         opacity: 1;
+    }
+}
+
+@keyframes topAppear {
+    0% {
+        transform: translateY(-50vh);
+    }
+    100% {
+        transform: translateX(0)
+    }
+}
+
+@keyframes bottomAppear {
+    0% {
+        transform: translateY(50vh);
+    }
+    100% {
+        transform: translateX(0)
+    }
+}
+
+@keyframes boosterAppear {
+    0% {
+        transform: scale(1.2) translateY(-20vh);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes actionsAppear {
+    0% {
+        transform: translateY(50vh) translateX(-50%);
+    }
+    100% {
+        transform: translateX(0) translateX(-50%);
+    }
+}
+
+@keyframes slideshowAppear {
+    0% {
+        transform: scale(1.2) translateY( calc(-20vh - 50%)) translateX(-40%);
+    }
+    100% {
+        transform: scale(1) translate(-50%, -50%);
+    }
+}
+
+@keyframes wankulAppear {
+    0% {
+        transform: translateX(30vw);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes leftWankulAppear {
+    0% {
+        transform: translateX(-30vw) scaleX(-1);
+    }
+    100% {
+        transform: translateX(0) scaleX(-1);
     }
 }
 
