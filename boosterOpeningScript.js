@@ -18,10 +18,9 @@
 // boosterBackground.style.backgroundColor = '#791e1e'
 // seasonTitle.innerHTML = "Saison 4 STELLAR"
 // boosterBackground.style.backgroundColor = '#4c2579ff'
-
-
 document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie GSAP a chargée
     gsap.registerPlugin(ScrollTrigger)
+    let root = document.documentElement
     let seasonTitle = document.getElementById('season_title')
     let boosterBackground = document.getElementById('booster_bg')
     let openButton = document.getElementById('open_button')
@@ -197,24 +196,55 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
     openButton.addEventListener("click", function(){
         let boosterOpening = document.querySelector('#booster_opening')
         let booster = document.querySelector('.booster')
+        let quickOpeningButton = document.getElementById('quick_opening_button')
+        let swiperSwaper = document.querySelector('.swiper-wrapper')
+        let cardReveal = document.getElementById('card_reveal')
+        let tempSelect = 0
+        let chosenCards = Array()
         canvasParticles()
 
         if(selected === 0) {
-            selected = Math.floor(Math.random() * 4) + 1
+            tempSelect = Math.floor(Math.random() * 4) + 1
+        } else {
+            tempSelect = selected
         }
 
         console.log("selected " + selected)
 
-        if(selected === 1) {booster.src = "sources/BoosterS1 ORIGINS.png"}
-        if(selected === 2) {booster.src = "sources/BoosterS2 CAMPUS.png"}
-        if(selected === 3) {booster.src = "sources/BoosterS3 BATTLE.png"}
-        if(selected === 4) {booster.src = "sources/BoosterS4 STELLAR.png"}
+        if(tempSelect === 1) {booster.src = "sources/BoosterS1 ORIGINS.png"}
+        if(tempSelect === 2) {booster.src = "sources/BoosterS2 CAMPUS.png"}
+        if(tempSelect === 3) {booster.src = "sources/BoosterS3 BATTLE.png"}
+        if(tempSelect === 4) {booster.src = "sources/BoosterS4 STELLAR.png"}
 
         boosterOpening.style.transform = "rotateX(0)"
-        booster.style.animation = "appear 2s"
+        booster.style.animation = "appear 1.5s"
         booster.style.animationFillMode = "forwards"
-        booster.style.animationDelay = "1s"
-        console.log('go for it')
+        booster.style.animationDelay = ".8s"
+        
+        fetch("cards.json")
+            .then((res) => res.json())
+            .then((text) => {chosenCards = cardsChoice(tempSelect,text)})
+            .catch((e) => console.error(e));
+
+        quickOpeningButton.addEventListener('click', function(){
+            for(let i=0; i<swiperSwaper.children.length; i++) {
+                swiperSwaper.children[i].background = `url(${chosenCards[i].image})`
+                console.log(swiperSwaper.children[i].background)
+            }
+
+            booster.style.animation = "boosterOpening 2s"
+            cardReveal.style.animation = "cardReveal 2s"
+            cardReveal.style.animationFillMode = "forwards"
+
+            let temp = 5
+            for (const element of swiperSwaper.children) {
+                temp += 1
+                element.style.opacity = "0"
+                element.style.animation = "opacityAppear .3s"
+                element.style.animationDelay = temp/10 + "s"
+                element.style.animationFillMode = "forwards"
+            }
+        })
     })
 
     backButton.addEventListener("click", function(){
@@ -223,6 +253,10 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
 
         boosterOpening.style.transform = "rotateX(.25turn)"
         booster.style.animation = "disappear 1s"
+
+        cardReveal.style.animation = "none"
+        cardReveal.style.transform = "scale(0)"
+        cardReveal.style.animationDelay = ""
     })
 
     function canvasParticles() {
@@ -297,4 +331,42 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
         })
         })
     }
+
+    function cardsChoice(season, cardDico) { // Choix aléatoire des 10 cartes dans un booster
+        let final = Array()
+
+        if (cardDico) {
+            for (let i=0; i<10; i++) {
+                let actualCard = randomCard(season, cardDico)
+                let n = 30
+                for (let i=0; i<n; i++) {
+                    if (final.includes(actualCard)) {
+                        let actualCard = randomCard(season, cardDico)
+                    } else {
+                        n = 0;
+                    }
+                }
+                final.push(actualCard)
+            }
+        }
+
+        return final
+    }
+
+    function randomCard(season, cardDico) {
+
+        let chosen = Math.floor(Math.random() * cardDico.cards.length)
+        let card = cardDico.cards[chosen]
+
+        if (card.season.id == season) {
+            return card
+        } else {
+            return randomCard(season, cardDico)
+        }
+    }
+
+    var swiper = new Swiper(".mySwiper", {
+        effect: "cards",
+        grabCursor: true,
+    });
 });

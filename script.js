@@ -14,6 +14,12 @@
 //
 // console renvoie : CORS
 
+//On récupère l'API en local pour pas avoir de problème
+fetch("cards.json")
+    .then((res) => res.json())
+    .then((text) => {showCards(text)})
+    .catch((e) => console.error(e));
+
 //On  prends les deux wankuls
 let wankuls = document.getElementsByClassName('wankul');
 
@@ -45,6 +51,11 @@ let profilBackbutton = document.getElementById('backarrow');
 
 let fightButton = document.getElementById('fight_button');
 let fightChoices = document.getElementsByClassName('fight_choice')
+
+// Pour les cartes Wankul
+let cardDisplate = document.getElementById('card_displate')
+
+
 
 //DEBUT DU CODE
 // Pour les wankuls aleatoires
@@ -157,3 +168,24 @@ fightButton.addEventListener('click', function(){ // Bouton "rentrer dans l'aren
     fightChoices[2].style.animationDelay = ".4s"
 })
 
+function showCards(dico) {
+    console.log(dico.cards)
+
+    let n = 40 // Nombres de cartes affichées
+    for(let i=1; i<n; i++) {
+        let cardName = dico.cards[i+29].title
+        let cardSource = dico.cards[i+29].image
+
+        let newElement = document.createElement(`img`)
+        newElement.alt = cardName
+        newElement.src = cardSource
+
+        cardDisplate.appendChild(newElement)
+    }
+}
+
+// S1 - 180
+// S2 - 155
+// S3 - 180
+// S4 - 180
+// HS - 67
