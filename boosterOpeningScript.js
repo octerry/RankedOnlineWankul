@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
     let openButton = document.getElementById('open_button')
     let backButton = document.getElementById('back_button')
     let boosterPointsOutputs = document.getElementById('booster_points').children
-    let boosterPoints = [0,0,0,0]
+    let boosterPoints = [10,10,10,10]
     if (localStorage.getItem('boosterPoints')) {
         boosterPoints = JSON.parse(localStorage.getItem('boosterPoints'))
         console.log(boosterPoints)

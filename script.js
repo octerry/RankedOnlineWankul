@@ -242,7 +242,7 @@ function showCards(dico) {
 
 cheatCodeSubmit.addEventListener('click', function() {
     if (cheatCodeInput.value == "ToutPourLe20") {
-        let boosterPoints = [0,0,0,0];
+        let boosterPoints = [10,10,10,10];
         if(localStorage.getItem('boosterPoints')) {boosterPoints = JSON.parse(localStorage.getItem('boosterPoints'))}
         for (let i=0; i<4; i++) {
             boosterPoints[i] += 200;
