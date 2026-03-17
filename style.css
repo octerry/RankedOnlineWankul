@@ -895,6 +895,67 @@ input[type="number"]::-webkit-inner-spin-button {
     background-color: #e1daec;
 }
 
+#cheat_code {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    top: 5%;
+    right: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 14%;
+    width: 90%;
+
+
+    input {
+        width: 100%;
+        height: 40%;
+
+        border-radius: 10px;
+        text-align: center;
+        background-color: #605470;
+        border: none;
+        box-shadow: inset 4px 4px 1px #00000050;
+        font-size: 20px;
+        color: #fff;
+        font-family: "Hammersmith One";
+
+        &::placeholder {
+            color: #b2a4c7;
+            font-size: 20px;
+        }
+    }
+
+    div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+        height: 50%;
+
+        border-radius: 10px;
+        text-align: center;
+        background-color: #5c94aa;
+        border: 1px solid #3a4b6e;
+        box-shadow: 4px 4px 1px #00000050;
+        font-size: 20px;
+        color: #2e3f5a;
+        font-family: "Hammersmith One";
+
+        transition: transform .3s, box-shadow .3s, background-color .3s, color .3s;
+
+        &:hover {
+            cursor: pointer;
+            box-shadow: none;
+            transform: translate(4px, 4px);
+            background-color: #75adc4;
+            color: #485d7e;
+        }
+    }
+}
+
 /*PROFIL*/
 #profil{
     position: fixed;
@@ -1229,7 +1290,7 @@ footer div .footer_svg{
 
 .actions {
     position: absolute;
-    bottom: 50px;
+    bottom: 10%;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -1239,6 +1300,45 @@ footer div .footer_svg{
     gap: 10px;
 
     animation: actionsAppear .5s ease-out;
+}
+
+#booster_points {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: fit-content;
+    border-bottom: 1px #fff solid;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 5px;
+
+    div {
+        padding: 0 3px;
+        border-radius: 4px;
+
+        color: #fff;
+        font-family: "Hammersmith One";
+        font-size: 20px;
+
+        margin: 0 3px;
+    }
+
+    div:nth-child(1) {
+        background-color: #0777aa;
+        border: 1px #fff solid;
+    }
+    div:nth-child(2) {
+        background-color: #0f772f;
+        border: 1px #fff solid;
+    }
+    div:nth-child(3) {
+        background-color: #961212;
+        border: 1px #fff solid;
+    }
+    div:nth-child(4) {
+        background-color: #7f2ba7;
+        border: 1px #fff solid;
+    }
 }
 
 #open_button {

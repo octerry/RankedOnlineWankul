@@ -25,6 +25,15 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
     let boosterBackground = document.getElementById('booster_bg')
     let openButton = document.getElementById('open_button')
     let backButton = document.getElementById('back_button')
+    let boosterPointsOutputs = document.getElementById('booster_points').children
+    let boosterPoints = [0,0,0,0]
+    if (localStorage.getItem('boosterPoints')) {
+        boosterPoints = JSON.parse(localStorage.getItem('boosterPoints'))
+        console.log(boosterPoints)
+        for (let i=0; i<4; i++) {
+            boosterPointsOutputs[i].innerHTML = boosterPoints[i];
+        }
+    };
     let selected = 0
     let myCards = []
     if (localStorage.getItem('myCards')) {
@@ -130,30 +139,49 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
             boosterBackground.style.backgroundColor = 'currentColor'
             seasonTitle.innerHTML = "Saison Aleatoire"
             openButton.innerHTML = "Ouvrir un booster aléatoire"
+            for (const element of boosterPointsOutputs) {
+                element.style.display = "block";
+            }
             selected = 0
         }
         if(newScroll === 200) {
             seasonTitle.innerHTML = "Saison 1 ORIGINS"
             boosterBackground.style.backgroundColor = '#183272'
             openButton.innerHTML = "Ouvrir un booster saison 1"
+            for (const element of boosterPointsOutputs) {
+                element.style.display = "none";
+            }
+            boosterPointsOutputs[0].style.display = "block";
             selected = 1
         }
         if(newScroll === 400) {
             seasonTitle.innerHTML = "Saison 2 CAMPUS"
             boosterBackground.style.backgroundColor = '#2e6428ff'
             openButton.innerHTML = "Ouvrir un booster saison 2"
+            for (const element of boosterPointsOutputs) {
+                element.style.display = "none";
+            }
+            boosterPointsOutputs[1].style.display = "block";
             selected = 2
         }
         if(newScroll === 600) {
             seasonTitle.innerHTML = "Saison 3 BATTLE"
             boosterBackground.style.backgroundColor = '#791e1e'
             openButton.innerHTML = "Ouvrir un booster saison 3"
+            for (const element of boosterPointsOutputs) {
+                element.style.display = "none";
+            }
+            boosterPointsOutputs[2].style.display = "block";
             selected = 3
         }
         if(newScroll === 800) {
             seasonTitle.innerHTML = "Saison 4 STELLAR"
             boosterBackground.style.backgroundColor = '#4c2579ff'
             openButton.innerHTML = "Ouvrir un booster saison 4"
+            for (const element of boosterPointsOutputs) {
+                element.style.display = "none";
+            }
+            boosterPointsOutputs[3].style.display = "block";
             selected = 4
         }
     }
@@ -197,77 +225,89 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
     }
 
     openButton.addEventListener("click", function(){
-        let boosterOpening = document.querySelector('#booster_opening')
-        let boosterAnimation = document.getElementById('booster_animation')
-        let booster = document.querySelector('.booster')
-        let quickOpeningButton = document.getElementById('quick_opening_button')
-        let swiperSwaper = document.querySelector('.swiper-wrapper')
-        let cardReveal = document.getElementById('card_reveal')
-        let skipButton = document.getElementById('skip_button')
-        let tempSelect = 0
-        let chosenCards = Array()
-        canvasParticles()
-        backButton.style.animation = "opacityAppear .5s forwards"
-        backButton.style.pointerEvents = "all";
-        swiper.slideTo(0);
+        if (boosterPoints[selected-1] > 0) {
+            let boosterOpening = document.querySelector('#booster_opening')
+            let boosterAnimation = document.getElementById('booster_animation')
+            let booster = document.querySelector('.booster')
+            let quickOpeningButton = document.getElementById('quick_opening_button')
+            let swiperSwaper = document.querySelector('.swiper-wrapper')
+            let cardReveal = document.getElementById('card_reveal')
+            let skipButton = document.getElementById('skip_button')
+            let clicked = false;
+            let tempSelect = 0
+            let chosenCards = Array()
+            canvasParticles()
+            backButton.style.animation = "opacityAppear .5s forwards"
+            backButton.style.pointerEvents = "all";
+            swiper.slideTo(0);
 
-        if(selected === 0) {
-            tempSelect = Math.floor(Math.random() * 4) + 1
-        } else {
-            tempSelect = selected
-        }
+            if(selected === 0) {
+                tempSelect = Math.floor(Math.random() * 4) + 1
+            } else {
+                tempSelect = selected
+            }
 
-        if(tempSelect === 1) {booster.src = "sources/BoosterS1 ORIGINS.png"}
-        if(tempSelect === 2) {booster.src = "sources/BoosterS2 CAMPUS.png"}
-        if(tempSelect === 3) {booster.src = "sources/BoosterS3 BATTLE.png"}
-        if(tempSelect === 4) {booster.src = "sources/BoosterS4 STELLAR.png"}
+            if(tempSelect === 1) {booster.src = "sources/BoosterS1 ORIGINS.png"}
+            if(tempSelect === 2) {booster.src = "sources/BoosterS2 CAMPUS.png"}
+            if(tempSelect === 3) {booster.src = "sources/BoosterS3 BATTLE.png"}
+            if(tempSelect === 4) {booster.src = "sources/BoosterS4 STELLAR.png"}
 
-        boosterOpening.style.transform = "rotateX(0)"
-        booster.style.animation = "appear 1.5s forwards"
-        booster.style.animationDelay = ".8s"
+            boosterOpening.style.transform = "rotateX(0)"
+            booster.style.animation = "appear 1.5s forwards"
+            booster.style.animationDelay = ".8s"
+                        
+            for (const element of swiperSwaper.children) {
+                element.style.animation = "none";
+            }
+            
+            fetch("cards.json")
+                .then((res) => res.json())
+                .then((cardDico) => {
+                    chosenCards = cardsChoice(tempSelect,cardDico)
+                    swiperSwaper = document.querySelector('.swiper-wrapper');
+                    swiperSlide = document.querySelectorAll('.swiper-slide');
                     
-        for (const element of swiperSwaper.children) {
-            element.style.animation = "none";
-        }
-        
-        fetch("cards.json")
-            .then((res) => res.json())
-            .then((cardDico) => {
-                chosenCards = cardsChoice(tempSelect,cardDico)
-                swiperSwaper = document.querySelector('.swiper-wrapper');
-                swiperSlide = document.querySelectorAll('.swiper-slide');
-                
-                for(let i=0; i<swiperSwaper.children.length; i++) {
-                    swiperSlide[i].style.background = `url(${chosenCards[i].image})`
-                    swiperSlide[i].style.backgroundSize = 'cover';
-                }
-
-                quickOpeningButton.addEventListener('click', function(){
-                    booster.style.animation = "boosterOpening 2s"
-                    cardReveal.style.animation = "cardReveal 2s forwards"
-                    backButton.style.animation = "opacityDisappear .5s forwards"
-                    backButton.style.pointerEvents = "none";
-                    skipButton.style.animation = "opacityAppear .5s forwards";
-                    skipButton.style.pointerEvents = "all";
-                    saveCards(chosenCards, cardDico)
-
-                    let temp = 5
-                    for (const element of swiperSwaper.children) {
-                        temp += 1
-                        element.style.opacity = "0"
-                        element.style.animation = "opacityAppear .3s"
-                        element.style.animationDelay = temp/10 + "s"
-                        element.style.animationFillMode = "forwards"
-                        boosterAnimation.style.backgroundColor = "#000000B0"
+                    for(let i=0; i<swiperSwaper.children.length; i++) {
+                        swiperSlide[i].style.background = `url(${chosenCards[i].image})`
+                        swiperSlide[i].style.backgroundSize = 'cover';
                     }
-                })
 
-                skipButton.addEventListener('click', function() {
-                    cardReveal.style.animation = "cardDisappear 1s forwards"
-                    boosterOpening.style.transform = "rotateX(.25turn)"
+                    quickOpeningButton.addEventListener('click', function(){
+                        booster.style.animation = "boosterOpening 2s"
+                        cardReveal.style.animation = "cardReveal 2s forwards"
+                        backButton.style.animation = "opacityDisappear .5s forwards"
+                        backButton.style.pointerEvents = "none";
+                        skipButton.style.animation = "opacityAppear .5s forwards";
+                        skipButton.style.pointerEvents = "all";
+                        if(!clicked) {
+                            boosterPoints[selected-1] -= 1;
+                            boosterPointsOutputs[selected-1].innerHTML = boosterPoints[selected-1]
+                            localStorage.setItem('boosterPoints', JSON.stringify(boosterPoints))
+                            saveCards(chosenCards, cardDico)
+                            clicked = true;
+                        }
+
+                        let temp = 5
+                        for (const element of swiperSwaper.children) {
+                            temp += 1
+                            element.style.opacity = "0"
+                            element.style.animation = "opacityAppear .3s"
+                            element.style.animationDelay = temp/10 + "s"
+                            element.style.animationFillMode = "forwards"
+                            boosterAnimation.style.backgroundColor = "#000000B0"
+                        }
+                    })
+
+                    skipButton.addEventListener('click', function() {
+                        cardReveal.style.animation = "cardDisappear 1s forwards"
+                        boosterOpening.style.transform = "rotateX(.25turn)"
+                    })
                 })
-            })
-            .catch((e) => console.error(e));
+                .catch((e) => console.error(e));
+        }
+        else {
+            alert(`Vous n'avez pas assez de points de saison ${selected} pour ouvrir un booster`)
+        }
     })
 
     backButton.addEventListener("click", function(){ // Bouton pour annuler le booster opening

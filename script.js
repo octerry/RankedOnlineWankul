@@ -82,6 +82,10 @@ let fightChoices = document.getElementsByClassName('fight_choice')
 // Pour les cartes Wankul
 let cardDisplate = document.getElementById('card_displate')
 
+// Cheat codes
+let cheatCodeInput = document.getElementById('cheat_code_input')
+let cheatCodeSubmit = document.getElementById('cheat_code_submit')
+
 
 //DEBUT DU CODE
 // Pour les wankuls aleatoires
@@ -235,3 +239,20 @@ function showCards(dico) {
 // S3 - 180
 // S4 - 180
 // HS - 67
+
+cheatCodeSubmit.addEventListener('click', function() {
+    if (cheatCodeInput.value == "ToutPourLe20") {
+        let boosterPoints = [0,0,0,0];
+        if(localStorage.getItem('boosterPoints')) {boosterPoints = JSON.parse(localStorage.getItem('boosterPoints'))}
+        for (let i=0; i<4; i++) {
+            boosterPoints[i] += 200;
+        }
+        localStorage.setItem('boosterPoints', JSON.stringify(boosterPoints));
+
+        alert("200 Boosters de chaque catégorie vous ont été ajouté !");
+    }
+    else {
+        alert("Ce cheatcode n'exite pas :/");
+    }
+    cheatCodeInput.value = "";
+})
