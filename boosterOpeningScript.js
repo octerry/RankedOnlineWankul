@@ -223,12 +223,14 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
             .then((res) => res.json())
             .then((text) => {
                 chosenCards = cardsChoice(tempSelect,text)
+                swiperSwaper = document.querySelector('.swiper-wrapper');
+                swiperSlide = document.querySelectorAll('.swiper-slide');
                 
                 for(let i=0; i<swiperSwaper.children.length; i++) {
-                    swiperSwaper = document.querySelector('.swiper-wrapper')
                     // swiperSwaper.children[i].backgroundColor = "#000"
-                    swiperSwaper.children[i].background = `url(${chosenCards[i].image})`
-                    console.log("couleur carte : " + swiperSwaper.backgroundColor, chosenCards[i])
+                    swiperSlide[i].style.background = `url(${chosenCards[i].image})`
+                    swiperSlide[i].style.backgroundSize = 'cover';
+                    console.log("bg carte : " + swiperSlide[i].background, chosenCards[i])
                 }
 
                 quickOpeningButton.addEventListener('click', function(){
