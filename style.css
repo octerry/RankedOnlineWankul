@@ -473,8 +473,13 @@ h1,h2,h3{
 
 #section_carte #selection_categorie #tout{
     color: white;
-    font-weight: 500;
-    transition: 500ms ease;
+    transition: 200ms ease;
+    font-weight: 200;
+
+    &:hover {
+        transform: scale(1.1);
+        cursor: pointer;
+    }
 }
 
 .light #section_carte #selection_categorie #tout{
@@ -484,7 +489,13 @@ h1,h2,h3{
 
 #section_carte #selection_categorie #vos_cartes{
     color: white;
-    transition: 500ms ease;
+    transition: 200ms ease;
+    font-weight: 500;
+
+    &:hover {
+        transform: scale(1.1);
+        cursor: pointer;
+    }
 }
 
 .light #section_carte #selection_categorie #vos_cartes{

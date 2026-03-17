@@ -15,9 +15,29 @@
 // console renvoie : CORS
 
 //On récupère l'API en local pour pas avoir de problème
+let displayAllButton = document.getElementById('tout');
+let displayMineButton = document.getElementById('vos_cartes');
+let onlyDisplayMine = true
+
 fetch("cards.json")
     .then((res) => res.json())
-    .then((text) => {showCards(text)})
+    .then((text) => {
+        showCards(text)
+
+        displayMineButton.addEventListener('click', function(){
+            onlyDisplayMine = true;
+            displayMineButton.style.fontWeight = "500";
+            displayAllButton.style.fontWeight = "200";
+            showCards(text)
+        })
+
+        displayAllButton.addEventListener('click', function(){
+            onlyDisplayMine = false;
+            displayMineButton.style.fontWeight = "500";
+            displayAllButton.style.fontWeight = "200";
+            showCards(text)
+        })
+    })
     .catch((e) => console.error(e));
 
 let myCards = new Set();
@@ -61,7 +81,6 @@ let fightChoices = document.getElementsByClassName('fight_choice')
 
 // Pour les cartes Wankul
 let cardDisplate = document.getElementById('card_displate')
-
 
 
 //DEBUT DU CODE
@@ -149,7 +168,6 @@ window.onclick = (event) => { // Si on clique en dehors du menu ça le ferme
     }
 
     if(!event.target.matches('.fight_choice') && !event.target.matches('h2')) {
-        console.log(fightChoices[0].style.animation)
         if(fightChoices[0].style.animation.includes("choiceAppear")) {
             for (const element of fightChoices) {
                 element.style.animation = "disappear .5s"
@@ -164,7 +182,6 @@ profilBackbutton.addEventListener('click', openProfilPopup) // En appuyant sur l
 
 function openProfilPopup () { // Ouverture de la page de profil
     profilPopup.classList.toggle('open')
-    console.log(profilPopup.classList)
 }
 
 fightButton.addEventListener('click', function(){ // Bouton "rentrer dans l'arene"
@@ -177,23 +194,39 @@ fightButton.addEventListener('click', function(){ // Bouton "rentrer dans l'aren
 })
 
 function showCards(dico) {
-    let cards = []
-    let myCardsTab = Array.from(myCards)
-    for (const element of myCardsTab) {
-        cards.push(dico.cards[element])
-    }
+    cardDisplate.innerHTML = "";
 
-    let n = 40 // Nombres de cartes affichées
-    if (cards.length < n) {n = cards.length}
-    for(let i=1; i<n; i++) {
-        let cardName = cards[i].title
-        let cardSource = cards[i].image
+    if (onlyDisplayMine) {
+        let cards = []
+        let myCardsTab = Array.from(myCards)
+        for (const element of myCardsTab) {
+            cards.push(dico.cards[element])
+        }
 
-        let newElement = document.createElement(`img`)
-        newElement.alt = cardName
-        newElement.src = cardSource
+        let n = 120 // Nombres de cartes affichées
+        if (cards.length < n) {n = cards.length}
+        for(let i=1; i<n; i++) {
+            let cardName = cards[i].title
+            let cardSource = cards[i].image
 
-        cardDisplate.appendChild(newElement)
+            let newElement = document.createElement(`img`)
+            newElement.alt = cardName
+            newElement.src = cardSource
+
+            cardDisplate.appendChild(newElement)
+        }
+    } else {
+        let n = 120 // Nombres de cartes affichées
+        for(let i=1; i<n; i++) {
+            let cardName = dico.cards[i].title
+            let cardSource = dico.cards[i].image
+
+            let newElement = document.createElement(`img`)
+            newElement.alt = cardName
+            newElement.src = cardSource
+
+            cardDisplate.appendChild(newElement)
+        }
     }
 }
 
