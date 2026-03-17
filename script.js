@@ -20,6 +20,11 @@ fetch("cards.json")
     .then((text) => {showCards(text)})
     .catch((e) => console.error(e));
 
+let myCards = new Set();
+if (localStorage.getItem('myCards')) {
+    myCards = JSON.parse(localStorage.getItem('myCards'))
+}
+
 //On  prends les deux wankuls
 let wankuls = document.getElementsByClassName('wankul');
 
@@ -172,12 +177,17 @@ fightButton.addEventListener('click', function(){ // Bouton "rentrer dans l'aren
 })
 
 function showCards(dico) {
-    console.log(dico.cards)
+    let cards = []
+    let myCardsTab = Array.from(myCards)
+    for (const element of myCardsTab) {
+        cards.push(dico.cards[element])
+    }
 
     let n = 40 // Nombres de cartes affichées
+    if (cards.length < n) {n = cards.length}
     for(let i=1; i<n; i++) {
-        let cardName = dico.cards[i+29].title
-        let cardSource = dico.cards[i+29].image
+        let cardName = cards[i].title
+        let cardSource = cards[i].image
 
         let newElement = document.createElement(`img`)
         newElement.alt = cardName

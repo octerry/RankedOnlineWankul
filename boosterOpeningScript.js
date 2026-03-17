@@ -26,6 +26,10 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
     let openButton = document.getElementById('open_button')
     let backButton = document.getElementById('back_button')
     let selected = 0
+    let myCards = []
+    if (localStorage.getItem('myCards')) {
+        myCards = Array.from ( JSON.parse(localStorage.getItem('myCards')) )
+    }
 
     gsap.registerPlugin(ScrollTrigger, Draggable);
 
@@ -199,9 +203,13 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
         let quickOpeningButton = document.getElementById('quick_opening_button')
         let swiperSwaper = document.querySelector('.swiper-wrapper')
         let cardReveal = document.getElementById('card_reveal')
+        let skipButton = document.getElementById('skip_button')
         let tempSelect = 0
         let chosenCards = Array()
         canvasParticles()
+        backButton.style.animation = "opacityAppear .5s forwards"
+        backButton.style.pointerEvents = "all";
+        swiper.slideTo(0);
 
         if(selected === 0) {
             tempSelect = Math.floor(Math.random() * 4) + 1
@@ -215,28 +223,33 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
         if(tempSelect === 4) {booster.src = "sources/BoosterS4 STELLAR.png"}
 
         boosterOpening.style.transform = "rotateX(0)"
-        booster.style.animation = "appear 1.5s"
-        booster.style.animationFillMode = "forwards"
+        booster.style.animation = "appear 1.5s forwards"
         booster.style.animationDelay = ".8s"
+                    
+        for (const element of swiperSwaper.children) {
+            element.style.animation = "none";
+        }
         
         fetch("cards.json")
             .then((res) => res.json())
-            .then((text) => {
-                chosenCards = cardsChoice(tempSelect,text)
+            .then((cardDico) => {
+                chosenCards = cardsChoice(tempSelect,cardDico)
                 swiperSwaper = document.querySelector('.swiper-wrapper');
                 swiperSlide = document.querySelectorAll('.swiper-slide');
                 
                 for(let i=0; i<swiperSwaper.children.length; i++) {
-                    // swiperSwaper.children[i].backgroundColor = "#000"
                     swiperSlide[i].style.background = `url(${chosenCards[i].image})`
                     swiperSlide[i].style.backgroundSize = 'cover';
-                    console.log("bg carte : " + swiperSlide[i].background, chosenCards[i])
                 }
 
                 quickOpeningButton.addEventListener('click', function(){
                     booster.style.animation = "boosterOpening 2s"
-                    cardReveal.style.animation = "cardReveal 2s"
-                    cardReveal.style.animationFillMode = "forwards"
+                    cardReveal.style.animation = "cardReveal 2s forwards"
+                    backButton.style.animation = "opacityDisappear .5s forwards"
+                    backButton.style.pointerEvents = "none";
+                    skipButton.style.animation = "opacityAppear .5s forwards";
+                    skipButton.style.pointerEvents = "all";
+                    saveCards(chosenCards, cardDico)
 
                     let temp = 5
                     for (const element of swiperSwaper.children) {
@@ -247,6 +260,11 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
                         element.style.animationFillMode = "forwards"
                         boosterAnimation.style.backgroundColor = "#000000B0"
                     }
+                })
+
+                skipButton.addEventListener('click', function() {
+                    cardReveal.style.animation = "cardDisappear 1s forwards"
+                    boosterOpening.style.transform = "rotateX(.25turn)"
                 })
             })
             .catch((e) => console.error(e));
@@ -338,42 +356,115 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
         })
     }
 
+    function saveCards(cards, cardDico) {
+        let myCardsTab = Array.from(myCards)
+
+        for (const element of cards) {
+            if (!myCards.includes(cardDico.cards.indexOf(element))) {
+                myCards.push(cardDico.cards.indexOf(element));
+                myCards.sort();
+            }
+        }
+        localStorage.setItem('myCards', JSON.stringify(myCards));
+        console.log('bien enregistré !')
+        console.log(localStorage.getItem('myCards'));
+    }
+
     function cardsChoice(season, cardDico) { // Choix aléatoire des 10 cartes dans un booster
         let final = Array()
+        console.log(cardDico)
 
         if (cardDico) {
+            let rarityNumbers = rarityChoser();
+            console.log(rarityNumbers)
             for (let i=0; i<10; i++) {
-                let actualCard = randomCard(season, cardDico)
-                let n = 300
-                for (let i=0; i<n; i++) {
-                    if (final.includes(actualCard)) {
-                        actualCard = randomCard(season, cardDico)
-                    } else {
-                        n = 0;
+                if (i === 0) {
+                    actualCard = randomCard(season, cardDico, "Terrain");
+                } else {
+                    let n = 300
+                    for (let u=0; u<n; u++) {
+                        actualCard = randomCard(season, cardDico, rarityNumbers[i-1]);
+                        if (final.some(item => item.title === actualCard.title)) {
+                            actualCard = randomCard(season, cardDico, rarityNumbers[i-1]);
+                        } else {
+                            n=0;
+                        }
                     }
                 }
                 final.push(actualCard)
             }
         }
-        console.log(final)
 
         return final
     }
 
-    function randomCard(season, cardDico) {
+    function rarityChoser() {
+        let final = [];
+        let sorting = [];
 
-        let chosen = Math.floor(Math.random() * cardDico.cards.length)
-        let card = cardDico.cards[chosen]
+        for (let i=0; i<9; i++) {
+            let chosen = Math.floor(Math.random() *9000)
 
-        if (card.season.id == season) {
+            if (chosen >= 4500) {
+                final.push("Commune")
+                sorting.push(0)
+            } else if (chosen >= 1500) {
+                final.push("Peu Commune")
+                sorting.push(1)
+            } else if (chosen >= 500) {
+                final.push("Rare")
+                sorting.push(2)
+            } else if (chosen >= 280) {
+                final.push("Ultra rare holo 1")
+                sorting.push(3)
+            } else if (chosen >= 120) {
+                final.push("Ultra rare holo 2")
+                sorting.push(4)
+            } else if (chosen >= 40) {
+                final.push("Légendaire Bronze")
+                sorting.push(5)
+            } else if (chosen >= 12) {
+                final.push("Légendaire Argent")
+                sorting.push(6)
+            } else {
+                final.push("Légendaire Or")
+                sorting.push(7)
+            }
+        }
+
+        const result = sorting // Tri de final selon sorting
+            .map((sorting, i) => [sorting, final[i]])
+            .sort((a, b) => a[0] - b[0])
+            .map(pair => pair[1]);
+
+        return result;
+    }
+
+    function randomCard(season, cardDico, rarity) {
+        let sortedTab = cardDico.cards.filter(element => element.rarity.name === rarity);
+
+        let chosen = Math.floor(Math.random() * sortedTab.length)
+        let card = sortedTab[chosen]
+        let refChar = `S0${season}`
+        if (season == 1) {refChar = "SO1"}
+        //"SO1"
+        //"S02"
+
+        if (card.season.number === refChar) {
+            
             return card
         } else {
-            return randomCard(season, cardDico)
+            return randomCard(season, cardDico, rarity)
         }
     }
 
     var swiper = new Swiper(".mySwiper", {
         effect: "cards",
         grabCursor: true,
+        on: {
+            slideChange: function () {
+                console.log('Slide actuel :', swiper.activeIndex);
+            },
+        },
     });
 });

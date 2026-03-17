@@ -1434,20 +1434,19 @@ footer div .footer_svg{
 }
 
 #card_reveal {
-position: fixed;
-height: 80vh;
-width: 80vw;
-font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-font-size: 14px;
-color: #000;
-margin: 0;
-padding: 0;
-display: flex;
-justify-content: center;
-align-items: center;
+    position: fixed;
+    height: 80vh;
+    width: 80vw;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: #000;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-transform: scale(0);
-
+    transform: scale(0);
 }
 
 .swiper {
@@ -1467,6 +1466,32 @@ transform: scale(0);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+#skip_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 100px;
+    opacity: 0;
+    pointer-events: none;
+
+    padding: 0 5px;
+    background-color: #00000050;
+    color: #ffffff50;
+    font-family: "Hind";
+    font-size: 22px;
+    border: 1px #ffffff50 solid;
+    border-radius: 10px;
+    transition: .2s;
+
+    &:hover {
+        cursor: pointer;
+        color: #ffffff;
+        border: 1px #ffffff solid;
+        background-color: #00000090;
+    }
 }
 
 @media (max-width: 400px) { /* Ne modifie que pour ceux qui sont trop petit */
@@ -1512,6 +1537,15 @@ transform: scale(0);
     }
     100% {
         opacity: 1;
+    }
+}
+
+@keyframes opacityDisappear {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
     }
 }
 
@@ -1614,5 +1648,17 @@ transform: scale(0);
         transform: scale(.5);
     } to {
         transform: scale(1);
+    }
+}
+
+@keyframes cardDisappear {
+    0% {
+        transform: scale(1);
+    }
+    30% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(0);
     }
 }
