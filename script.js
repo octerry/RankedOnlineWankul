@@ -250,6 +250,15 @@ cheatCodeSubmit.addEventListener('click', function() {
         localStorage.setItem('boosterPoints', JSON.stringify(boosterPoints));
 
         alert("200 Boosters de chaque catégorie vous ont été ajouté !");
+    } else if (cheatCodeInput.value == "MyBoosterIsKindaCardless") {
+        let boosterPoints = [0,0,0,0];
+        if(localStorage.getItem('boosterPoints')) {boosterPoints = JSON.parse(localStorage.getItem('boosterPoints'))}
+        for (let i=0; i<4; i++) {
+            boosterPoints[i] = 0;
+        }
+        localStorage.setItem('boosterPoints', JSON.stringify(boosterPoints));
+
+        alert("Tous vos boosters ont été retirés");
     }
     else {
         alert("Ce cheatcode n'exite pas :/");

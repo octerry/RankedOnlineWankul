@@ -1,3 +1,13 @@
 Carte 1 : Terrain
 Carte 2-9 : Classique (peut avoir des brillantes mais n'est pas la plus rare du lot)
 Carte 10 : Carte la plus rare du paquet
+
+Drop :
+Commune -> 45%
+Peu Commune -> 30%
+Rare -> 10%
+Ultra rare Holo 1 -> 2.24%
+Ultra rare Holo 2 -> 1.60%
+Légendaire Bronze -> 0.80%
+Légendaire Argent -> 0.28%
+Légendaire Or -> 0.08%
