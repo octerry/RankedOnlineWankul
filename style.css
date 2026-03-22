@@ -1246,11 +1246,27 @@ footer div .footer_svg{
 
 /* Page Booster Opening */
 /* -----------↓ A MODIFIER PLUS TARD ↓----------- */
-#boorder_body {
+#booster_body {
     background: #111;
     min-height: 100vh;
     padding: 0;
     margin: 0;
+}
+
+#c {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+#tsparticles {
+    background-color: #000;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
 }
 
 .gallery {
@@ -1501,6 +1517,7 @@ footer div .footer_svg{
     width: 100%;
     height: 100%;
     transition: background-color 2s;
+    z-index: 1;
 }
 
 #booster_animation .booster {
@@ -1556,6 +1573,7 @@ footer div .footer_svg{
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1;
 
     transform: scale(0);
 }
@@ -1596,6 +1614,7 @@ footer div .footer_svg{
     border: 1px #ffffff50 solid;
     border-radius: 10px;
     transition: .2s;
+    z-index: 2;
 
     &:hover {
         cursor: pointer;
@@ -1603,6 +1622,10 @@ footer div .footer_svg{
         border: 1px #ffffff solid;
         background-color: #00000090;
     }
+}
+
+#canvaC {
+    transition: backdropFilter 2s;
 }
 
 @media (max-width: 400px) { /* Ne modifie que pour ceux qui sont trop petit */
@@ -1746,10 +1769,11 @@ footer div .footer_svg{
 
 @keyframes boosterOpening {
     from {
-        z-index: 30;
+        z-index: 10;
         transform: translateY(0) scale(1);
     } to {
-        z-index: 30;
+        z-index: 10;
+        pointer-events: none;
         transform: translateY(100vh) scale(1);
     }
 }
@@ -1771,5 +1795,50 @@ footer div .footer_svg{
     }
     100% {
         transform: scale(0);
+    }
+}
+
+@keyframes goToBronze {
+    0% {
+        background: radial-gradient(#e2a683, #41160270);
+        background-size: 0%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    100% {
+        background: radial-gradient(#e2a683, #41160270);
+        background-size: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+}
+
+@keyframes goToSilver {
+    0% {
+        background: radial-gradient(#ffffff, #7a7a7a70);
+        background-size: 0%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    100% {
+        background: radial-gradient(#dfdfdf, #7a7a7a70);
+        background-size: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+}
+
+@keyframes goToGold {
+    0% {
+        background: radial-gradient(#ffed87, #ca8d3d70);
+        background-size: 0%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    100% {
+        background: radial-gradient(#ffed87, #ca8d3d70);
+        background-size: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
     }
 }

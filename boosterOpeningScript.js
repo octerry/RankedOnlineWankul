@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
     let backButton = document.getElementById('back_button')
     let boosterPointsOutputs = document.getElementById('booster_points').children
     let boosterPoints = [10,10,10,10]
+    let chosenCards = Array()
     if (localStorage.getItem('boosterPoints')) {
         boosterPoints = JSON.parse(localStorage.getItem('boosterPoints'))
         console.log(boosterPoints)
@@ -234,7 +235,6 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
         let skipButton = document.getElementById('skip_button')
         let clicked = false;
         let tempSelect = 0
-        let chosenCards = Array()
         canvasParticles()
         backButton.style.animation = "opacityAppear .5s forwards"
         backButton.style.pointerEvents = "all";
@@ -509,12 +509,165 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
         }
     }
 
+    const canvaC = document.getElementById('c');
+    canvaC.style.opacity = "0";
+
+    let scene = new THREE.Scene();
+
+    let camera = new THREE.PerspectiveCamera(75, innerWidth/innerHeight, 0.1, 100);
+    camera.position.z = 5;
+
+    let renderer = new THREE.WebGLRenderer({ canvas: c, alpha: true });
+    renderer.setSize(innerWidth, innerHeight);
+
+    let triangles = [];
+
+    let particlesNumber = 300;
+    let particuleLength = 0;
+    let colors = [0xbfbfbf, 0x0ffffff, 0x878686];
+
+    function createTriangle() {
+        const geometry = new THREE.BufferGeometry();
+        const vertices = new Float32Array([
+            0, 0.1, 0,
+            -0.1, -0.1, 0,
+            0.1, -0.1, 0
+        ]);
+        geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+
+        const material = new THREE.MeshBasicMaterial({
+            color: 0xffffff,
+            side: THREE.DoubleSide,
+            transparent: true,
+            opacity: 1
+        });
+
+        const mesh = new THREE.Mesh(geometry, material);
+
+        resetTriangle(mesh);
+
+        scene.add(mesh);
+        triangles.push(mesh);
+    }
+
+    // reset = respawn au centre avec valeurs random
+    function resetTriangle(t) {
+        t.position.set(0, 0, 0);
+        t.material.color.set(colors[Math.floor(Math.random() * colors.length)]);
+
+        t.userData.velocity = new THREE.Vector3(
+            (Math.random() - 0.5) * 0.1,
+            (Math.random() - 0.5) * 0.1,
+            (Math.random() - 0.5) * 0.1
+        );
+
+        // rotations random 🔥
+        t.userData.rotationSpeed = {
+            x: (Math.random() - 0.5) * 0.2,
+            y: (Math.random() - 0.5) * 0.2,
+            z: (Math.random() - 0.5) * 0.2
+        };
+
+        t.material.opacity = 1;
+    }
+
+    // créer plein de particules
+    for (let i = 0; i < particlesNumber; i++) {
+        setTimeout( function(){
+            createTriangle();
+        }, i*10);
+    }
+
+    function setColor(colors) {
+        triangles.forEach(t => {
+            t.material.color.set(colors[Math.floor(Math.random() * colors.length)]);
+        });
+    }
+
+    function setParticles(n) {
+        if (triangles.length > n) {
+            removeParticles(triangles.length - n);
+        } else {
+            addParticles(n - triangles.length);
+        }
+    }
+
+    function addParticles(n) {
+        for (let i = 0; i < n; i++) {
+            createTriangle();
+        }
+    }
+
+    function removeParticles(n) {
+        for (let i = 0; i < n; i++) {
+            setTimeout( function(){ 
+                const t = triangles.pop();
+                scene.remove(t);
+            }, i*10);
+        }
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+
+        triangles.forEach(t => {
+            t.position.add(t.userData.velocity);
+
+            // rotation aléatoire différente pour chaque triangle
+            t.rotation.x += t.userData.rotationSpeed.x;
+            t.rotation.y += t.userData.rotationSpeed.y;
+            t.rotation.z += t.userData.rotationSpeed.z;
+
+            // fade out
+            t.material.opacity -= 0.01;
+
+            // distance ou invisible → reset
+            if (t.material.opacity <= 0 || t.position.length() > particuleLength) {
+                resetTriangle(t);
+            }
+        });
+
+        renderer.render(scene, camera);
+    }
+
+    animate();
+
     var swiper = new Swiper(".mySwiper", {
         effect: "cards",
         grabCursor: true,
         on: {
             slideChange: function () {
-                console.log('Slide actuel :', swiper.activeIndex);
+                console.log(chosenCards[swiper.activeIndex].rarity)
+                if (chosenCards[swiper.activeIndex].rarity.name == "Légendaire Or") {
+                    console.log("OR")
+                    particlesNumber = 300;
+                    particuleLength = 6;
+                    colors = [0xdbbf8a, 0x0ffffff, 0xa88c58];
+                    canvaC.style.animation = 'goToGold 2s forwards';
+                    canvaC.style.opacity = "1";
+                }
+                else if (chosenCards[swiper.activeIndex].rarity.name == "Légendaire Argent") {
+                    console.log("ARGENT")
+                    particlesNumber = 300;
+                    particuleLength = 5;
+                    colors = [0xbfbfbf, 0x0ffffff, 0x878686];
+                    canvaC.style.animation = 'goToSilver 2s forwards';
+                    canvaC.style.opacity = "1";
+                } else if (chosenCards[swiper.activeIndex].rarity.name == "Légendaire Bronze") {
+                    console.log("BRONZE")
+                    particlesNumber = 300;
+                    particuleLength = 4;
+                    colors = [0x453631, 0x9e573f, 0x8c4022];
+                    canvaC.style.animation = 'goToBronze 2s forwards';
+                    canvaC.style.opacity = "1";
+                } else {
+                    particlesNumber = 0;
+                    canvaC.style.animation = 'none';
+                    canvaC.style.opacity = "0";
+                }
+
+                setColor(colors);
+                setParticles(particlesNumber);
             },
         },
     });
