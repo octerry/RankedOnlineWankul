@@ -40,29 +40,38 @@ function rarityChoser() {
         return result;
 }
 
-let occurences = 1000;
-let stats = [0,0,0,0,0,0,0]
+let occurences = 1_000_000;
+let stats = [0,0,0,0,0,0,0,0]
 
 for (let i=0; i<occurences; i++) {
     let truc = rarityChoser();
 
     for (const element of truc) {
         if (element === "Commune") {
-            truc[0]++;
+            stats[0]++;
         } else if (element === "Peu Commune") {
-            truc[1]++;
+            stats[1]++;
         } else if (element === "Rare") {
-            truc[2]++;
+            stats[2]++;
         } else if (element === "Ultra rare holo 1") {
-            truc[3]++;
+            stats[3]++;
         } else if (element === "Ultra rare holo 2") {
-            truc[4]++;
-        } else if (element === "Ultra rare holo 1") {
-            truc[3]++;
-        } else if (element === "Ultra rare holo 1") {
-            truc[3]++;
-        } else (element === "Ultra rare holo 1") {
-            truc[3]++;
+            stats[4]++;
+        } else if (element === "Légendaire Bronze") {
+            stats[5]++;
+        } else if (element === "Légendaire Argent") {
+            stats[6]++;
+        } else {
+            stats[7]++;
         }
     }
 }
+
+console.log(`Commun : ` + (stats[0]/occurences*10) + "%");
+console.log(`Peu Commun : ` + (stats[1]/occurences*10) + "%");
+console.log(`Rare : ` + (stats[2]/occurences*10) + "%");
+console.log(`Rare Holo 1 : ` + (stats[3]/occurences*10) + "%");
+console.log(`Rare Holo 2 : ` + (stats[4]/occurences*10) + "%");
+console.log(`Leg Bronze : ` + (stats[5]/occurences*10) + "%");
+console.log(`Leg Argent : ` + (stats[6]/occurences*10) + "%");
+console.log(`Leg Or : ` + (stats[7]/occurences*10) + "%");
