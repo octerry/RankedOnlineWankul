@@ -15,6 +15,22 @@ MADE ON EARTH BY HUMANS */
 
 /* source : https://www.unclebigbay.com/blog/10-custom-scrollbar-samples-for-your-next-project */
 /* On modifie la barre de scroll d'origine parce qu'elle est moche :3 */
+:root {
+    --gold1: #c7a674;
+    --gold2: #d1b454A0;
+    --gold3: #ceb29250;
+    --silver1: #3a3d3e;
+    --silver2: #7b7b7bA0;
+    --silver3: #ffffff50;
+    --bronze1: #54331d;
+    --bronze2: #73573fA0;
+    --bronze3: #8c675550;
+
+    animation: goldAnimation 1s infinite ease-in-out, 
+    silverAnimation 1s infinite ease-in-out,
+    bronzeAnimation 1s infinite ease-in-out;
+}
+
 body::-webkit-scrollbar {
     width: 6px;
     background-color: #000000;
@@ -1800,13 +1816,13 @@ footer div .footer_svg{
 
 @keyframes goToBronze {
     0% {
-        background: radial-gradient(#e2a683, #41160270);
+        background: radial-gradient(var(--bronze1), var(--bronze2), var(--bronze3));
         background-size: 0%;
         background-position: center;
         background-repeat: no-repeat;
     }
     100% {
-        background: radial-gradient(#e2a683, #41160270);
+        background: radial-gradient(var(--bronze1), var(--bronze2), var(--bronze3));
         background-size: 100%;
         background-position: center;
         background-repeat: no-repeat;
@@ -1815,13 +1831,13 @@ footer div .footer_svg{
 
 @keyframes goToSilver {
     0% {
-        background: radial-gradient(#ffffff, #7a7a7a70);
+        background: radial-gradient(var(--silver1), var(--silver2), var(--silver3));
         background-size: 0%;
         background-position: center;
         background-repeat: no-repeat;
     }
     100% {
-        background: radial-gradient(#dfdfdf, #7a7a7a70);
+        background: radial-gradient(var(--silver1), var(--silver2), var(--silver3));
         background-size: 100%;
         background-position: center;
         background-repeat: no-repeat;
@@ -1830,15 +1846,84 @@ footer div .footer_svg{
 
 @keyframes goToGold {
     0% {
-        background: radial-gradient(#ffed87, #ca8d3d70);
+        background: radial-gradient(var(--gold1), var(--gold2), var(--gold3));
         background-size: 0%;
         background-position: center;
         background-repeat: no-repeat;
     }
     100% {
-        background: radial-gradient(#ffed87, #ca8d3d70);
+        background: radial-gradient(var(--gold1), var(--gold2), var(--gold3));
         background-size: 100%;
         background-position: center;
         background-repeat: no-repeat;
+    }
+}
+
+@keyframes goldAnimation {
+    0% {
+        --gold1: #b47515;
+        --gold2: #d1b454A0;
+        --gold3: #ceb29250;
+    }
+    33% {
+        --gold1: #d1b454;
+        --gold2: #ceb292A0;
+        --gold3: #b4751550;
+    }
+    66% {
+        --gold1: #ceb292;
+        --gold2: #b47515A0;
+        --gold3: #d1b45450;
+    }
+    100% {
+        --gold1: #b47515;
+        --gold2: #d1b454A0;
+        --gold3: #ceb29250;
+    }
+}
+
+@keyframes silverAnimation {
+    0% {
+        --silver1: #3a3d3e;
+        --silver2: #7b7b7bA0;
+        --silver3: #ffffff50;
+    }
+    33% {
+        --silver1: #ffffff;
+        --silver2: #3a3d3eA0;
+        --silver3: #7b7b7b50;
+    }
+    66% {
+        --silver1: #7b7b7b;
+        --silver2: #ffffffA0;
+        --silver3: #3a3d3e50;
+    }
+    100% {
+        --silver1: #3a3d3e;
+        --silver2: #7b7b7bA0;
+        --silver3: #ffffff50;
+    }
+}
+
+@keyframes bronzeAnimation {
+    0% {
+        --bronze1: #54331d;
+        --bronze2: #73573fA0;
+        --bronze3: #8c675550;
+    }
+    33% {
+        --bronze1: #8c6755;
+        --bronze2: #54331dA0;
+        --bronze3: #73573f50;
+    }
+    66% {
+        --bronze1: #73573f;
+        --bronze2: #8c6755A0;
+        --bronze3: #54331d50;
+    }
+    100% {
+        --bronze1: #54331d;
+        --bronze2: #73573fA0;
+        --bronze3: #8c675550;
     }
 }
