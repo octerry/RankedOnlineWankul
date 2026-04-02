@@ -268,7 +268,7 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
                     element.style.animation = "none";
                 }
                 
-                fetch("cards.json")
+                fetch("https://vps.terrysegaunes.fr/row-backend/src/index.php") // Adresse de mon VPS personnel :)
                     .then((res) => res.json())
                     .then((cardDico) => {
                         chosenCards = cardsChoice(tempSelect,cardDico)

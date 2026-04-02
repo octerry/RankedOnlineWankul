@@ -19,7 +19,7 @@ let displayAllButton = document.getElementById('tout');
 let displayMineButton = document.getElementById('vos_cartes');
 let onlyDisplayMine = true
 
-fetch("http://92.222.247.84/row-backend/src/index.php")
+fetch("https://vps.terrysegaunes.fr/row-backend/src/index.php") // Adresse de mon VPS personnel :)
     .then(response => {
         return response.json();
     })
