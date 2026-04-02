@@ -19,23 +19,25 @@ let displayAllButton = document.getElementById('tout');
 let displayMineButton = document.getElementById('vos_cartes');
 let onlyDisplayMine = true
 
-fetch("cards.json")
-    .then((res) => res.json())
-    .then((text) => {
-        showCards(text)
+fetch("http://92.222.247.84/row-backend/src/index.php")
+    .then(response => {
+        return response.json();
+    })
+    .then(data => {
+        showCards(data)
 
         displayMineButton.addEventListener('click', function(){
             onlyDisplayMine = true;
             displayMineButton.style.fontWeight = "500";
             displayAllButton.style.fontWeight = "200";
-            showCards(text)
+            showCards(data)
         })
 
         displayAllButton.addEventListener('click', function(){
             onlyDisplayMine = false;
             displayMineButton.style.fontWeight = "500";
             displayAllButton.style.fontWeight = "200";
-            showCards(text)
+            showCards(data)
         })
     })
     .catch((e) => console.error(e));
@@ -165,7 +167,7 @@ amburgerButton2.addEventListener('click', function () {
     document.body.style.overflow = 'visible';
 })
 
-window.onclick = (event) => { // Si on clique en dehors du menu ça le ferme
+window.addEventListener('click', event => { // Si on clique en dehors du menu ça le ferme
     if(!event.target.matches('#inner_menu') && event.target.matches('#menu_popup')) {
         menuPopup.style.display = 'none';
         document.body.style.overflow = 'visible'
@@ -178,7 +180,7 @@ window.onclick = (event) => { // Si on clique en dehors du menu ça le ferme
             }
         }
     }
-}
+})
 
 profilButton.addEventListener('click', openProfilPopup) // En appuyant sur le profil
 
