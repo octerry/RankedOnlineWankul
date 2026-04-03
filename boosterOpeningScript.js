@@ -454,8 +454,8 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
         let sorting = [];
 
         for (let i=0; i<9; i++) {
-            // let chosen = Math.floor(Math.random() *9000)
-            let chosen = 1;
+            let chosen = Math.floor(Math.random() *9000)
+            // let chosen = 1;
 
             if (chosen >= 4500) {
                 final.push("Commune")
