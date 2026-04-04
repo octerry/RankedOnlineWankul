@@ -7,17 +7,7 @@
 // | |_| | | |___     |  |    | |___  | |\ \  | |\ \  | |
 // \_____/ \_____]    |__|    |_____] |_| \_\ |_| \_\ |_|
 // MADE ON EARTH BY HUMANS
-//DEFINITION DES VARIABLES AUQUEL ON AURA BESOIN
 
-// boosterBackground.style.backgroundColor = 'currentColor'
-// seasonTitle.innerHTML = "Saison 1 ORIGINS"
-// boosterBackground.style.backgroundColor = '#183272'
-// seasonTitle.innerHTML = "Saison 2 CAMPUS"
-// boosterBackground.style.backgroundColor = '#2e6428ff'
-// seasonTitle.innerHTML = "Saison 3 BATTLE"
-// boosterBackground.style.backgroundColor = '#791e1e'
-// seasonTitle.innerHTML = "Saison 4 STELLAR"
-// boosterBackground.style.backgroundColor = '#4c2579ff'
 document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie GSAP a chargée
     gsap.registerPlugin(ScrollTrigger)
     let root = document.documentElement

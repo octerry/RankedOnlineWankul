@@ -47,6 +47,13 @@ if (localStorage.getItem('myCards')) {
     myCards = JSON.parse(localStorage.getItem('myCards'))
 }
 
+let userID = null;
+if (localStorage.getItem('userID')) {
+    userID = JSON.parse(localStorage.getItem('userID'))
+} else {
+    location.href = "/connexion"
+}
+
 //On  prends les deux wankuls
 let wankuls = document.getElementsByClassName('wankul');
 
@@ -261,6 +268,10 @@ cheatCodeSubmit.addEventListener('click', function() {
         localStorage.setItem('boosterPoints', JSON.stringify(boosterPoints));
 
         alert("Tous vos boosters ont été retirés");
+    } else if (cheatCodeInput.value == "SpiderManNoWayHome") {
+        localStorage.removeItem('userID');
+        alert("Votre userID a été supprimé");
+        location.href = "/connexion"
     }
     else {
         alert("Ce cheatcode n'exite pas :/");

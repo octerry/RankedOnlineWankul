@@ -1,3 +1,11 @@
+/* Coucou toi qui regarde dans le code
+/‾‾‾‾‾\ /‾‾‾‾‾] [‾‾‾‾‾‾‾‾] |‾‾‾‾‾] |‾‾‾‾‾\ |‾‾‾‾‾\ |‾| /‾/
+| |‾| | | |‾‾‾   ‾‾|  |‾‾  | |‾‾‾  |     | |     | | |/ /
+| | | | | |        |  |    |  ___] |     / |     / |  _/
+| |_| | | |___     |  |    | |___  | |\ \  | |\ \  | |
+\_____/ \_____]    |__|    |_____] |_| \_\ |_| \_\ |_|
+MADE ON EARTH BY HUMANS */
+
 @import url('https://fonts.googleapis.com/css2?family=Gothic+A1&family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&display=swap');
 
 html, body {
@@ -77,8 +85,46 @@ input {
     color: #fff;
     box-shadow: inset 5px 5px 10px #00000040;
 
+    transition: border .1s ease-in, background-color .2s ease-in;
+
     &::placeholder {
         color: #C1B3E3;
+    }
+}
+
+.error {
+    border: 2px #a85858 solid;
+    background-color: #c4656550;
+}
+
+#login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    margin-top: 6px;
+    width: 90%;
+
+    background-color: #0c071a50;
+    border: 2px #a78eec50 solid;
+    border-radius: 10px;
+    font-size: 15px;
+    color: #fff;
+    box-shadow: 3px 3px 6px #00000040;
+
+    transition: background-color .2s ease-out, transform .2s ease-out, box-shadow .2s ease-out;
+
+    h2 { 
+        margin: 0;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    &:hover {
+        cursor: pointer;
+        background-color: #a78eec50;
+        transform: scale(1.05);
+        box-shadow: 5px 5px 10px #00000040;
     }
 }
 
@@ -86,7 +132,7 @@ input {
     display: flex;
     align-items: center;
     justify-content: center;
-    max-width: 100%;
+    max-width: 70%;
 
     background-color: #ffffff10;
     border: 1px #fff solid;
@@ -94,7 +140,7 @@ input {
     padding: 10px;
     box-shadow: 4px 4px 8px #00000040;
 
-    transition: transform .3s ease-out, box-shadow .3s ease-out, background-color .3s ease-out;
+    transition: transform .2s ease-out, box-shadow .2s ease-out, background-color .2s ease-out;
 
     &:hover {
         cursor: pointer;
