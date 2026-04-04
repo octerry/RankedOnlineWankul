@@ -12,7 +12,7 @@ let userID = null; // On vérifie que la personne est bien connectée
 if (localStorage.getItem('userID')) {
     userID = JSON.parse(localStorage.getItem('userID'))
 } else {
-    location.href = "/connexion/"
+    location.href = "/connexion/index.html";
 }
 
 document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie GSAP a chargée
