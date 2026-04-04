@@ -97,7 +97,7 @@ input {
     background-color: #c4656550;
 }
 
-#login {
+#login, #create {
     display: flex;
     align-items: center;
     justify-content: center;

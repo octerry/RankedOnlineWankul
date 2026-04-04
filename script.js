@@ -19,7 +19,14 @@ let displayAllButton = document.getElementById('tout');
 let displayMineButton = document.getElementById('vos_cartes');
 let onlyDisplayMine = true
 
-fetch("https://vps.terrysegaunes.fr/row-backend/src/index.php") // Adresse de mon VPS personnel :)
+let userID = null;
+if (localStorage.getItem('userID')) {
+    userID = JSON.parse(localStorage.getItem('userID'))
+} else {
+    location.href = "/connexion"
+}
+
+fetch("https://vps.terrysegaunes.fr/row-backend/src/getAPI.php") // Adresse de mon VPS personnel :)
     .then(response => {
         return response.json();
     })
@@ -45,13 +52,6 @@ fetch("https://vps.terrysegaunes.fr/row-backend/src/index.php") // Adresse de mo
 let myCards = new Set();
 if (localStorage.getItem('myCards')) {
     myCards = JSON.parse(localStorage.getItem('myCards'))
-}
-
-let userID = null;
-if (localStorage.getItem('userID')) {
-    userID = JSON.parse(localStorage.getItem('userID'))
-} else {
-    location.href = "/connexion"
 }
 
 //On  prends les deux wankuls
@@ -243,11 +243,26 @@ function showCards(dico) {
     }
 }
 
+// NOMBRE DE CARTES PAR SAISONS
 // S1 - 180
 // S2 - 155
 // S3 - 180
 // S4 - 180
 // HS - 67
+
+function setValue(key, value) {
+    if (localStorage.getItem('username')) {
+        let username = localStorage.getItem('username')
+        console.log("user : " + username);
+        fetch(`https://vps.terrysegaunes.fr/row-backend/src/setUserInfo.php?name=${username}&key=${key}&value=${JSON.stringify(value)}`)
+            .then (res=>{return res.json()})
+            .then (data=>{
+                if (data == 0) {
+                    console.error("Erreur lors de la modification de la base de donnée");
+                }
+            })
+    }
+}
 
 cheatCodeSubmit.addEventListener('click', function() {
     if (cheatCodeInput.value == "ToutPourLe20") {
@@ -257,6 +272,7 @@ cheatCodeSubmit.addEventListener('click', function() {
             boosterPoints[i] += 200;
         }
         localStorage.setItem('boosterPoints', JSON.stringify(boosterPoints));
+        setValue("boosters",boosterPoints);
 
         alert("200 Boosters de chaque catégorie vous ont été ajouté !");
     } else if (cheatCodeInput.value == "MyBoosterIsKindaCardless") {
@@ -266,11 +282,12 @@ cheatCodeSubmit.addEventListener('click', function() {
             boosterPoints[i] = 0;
         }
         localStorage.setItem('boosterPoints', JSON.stringify(boosterPoints));
+        setValue("boosters",boosterPoints);
 
         alert("Tous vos boosters ont été retirés");
     } else if (cheatCodeInput.value == "SpiderManNoWayHome") {
         localStorage.removeItem('userID');
-        alert("Votre userID a été supprimé");
+        alert("Vous avez être déconnecté de votre compte");
         location.href = "/connexion"
     }
     else {

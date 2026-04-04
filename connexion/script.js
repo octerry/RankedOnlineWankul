@@ -20,17 +20,38 @@ const createButton = document.getElementById("create_account");
 loginButton.addEventListener("click", ()=>{
     let namechecked = nameCheck(nameInput.value);
     let passwordchecked = passwordCheck(passwordInput.value);
-
-    if (!namechecked) {
-        nameInput.classList.add("error")
-    }
-    if (!passwordchecked) {
-        passwordInput.classList.add("error")
-    }
-    if (namechecked && passwordchecked) {
-        localStorage.setItem('userID', JSON.stringify(0));
-        location.href = "../index.html"
-    }
+    let globalVerification = 0;
+    fetch(`https://vps.terrysegaunes.fr/row-backend/src/connexion.php?name=${nameInput.value}&password=${passwordInput.value}`)
+        .then(res => {
+            return res.json();
+        })
+        .then(data => {
+            globalVerification = data;
+            if (!namechecked || globalVerification == 0) {
+                nameInput.classList.add("error")
+            }
+            if (!passwordchecked || globalVerification == 0) {
+                passwordInput.classList.add("error")
+            }
+            if (namechecked && passwordchecked && globalVerification == 1) {
+                fetch(`https://vps.terrysegaunes.fr/row-backend/src/getUserInfo.php?name=${nameInput.value}`)
+                    .then(res => {
+                        return res.json();
+                    })
+                    .then(data => {
+                        console.log(data);
+                        localStorage.setItem('userID', data.id);
+                        localStorage.setItem('username', nameInput.value);
+                        if (data.cards == undefined) {
+                            localStorage.setItem('myCards', JSON.stringify([]));
+                        } else {
+                            localStorage.setItem('myCards', JSON.stringify(data.cards));
+                        }
+                        localStorage.setItem('boosterPoints', JSON.stringify(data.boosters));
+                        location.href = "../index.html"
+                    });
+            }
+        })
 })
 
 nameInput.addEventListener("input", ()=>{
@@ -39,10 +60,6 @@ nameInput.addEventListener("input", ()=>{
 
 passwordInput.addEventListener("input", ()=>{
     passwordInput.classList.remove("error")
-})
-
-createButton.addEventListener("click", ()=>{
-    alert("Pour l'instant il n'y a pas de systeme de compte, cliquez juste sur le bouton Se Connecter")
 })
 
 function nameCheck(name) {

@@ -8,6 +8,13 @@
 // \_____/ \_____]    |__|    |_____] |_| \_\ |_| \_\ |_|
 // MADE ON EARTH BY HUMANS
 
+let userID = null; // On vérifie que la personne est bien connectée
+if (localStorage.getItem('userID')) {
+    userID = JSON.parse(localStorage.getItem('userID'))
+} else {
+    location.href = "/connexion"
+}
+
 document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie GSAP a chargée
     gsap.registerPlugin(ScrollTrigger)
     let root = document.documentElement
@@ -258,7 +265,7 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
                     element.style.animation = "none";
                 }
                 
-                fetch("https://vps.terrysegaunes.fr/row-backend/src/index.php") // Adresse de mon VPS personnel :)
+                fetch("https://vps.terrysegaunes.fr/row-backend/src/getAPI.php") // Adresse de mon VPS personnel :)
                     .then((res) => res.json())
                     .then((cardDico) => {
                         chosenCards = cardsChoice(tempSelect,cardDico)
@@ -281,6 +288,7 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
                                 boosterPoints[selected-1] -= 1;
                                 boosterPointsOutputs[selected-1].innerHTML = boosterPoints[selected-1]
                                 localStorage.setItem('boosterPoints', JSON.stringify(boosterPoints))
+                                setValue("boosters", boosterPoints);
                                 saveCards(chosenCards, cardDico)
                                 clicked = true;
                             }
@@ -407,6 +415,7 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
             }
         }
         localStorage.setItem('myCards', JSON.stringify(myCards));
+        setValue('cards', myCards);
         console.log('bien enregistré !')
         console.log(localStorage.getItem('myCards'));
     }
@@ -497,6 +506,20 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
             return card
         } else {
             return randomCard(season, cardDico, rarity)
+        }
+    }
+
+    function setValue(key, value) {
+        if (localStorage.getItem('username')) {
+            let username = localStorage.getItem('username')
+            console.log("user : " + username);
+            fetch(`https://vps.terrysegaunes.fr/row-backend/src/setUserInfo.php?name=${username}&key=${key}&value=${JSON.stringify(value)}`)
+                .then (res=>{return res.json()})
+                .then (data=>{
+                    if (data == 0) {
+                        console.error("Erreur lors de la modification de la base de donnée");
+                    }
+                })
         }
     }
 
