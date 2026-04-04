@@ -288,7 +288,7 @@ cheatCodeSubmit.addEventListener('click', function() {
     } else if (cheatCodeInput.value == "SpiderManNoWayHome") {
         localStorage.removeItem('userID');
         alert("Vous avez être déconnecté de votre compte");
-        location.href = "/connexion"
+        location.href.replace("index.html", "connexion");
     }
     else {
         alert("Ce cheatcode n'exite pas :/");
