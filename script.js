@@ -23,7 +23,7 @@ let userID = null;
 if (localStorage.getItem('userID')) {
     userID = JSON.parse(localStorage.getItem('userID'))
 } else {
-    location.href = "connexion/index.html";
+    location.href = location.origin + "/connexion";
 }
 
 fetch("https://vps.terrysegaunes.fr/row-backend/src/getAPI.php") // Adresse de mon VPS personnel :)
