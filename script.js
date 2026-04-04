@@ -23,7 +23,7 @@ let userID = null;
 if (localStorage.getItem('userID')) {
     userID = JSON.parse(localStorage.getItem('userID'))
 } else {
-    location.href.replace("index.html", "connexion");
+    location.href += "connexion";
 }
 
 fetch("https://vps.terrysegaunes.fr/row-backend/src/getAPI.php") // Adresse de mon VPS personnel :)
@@ -288,7 +288,7 @@ cheatCodeSubmit.addEventListener('click', function() {
     } else if (cheatCodeInput.value == "SpiderManNoWayHome") {
         localStorage.removeItem('userID');
         alert("Vous avez être déconnecté de votre compte");
-        location.href.replace("index.html", "connexion");
+        location.href += "connexion";
     }
     else {
         alert("Ce cheatcode n'exite pas :/");
