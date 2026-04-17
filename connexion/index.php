@@ -17,14 +17,25 @@ MADE ON EARTH BY HUMANS
     <script defer src="script.js"></script>
 </head>
 <body>
+    <?php 
+    
+    $user_id = $_SESSION["id"];
+
+    if (!empty($user_id)) {
+        header("location: ../home.html");
+    }
+    
+    ?>
     <main>
         <img src="../sources/Logo.svg" id="row_logo" alt="logo">
         <h1>Ranked Online Wankul</h1>
-        <input type="name" placeholder="Nom" id="name_input">
-        <input type="password" placeholder="Mot de passe" id="pw_input">
-        <div id="login">
-            <h2>Se connecter</h2>
-        </div>
+        <form action="login.php" method="POST">
+            <input type="name" name="name" placeholder="Nom" id="name_input">
+            <input type="password" name="password" placeholder="Mot de passe" id="pw_input">
+            <button style="submit" id="login">
+                <h2>Se connecter</h2>
+            </button>
+        </form>
         <h2 id="forgotten_pw">j'ai oublié mon mot de passe</h2>
         <h1>ou</h1>
         <div id="google_button">
