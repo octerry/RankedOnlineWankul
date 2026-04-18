@@ -8,10 +8,15 @@ try {
     require "connection.php";
 
     $id = $_GET["id"];
-    $result = $pdo->prepare("SELECT * FROM login WHERE id = :id");
-    $result->execute([
-        "id" => $id
-    ]);
+    
+    if (!empty($id)) {
+        $result = $pdo->prepare("DELETE FROM login WHERE id = :id");
+        $result->execute([
+            "id" => $id
+        ]);
+    }
+
+    echo "Bien supprimé !";
 } catch (PDOException $e) {
     echo $e->getMessage();
 }
