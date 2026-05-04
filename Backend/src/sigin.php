@@ -7,22 +7,33 @@ try {
     $password = $_POST["password"];
     $password = password_hash($password, PASSWORD_DEFAULT);
 
-    $result = $pdo->query("SELECT name FROM login");
-    $names = $result->fetch(PDO::FETCH_ASSOC);
+    $result = $pdo->prepare("SELECT COUNT(*) FROM login WHERE name = :name");
+    $result->execute([
+        "name" => $name,
+    ]);
+    $count = $result->fetch(PDO::FETCH_NUM);
 
-    if ( ( empty($names["name"]) || $name != $names["name"] || !in_array($name, $names["name"]) ) && !empty($name) && !empty($password)) {
+ 
+    if ( $count[0] <= 0 && !empty($name) && !empty($password)) {
         $stmt = $pdo->prepare("INSERT INTO login (name, password) VALUES (:name, :password)");
         $stmt->execute([
             "name" => $name,
             "password"=> $password
         ]);
 
-        echo "Bien enregistré :)";
+        $count = $stmt->fetch(PDO::FETCH_NUM);
+        echo $count[0];
+
+        session_start();
+        $_SESSION["name"] = $name;
+        $_SESSION["id"] = $actulizeData[0]["id"];
+        echo "<script type='text/javascript'>alert('Bien enregistré ! Bienvenue $name')</script>";
+        header("Location: ../../home.php");
     } else {
-        echo "Un compte porte déjà ce nom :/";
+        echo "<script type='text/javascript'>alert('Un utilisateur porte déjà le nom $name :/')</script>";
     }
 } catch (Exception $e) {
-    echo "Erreur : ". $e->getMessage() ."";
+    echo "Erreur : ". $e->getMessage();
 }
 
 ?>

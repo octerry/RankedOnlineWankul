@@ -26,8 +26,18 @@ MADE ON EARTH BY HUMANS<
     <script defer src="boosterOpeningScript.js"></script>
 </head>
 <body id="booster_body">
+    <?php 
+    
+    session_start();
+    if ($_SESSION["id"] == "") header("Location: ./connexion/");
+    else {
+        $id = $_SESSION["id"];
+    }
+
+    ?>
+
     <div id="superior_body">
-        <a href="index.html">
+        <a href="home.php">
             <img src="//wankul.fr/cdn/shop/files/Wankul_Logo_Blanc.png" alt="Logo Wankul" id="logo_img">
         </a>
         <h1>Ouvrir un booster</h1>

@@ -19,13 +19,6 @@ let displayAllButton = document.getElementById('tout');
 let displayMineButton = document.getElementById('vos_cartes');
 let onlyDisplayMine = true
 
-let userID = null;
-if (localStorage.getItem('userID')) {
-    userID = JSON.parse(localStorage.getItem('userID'))
-} else {
-    location.href += "connexion";
-}
-
 fetch("https://vps.terrysegaunes.fr/row-backend/src/getAPI.php") // Adresse de mon VPS personnel :)
     .then(response => {
         return response.json();

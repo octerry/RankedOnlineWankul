@@ -10,7 +10,7 @@ $password = trim($_POST["password"]);
 try {
     require "connection.php";
 
-    $stmt = $pdo->prepare("SELECT password FROM login WHERE name = :name");
+    $stmt = $pdo->prepare("SELECT * FROM login WHERE name = :name");
     $stmt->execute([
         "name" => $name
     ]);
@@ -18,12 +18,15 @@ try {
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     if (password_verify($password, $result[0]["password"])){
-        echo 1;
+        session_start();
+        $_SESSION["username"] = $name;
+        $_SESSION["id"] = $result[0]["id"];
+        header("Location: ../../home.php");
     } else {
-        echo 0;
+        header("Location: ../../connexion/");
     }
 } catch (PDOException $e) {
-    echo 0;
+    header("Location: ../../connexion/");
 }
 
 ?>

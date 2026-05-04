@@ -710,7 +710,7 @@ h1,h2,h3{
     background-color: #000;
     background-position: center;
     background-size: cover;
-    background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDP0mKW3JAsjeUqO9T4NJ8_-vpGo0gixz1Bw&s);
+    background-image: url(sources/wankul1.png);
 }
 
 #section_friends #content_list .friends_list_element .left_elements h2 {
@@ -1050,7 +1050,7 @@ input[type="number"]::-webkit-inner-spin-button {
     width: 13vh;
     background-position: center;
     background-size: cover;
-    background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDP0mKW3JAsjeUqO9T4NJ8_-vpGo0gixz1Bw&s);
+    background-image: url(sources/wankul1.png);
 }
 
 #profil #profil_up_section {
@@ -1125,6 +1125,10 @@ input[type="number"]::-webkit-inner-spin-button {
     font-family: "Hammersmith One";
     font-size: 1.8vh;
     margin: .7vh;
+}
+
+#profil a {
+    color: #fff;
 }
 
 .light_red {

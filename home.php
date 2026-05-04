@@ -9,6 +9,16 @@ MADE ON EARTH BY HUMANS
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <?php 
+    
+        session_start();
+        if ($_SESSION["id"] == "") header("Location: ./connexion/");
+        else {
+            $id = $_SESSION["id"];
+        }
+
+    ?>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:title" content="Ranked Online Wankul">
@@ -54,7 +64,7 @@ MADE ON EARTH BY HUMANS
             </div>
             <div id="booster_section">
                 <img src="sources/wankul1.png" alt="Wankul" class="wankul" id="wankul_gauche">
-                <a href="boosterOpening.html">
+                <a href="boosterOpening.php">
                     <div id="onglet_booster" > <!-- Onglet Booster -->
                         <div> <!-- Partie texte -->
                             <h1>Ouvrir un booster de cartes</h1>
@@ -220,10 +230,14 @@ MADE ON EARTH BY HUMANS
             <div id="picture"></div>
             <div id="profil_up_section">
                 <div id="pseudo">
-                    <h1>Quenouille</h1>
+                    <?php 
+                    
+                    echo "<h1>" . $_SESSION["name"] . "</h1>";
+                    
+                    ?>
                     <h3>[ROBA]</h3>
                 </div>
-                <p>Salut ! J'utilise WhatsApp.</p>
+                <p>Default description</p>
             </div>
         </div>
         <div id="level_info">
@@ -269,6 +283,7 @@ MADE ON EARTH BY HUMANS
                 <img src="https://cdn.shopify.com/s/files/1/0683/2055/9412/files/Wankul_S4_062_u3yfdeq16rg10n6n030ciutm.webp?v=1740129183">
             </div>
         </div>
+        <a href="./Backend/src/logout.php">Se déconnecter</a>
     </div>
     <footer>
         <div>

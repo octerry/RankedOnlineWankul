@@ -21,18 +21,20 @@ MADE ON EARTH BY HUMANS
         <img src="../sources/Logo.svg" id="row_logo" alt="logo">
         <h1>Ranked Online Wankul</h1>
         <h1>Créer un compte</h1>
-        <input type="name" placeholder="Nom" id="name_input">
-        <input type="password" placeholder="Mot de passe" id="pw_input">
-        <input type="password" placeholder="Retapez votre mot de passe" id="pw_input2">
-        <div id="create">
-            <h2>Créer un compte</h2>
-        </div>
+        <form action="../Backend/src/sigin.php" method="POST">
+            <input type="name" placeholder="Nom" id="name_input" name="name">
+            <input type="password" placeholder="Mot de passe" id="pw_input" name="password">
+            <input type="password" placeholder="Retapez votre mot de passe" id="pw_input2" name="password2">
+            <button id="create" style="submit">
+                <h2>Créer un compte</h2>
+            </button>
+        </form>
         <h1>ou</h1>
         <div id="google_button">
             <img src="../sources/googleLogo.svg" id="google_logo" alt="logoGoogle">
             <h3>Se connecter avec Google</h3> 
         </div>
-        <a href="index.html" style="text-decoration:none;">
+        <a href="index.php" style="text-decoration:none;">
             <h2 id="login_account">Se connecter</h2>
         </a>
     </main>

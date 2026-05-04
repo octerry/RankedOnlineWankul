@@ -7,7 +7,7 @@
 MADE ON EARTH BY HUMANS
 -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,17 +19,13 @@ MADE ON EARTH BY HUMANS
 <body>
     <?php 
     
-    $user_id = $_SESSION["id"];
+    if ($_SESSION["id"] != "") header("Location: ../home.php")
 
-    if (!empty($user_id)) {
-        header("location: ../home.html");
-    }
-    
     ?>
     <main>
         <img src="../sources/Logo.svg" id="row_logo" alt="logo">
         <h1>Ranked Online Wankul</h1>
-        <form action="login.php" method="POST">
+        <form action="../Backend/src/login.php" method="POST">
             <input type="name" name="name" placeholder="Nom" id="name_input">
             <input type="password" name="password" placeholder="Mot de passe" id="pw_input">
             <button style="submit" id="login">
@@ -42,7 +38,7 @@ MADE ON EARTH BY HUMANS
             <img src="../sources/googleLogo.svg" id="google_logo" alt="logoGoogle">
             <h3>Se connecter avec Google</h3> 
         </div>
-        <a href="createAccount.html" style="text-decoration:none;">
+        <a href="create-account-page.php" style="text-decoration:none;">
             <h2 id="create_account">Créer un compte</h2>
         </a>
     </main>
