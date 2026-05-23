@@ -37,5 +37,26 @@
     }
     
     ?>
+
+    <style>
+        body {
+            background-color: #333;
+            color: #fff;
+        }
+
+        input {
+            background-color: #444;
+            color: #fff;
+            border: #fff 1px solid;
+
+            &::placeholder {
+                color: #fff;
+            }
+        }
+
+        a {
+            color: #a86262;
+        }
+    </style>
 </body>
 </html>
