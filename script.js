@@ -11,15 +11,13 @@
 //fetch("https://wankul.fr/apps/proxy/api/wankuldex/cards")
 //   .then(response => console.log(response))
 //   .catch(error => console.error(error))
-//
-// console renvoie : CORS
 
 //On récupère l'API en local pour pas avoir de problème
 let displayAllButton = document.getElementById('tout');
 let displayMineButton = document.getElementById('vos_cartes');
 let onlyDisplayMine = true
 
-fetch("https://vps.terrysegaunes.fr/row-backend/src/getAPI.php") // Adresse de mon VPS personnel :)
+fetch("https://terrysegaunes.com/row-backend/src/getAPI.php") // Adresse de mon VPS personnel :)
     .then(response => {
         return response.json();
     })
