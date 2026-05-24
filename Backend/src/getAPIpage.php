@@ -4,10 +4,11 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
-$ch = curl_init("https://wankul.fr/apps/wankul/api/wankuldex/cards");
+$page = trim($_GET["page"]);
+
+
+$ch = curl_init("https://wankul.fr/apps/wankul/api/wankuldex/cards?page=" . $page . "&limit=20");
 
 curl_exec($ch);
-
-echo json_encode( curl_getinfo($ch) );
 
 ?>

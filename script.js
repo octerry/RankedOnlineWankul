@@ -15,11 +15,11 @@
 //On récupère l'API en local pour pas avoir de problème
 let displayAllButton = document.getElementById('tout');
 let displayMineButton = document.getElementById('vos_cartes');
-let onlyDisplayMine = true
+let onlyDisplayMine = false
 
-fetch("https://terrysegaunes.com/row-backend/src/getAPI.php") // Adresse de mon VPS personnel :)
-    .then(response => {
-        return response.json();
+fetch("https://terrysegaunes.com/row-backend/src/getAPIpage.php?page=1")
+    .then(res => {
+        return res.json();
     })
     .then(data => {
         showCards(data)
@@ -85,16 +85,6 @@ let cardDisplate = document.getElementById('card_displate')
 // Cheat codes
 let cheatCodeInput = document.getElementById('cheat_code_input')
 let cheatCodeSubmit = document.getElementById('cheat_code_submit')
-
-// Pour changer les moustaches Vue.js
-const { createApp, ref } = Vue
-
-createApp ({
-    setup() {
-        const username = ref()
-    }
-})
-
 
 //DEBUT DU CODE
 // Pour les wankuls aleatoires
@@ -213,10 +203,10 @@ function showCards(dico) {
         let cards = []
         let myCardsTab = Array.from(myCards)
         for (const element of myCardsTab) {
-            cards.push(dico.cards[element])
+            cards.push(dico.data[element])
         }
 
-        let n = 120 // Nombres de cartes affichées
+        let n = 20 // Nombres de cartes affichées
         if (cards.length < n) {n = cards.length}
         for(let i=1; i<n; i++) {
             let cardName = cards[i].title
@@ -229,10 +219,10 @@ function showCards(dico) {
             cardDisplate.appendChild(newElement)
         }
     } else {
-        let n = 120 // Nombres de cartes affichées
+        let n = 20 // Nombres de cartes affichées
         for(let i=1; i<n; i++) {
-            let cardName = dico.cards[i].title
-            let cardSource = dico.cards[i].image
+            let cardName = dico.data[i].title
+            let cardSource = dico.data[i].image
 
             let newElement = document.createElement(`img`)
             newElement.alt = cardName
@@ -254,7 +244,7 @@ function setValue(key, value) {
     if (localStorage.getItem('username')) {
         let username = localStorage.getItem('username')
         console.log("user : " + username);
-        fetch(`https://vps.terrysegaunes.fr/row-backend/src/setUserInfo.php?name=${username}&key=${key}&value=${JSON.stringify(value)}`)
+        fetch(`https://terrysegaunes.com/row-backend/src/setUserInfo.php?name=${username}&key=${key}&value=${JSON.stringify(value)}`)
             .then (res=>{return res.json()})
             .then (data=>{
                 if (data == 0) {
