@@ -86,6 +86,15 @@ let cardDisplate = document.getElementById('card_displate')
 let cheatCodeInput = document.getElementById('cheat_code_input')
 let cheatCodeSubmit = document.getElementById('cheat_code_submit')
 
+// Pour changer les moustaches Vue.js
+const { createApp, ref } = Vue
+
+createApp ({
+    setup() {
+        const username = ref()
+    }
+})
+
 
 //DEBUT DU CODE
 // Pour les wankuls aleatoires

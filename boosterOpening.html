@@ -16,6 +16,7 @@ MADE ON EARTH BY HUMANS<
     <title>Opening Booster Wankul</title>
     <link rel="stylesheet" href="style.css">
 
+    <script src="userCheck.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" /><!-- Swiper JS -->
     <script defer src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script><!-- Swiper JS -->
@@ -26,16 +27,6 @@ MADE ON EARTH BY HUMANS<
     <script defer src="boosterOpeningScript.js"></script>
 </head>
 <body id="booster_body">
-    <?php 
-    
-    session_start();
-    if ($_SESSION["id"] == "") header("Location: ./connexion/");
-    else {
-        $id = $_SESSION["id"];
-    }
-
-    ?>
-
     <div id="superior_body">
         <a href="home.php">
             <img src="//wankul.fr/cdn/shop/files/Wankul_Logo_Blanc.png" alt="Logo Wankul" id="logo_img">

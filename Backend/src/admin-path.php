@@ -7,13 +7,13 @@
 </head>
 <body>
     <h2>Créer un compte</h2>
-    <form action="sigin.php" method="POST">
+    <form action="sigin.php" method="GET">
         <input type="text" name="name" required>
         <input type="password" name="password" required>
         <button type="submit">Enregistrer</button>
     </form>
     <h2>Se connecter</h2>
-    <form action="login.php" method="POST">
+    <form action="login.php" method="GET">
         <input type="text" name="name" required>
         <input type="password" name="password" required>
         <button type="submit">Se connecter</button>

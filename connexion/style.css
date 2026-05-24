@@ -93,8 +93,23 @@ input {
 }
 
 .error {
-    border: 2px #a85858 solid;
-    background-color: #c4656550;
+    border: 2px #94344a solid;
+    background-color: #a63c5550;
+}
+
+.message-error {
+    display: none;
+
+    width: 90%;
+    padding: 20px 30px;
+    
+    background-color: #e94a6f50;
+    color: #ffffff;
+    font-family: "Gothic A1";
+    font-weight: 900;
+
+    border: 2px solid #e94a6f;
+    border-radius: 10px;
 }
 
 #login, #create {

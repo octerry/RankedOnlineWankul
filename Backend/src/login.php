@@ -4,8 +4,8 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
-$name = trim($_POST["name"]);
-$password = trim($_POST["password"]);
+$name = trim($_GET["name"]);
+$password = trim($_GET["password"]);
 
 try {
     require "connection.php";
@@ -18,15 +18,12 @@ try {
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     if (password_verify($password, $result[0]["password"])){
-        session_start();
-        $_SESSION["username"] = $name;
-        $_SESSION["id"] = $result[0]["id"];
-        header("Location: ../../home.php");
+        echo json_encode([1,$result[0]["id"]]);
     } else {
-        header("Location: ../../connexion/");
+        echo json_encode([0,"Nom ou mot de passe incorrect"]);
     }
 } catch (PDOException $e) {
-    header("Location: ../../connexion/");
+    echo json_encode([0,"Erreur lors de la connexion"]);
 }
 
 ?>
