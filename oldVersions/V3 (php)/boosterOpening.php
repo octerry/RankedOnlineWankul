@@ -1,0 +1,105 @@
+<!-- Coucou toi qui regarde dans le code
+/‾‾‾‾‾\ /‾‾‾‾‾] [‾‾‾‾‾‾‾‾] |‾‾‾‾‾] |‾‾‾‾‾\ |‾‾‾‾‾\ |‾| /‾/
+| |‾| | | |‾‾‾   ‾‾|  |‾‾  | |‾‾‾  |     | |     | | |/ /
+| | | | | |        |  |    |  ___] |     / |     / |  _/
+| |_| | | |___     |  |    | |___  | |\ \  | |\ \  | |
+\_____/ \_____]    |__|    |_____] |_| \_\ |_| \_\ |_|
+MADE ON EARTH BY HUMANS<
+-->
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="sources/banana_fruit_food_icon.ico">
+    <title>Opening Booster Wankul</title>
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" /><!-- Swiper JS -->
+    <script defer src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script><!-- Swiper JS -->
+    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/gsap.min.js"></script> <!--GSAP-->
+    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/Draggable.min.js"></script> <!--GSAP draggable-->
+    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/ScrollTrigger.min.js"></script> <!--GSAP scrollTrigger-->
+    
+    <script defer src="boosterOpeningScript.js"></script>
+</head>
+<body id="booster_body">
+    <?php 
+    
+    session_start();
+    if ($_SESSION["id"] == "") header("Location: ./connexion/");
+    else {
+        $id = $_SESSION["id"];
+    }
+
+    ?>
+
+    <div id="superior_body">
+        <a href="home.php">
+            <img src="//wankul.fr/cdn/shop/files/Wankul_Logo_Blanc.png" alt="Logo Wankul" id="logo_img">
+        </a>
+        <h1>Ouvrir un booster</h1>
+        <h2 id="season_title">Saison Aléatoire</h2>
+    </div>
+    <div class="gallery">
+        <ul class="cards">
+            <li style="background-image: url(sources/BoosterAleatoire.png)"></li>
+            <li style="background-image: url(sources/BoosterS1\ ORIGINS.png)"></li>
+            <li style="background-image: url(sources/BoosterS2\ CAMPUS.png)"></li>
+            <li style="background-image: url(sources/BoosterS3\ BATTLE.png)"></li>
+            <li style="background-image: url(sources/BoosterS4\ STELLAR.png)"></li>
+            <li style="background-image: url(sources/BoosterAleatoire.png)"></li>
+            <li style="background-image: url(sources/BoosterS1\ ORIGINS.png)"></li>
+            <li style="background-image: url(sources/BoosterS2\ CAMPUS.png)"></li>
+            <li style="background-image: url(sources/BoosterS3\ BATTLE.png)"></li>
+            <li style="background-image: url(sources/BoosterS4\ STELLAR.png)"></li>
+        </ul>
+        <div class="actions">
+            <div id="booster_points">
+                <div id="S1_points">10</div>
+                <div id="S2_points">8</div>
+                <div id="S3_points">3</div>
+                <div id="S4_points">14</div>
+            </div>
+            <div class="actions-inner">
+                <button class="prev">&#60</button>
+                <button class="next">&#62</button>
+            </div>
+            <button id="open_button">Ouvrir un booster aléatoire</button>
+        </div>
+    </div>
+    <div class="drag-proxy"></div>
+    <div id="booster_bg">
+    </div>
+    <div id="booster_opening">
+        <canvas></canvas>
+        <div id="back_button">Annuler</div>
+        <div id="booster_animation">
+            <img src="sources/BoosterS1 ORIGINS.png" alt="booster" class="booster">
+            <div id="quick_opening_button">
+                <div>Ouvrir</div>
+            </div>
+        </div>
+        <div id="card_reveal">
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"></div>
+                    <div class="swiper-slide"></div>
+                    <div class="swiper-slide"></div>
+                    <div class="swiper-slide"></div>
+                    <div class="swiper-slide"></div>
+                    <div class="swiper-slide"></div>
+                    <div class="swiper-slide"></div>
+                    <div class="swiper-slide"></div>
+                    <div class="swiper-slide"></div>
+                    <div class="swiper-slide"></div>
+                </div>
+            </div>
+        </div>
+        <div id="skip_button">Passer</div>
+        <canvas id="c"></canvas>
+    </div>
+</body>
+</html>
