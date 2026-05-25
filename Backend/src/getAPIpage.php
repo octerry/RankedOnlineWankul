@@ -7,7 +7,7 @@ header("Access-Control-Allow-Headers: Content-Type");
 $page = trim($_GET["page"]);
 
 
-$ch = curl_init("https://wankul.fr/apps/wankul/api/wankuldex/cards?page=" . $page . "&limit=20");
+$ch = curl_init("https://wankul.fr/apps/wankul/api/wankuldex/cards?page=" . $page . "&limit=20&sort=id&dir=asc");
 
 curl_exec($ch);
 

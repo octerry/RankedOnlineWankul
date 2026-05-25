@@ -7,38 +7,71 @@
 // MADE ON EARTH BY HUMANS
 
 // L'API de Wankul -> https://wankul.fr/apps/proxy/api/wankuldex/cards
-//
-//fetch("https://wankul.fr/apps/proxy/api/wankuldex/cards")
-//   .then(response => console.log(response))
-//   .catch(error => console.error(error))
 
 //On récupère l'API en local pour pas avoir de problème
 let displayAllButton = document.getElementById('tout');
 let displayMineButton = document.getElementById('vos_cartes');
 let onlyDisplayMine = false
 
-fetch("https://terrysegaunes.com/row-backend/src/getAPIpage.php?page=1")
-    .then(res => {
-        return res.json();
-    })
-    .then(data => {
+let allAPI = {}
+
+async function fetchAllAPI(n = 1) {
+    try {
+        // Récupérer la page actuelle de l'API
+        const res = await fetch("https://terrysegaunes.com/row-backend/src/getAPIpage.php?page=" + n)
+        const data = await res.json()
+        console.log( Math.floor(n / data.meta.totalPages * 100) + "%")
+
+        // Ne renvoyer que la page actuelle si c'est la dernière
+        if (n >= data.meta.totalPages) {
+            return data.data
+        }
+
+        // Prendre la prochaine page
+        const next = await fetchAllAPI(n+1)
+
+        // Lancer tout l'API sur le site
+        if (n == 1) startAfterFetch([...data.data, ...next])
+
+        // Mettre l'API dans le localstorage pour éviter d'aller le chercher à chaque fois
+        localStorage.setItem("cards",JSON.stringify([...data.data, ...next]))
+
+        return [...data.data, ...next]
+    }catch (e) {
+        console.error(e)
+    } 
+}
+async function loadImage(url) {
+    try {
+        // On récupère l'image (parce qu'on peut pas mettre directement l'image, l'API redirrige T_T )
+        const res = await fetch(url);
+        const blob = await res.blob(); // c'est juste ce qu'il a recu
+
+        // On récupère l'URL
+        const localURL = URL.createObjectURL(blob);
+        return localURL
+    } catch (e) {
+        console.error(e)
+    }
+}
+
+function startAfterFetch(data) {
+    showCards(data)
+
+    displayMineButton.addEventListener('click', function(){
+        onlyDisplayMine = true;
+        displayMineButton.style.fontWeight = "500";
+        displayAllButton.style.fontWeight = "200";
         showCards(data)
-
-        displayMineButton.addEventListener('click', function(){
-            onlyDisplayMine = true;
-            displayMineButton.style.fontWeight = "500";
-            displayAllButton.style.fontWeight = "200";
-            showCards(data)
-        })
-
-        displayAllButton.addEventListener('click', function(){
-            onlyDisplayMine = false;
-            displayMineButton.style.fontWeight = "500";
-            displayAllButton.style.fontWeight = "200";
-            showCards(data)
-        })
     })
-    .catch((e) => console.error(e));
+
+    displayAllButton.addEventListener('click', function(){
+        onlyDisplayMine = false;
+        displayMineButton.style.fontWeight = "500";
+        displayAllButton.style.fontWeight = "200";
+        showCards(data)
+    })
+}
 
 let myCards = new Set();
 if (localStorage.getItem('myCards')) {
@@ -92,7 +125,13 @@ let logoutButton = document.getElementById("logout_button")
 // Profil
 let profilUsername = document.getElementById("username_profil")
 
-
+if (localStorage.getItem("cards")) {
+    allAPI = JSON.parse(localStorage.getItem("cards"))
+    startAfterFetch(allAPI)
+}
+else {
+    allAPI = fetchAllAPI()
+}
 
 
 
@@ -213,19 +252,20 @@ fightButton.addEventListener('click', function(){ // Bouton "rentrer dans l'aren
 
 function showCards(dico) {
     cardDisplate.innerHTML = "";
+    console.log(dico)
 
     if (onlyDisplayMine) {
         let cards = []
         let myCardsTab = Array.from(myCards)
         for (const element of myCardsTab) {
-            cards.push(dico.data[element])
+            cards.push(dico[element])
         }
 
         let n = 20 // Nombres de cartes affichées
         if (cards.length < n) {n = cards.length}
         for(let i=1; i<n; i++) {
-            let cardName = cards[i].title
-            let cardSource = cards[i].image
+            let cardName = cards[i].name
+            let cardSource = loadImage("https://wankul.fr" + cards[i].imageUrl)
 
             let newElement = document.createElement(`img`)
             newElement.alt = cardName
@@ -236,8 +276,8 @@ function showCards(dico) {
     } else {
         let n = 20 // Nombres de cartes affichées
         for(let i=1; i<n; i++) {
-            let cardName = dico.data[i].title
-            let cardSource = dico.data[i].image
+            let cardName = dico[i].name
+            let cardSource = loadImage("https://wankul.fr" + dico[i].imageUrl)
 
             let newElement = document.createElement(`img`)
             newElement.alt = cardName
