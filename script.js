@@ -86,6 +86,16 @@ let cardDisplate = document.getElementById('card_displate')
 let cheatCodeInput = document.getElementById('cheat_code_input')
 let cheatCodeSubmit = document.getElementById('cheat_code_submit')
 
+// Bouton de déconnexion
+let logoutButton = document.getElementById("logout_button")
+
+// Profil
+let profilUsername = document.getElementById("username_profil")
+
+
+
+
+
 //DEBUT DU CODE
 // Pour les wankuls aleatoires
 let chosen = Math.floor(Math.random() * 21) + 1
@@ -96,6 +106,11 @@ if (chosen === chosen2) {
     else {chosen2++}
 }
 wankuls[1].src = "sources/wankul" + chosen2 + ".png"
+
+if (localStorage.getItem('name')) {
+    let username = localStorage.getItem('name')
+    profilUsername.innerText = username
+}
 
 // Pour le darkmode
 darkmodeButton.addEventListener('click', function () {
@@ -233,6 +248,11 @@ function showCards(dico) {
     }
 }
 
+logoutButton.addEventListener("click",()=>{
+    localStorage.clear()
+    window.location.href = "./connexion/"
+})
+
 // NOMBRE DE CARTES PAR SAISONS
 // S1 - 180
 // S2 - 155
@@ -243,7 +263,7 @@ function showCards(dico) {
 function setValue(key, value) {
     if (localStorage.getItem('username')) {
         let username = localStorage.getItem('username')
-        console.log("user : " + username);
+        profilUsername.innerText = username
         fetch(`https://terrysegaunes.com/row-backend/src/setUserInfo.php?name=${username}&key=${key}&value=${JSON.stringify(value)}`)
             .then (res=>{return res.json()})
             .then (data=>{
