@@ -11,7 +11,12 @@ $value = json_decode($_GET["value"]);
 try {
     require "connection.php";
 
+    // Si la valeur est une liste on la convertie en string
+    if (in_array($key,["boosters","cards","cards-search","friends","friend_requests"])) $value = json_encode($value);
+
+    // On trouve la table dans laquelle est rangée la valeur
     $table = "";
+
     if (in_array($key,["boosters","cards","cards-search","card-fav","card-duo"])) {
         $table = "content";
     }
@@ -32,32 +37,20 @@ try {
     
     // On vérifie si on a bien un compte avec ce nom
     if ($count[0] >= 0 && !empty($name)) {
-        $result = $pdo->prepare("SELECT COUNT(*) FROM :table WHERE login.name = :name JOIN login ON :table.id = login.id");
+        $result = $pdo->prepare("SELECT id FROM login WHERE name = :name");
         $result->execute([
-            "name" => $name,
+            "name" => $name
+        ]);
+        $id = $result->fetch(PDO::FETCH_ASSOC);
+
+        // Si oui, on change la valeur
+        $stmt = $pdo->prepare("UPDATE :table SET :key = :value WHERE id = :id");
+        $stmt->execute([
+            "id" => $id[0],
+            "key" => $key,
+            "value" => $value,
             "table" => $table
         ]);
-        $count = $result->fetch(PDO::FETCH_NUM);
-
-        // On vérifie si cet utilisateur est déjà dans la table
-        if ($count >= 0) {
-            // Si oui, on change la valeur
-            $stmt = $pdo->prepare("UPDATE :table SET :key = :value WHERE login.name = :name JOIN login ON :table.id = login.id");
-            $stmt->execute([
-                "key" => $key,
-                "value" => json_encode($value),
-                "table" => $table
-            ]);
-        } else {
-            // Sinon, on ajoute la valeur
-            $stmt = $pdo->prepare("INSERT INTO :table (id, :key) VALUES (login.id, :value)");
-            $stmt->execute([
-                "key" => $key,
-                "value" => json_encode($value),
-                "table" => $table,
-                "name" => $name
-            ]);
-        }
 
         echo json_encode([1,""]);
     } else {

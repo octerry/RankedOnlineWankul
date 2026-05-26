@@ -1,8 +1,8 @@
 <?php
 
-// header("Access-Control-Allow-Origin: *");
-// header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-// header("Access-Control-Allow-Headers: Content-Type");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
 
 $id = $_GET["id"];
 
@@ -15,9 +15,21 @@ try {
     ]);
     $infos = $result->fetch(PDO::FETCH_ASSOC);
 
-    echo json_encode($infos);
+    $content = $pdo->prepare("SELECT * FROM content WHERE id = :id");
+    $content->execute([
+        "id" => $id
+    ]);
+    $infos = array_merge($infos, $content->fetch(PDO::FETCH_ASSOC));
+
+    $account = $pdo->prepare("SELECT * FROM account WHERE id = :id");
+    $account->execute([
+        "id" => $id
+    ]);
+    $infos = array_merge($infos, $account->fetch(PDO::FETCH_ASSOC));
+
+    echo json_encode([1,$infos]);
 } catch (PDOException $e) {
-    echo $e->getMessage();
+    echo json_encode([0,$e]);
 }
 
 

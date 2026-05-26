@@ -14,6 +14,14 @@ try {
         $result->execute([
             "id" => $id
         ]);
+        $result = $pdo->prepare("DELETE FROM content WHERE id = :id");
+        $result->execute([
+            "id" => $id
+        ]);
+        $result = $pdo->prepare("DELETE FROM account WHERE id = :id");
+        $result->execute([
+            "id" => $id
+        ]);
     }
 
     echo "Bien supprimé !";

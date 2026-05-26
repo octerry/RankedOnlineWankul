@@ -1,15 +1,21 @@
 <?php
 
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
-
-$name = trim($_GET["name"]);
-$password = trim($_GET["password"]);
-
 try {
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+    header("Access-Control-Allow-Headers: Content-Type");
+
+    $name = isset($_GET["name"]) ? trim($_GET["name"]) : '';
+    $password = isset($_GET["password"]) ? trim($_GET["password"]) : '';
+
+    if ($name === '' || $password === '') {
+        echo json_encode([0, "Paramètres manquants ou invalides"]);
+        exit;
+    }
+
     require "connection.php";
 
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $result = $pdo->prepare("SELECT COUNT(*) FROM login WHERE name = :name");
     $result->execute([
         "name" => $name,
@@ -65,7 +71,7 @@ try {
         echo json_encode([0,"Ce nom existe déjà"]);
     }
 } catch (Exception $e) {
-    echo json_encode([0,"Erreur lors de la connexion",$e]);
+    echo json_encode([0, "Erreur lors de la connexion", $e->getMessage()]);
 }
 
 ?>

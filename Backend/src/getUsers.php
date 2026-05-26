@@ -3,13 +3,11 @@
 try {
     require "connection.php";
 
-    $result = $pdo->query("SELECT * FROM login");
+    $result = $pdo->query("SELECT name FROM login");
 
-    foreach ($result as $row) {
-        echo $row["id"]. ". " . $row["name"] . " -> " . $row["password"];
-    }
+    echo json_encode([1,$result]);
 } catch (Exception $e) {
-    echo "Erreur : ". $e->getMessage() ."";
+    echo json_encode([0,$e]);
 }
 
 ?> 

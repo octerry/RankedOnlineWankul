@@ -17,10 +17,23 @@ if (!localStorage.getItem("id")) {
             .then(message=>{
                 if (message != 1) {
                     window.location.href = "./connexion/"
+                    setAllDataToLocal();
                 }
             })
             .catch(e=>{
                 window.location.href = "./connexion/"
             })
     }
+}
+
+function setAllDataToLocal() {
+    fetch("https://terrysegaunes.com/row-backend/src/getUserInfo.php?id=" + localStorage.getItem("id"))
+        .then(res=>{return res.json()})
+        .then(message=>{
+            if (message[0]) console.log(message[1]);
+            else {
+                console.log(message[1])
+            }
+        })
+        .catch(e=>{console.log(e)})
 }

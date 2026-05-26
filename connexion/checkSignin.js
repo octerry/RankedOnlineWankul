@@ -95,5 +95,12 @@ form.addEventListener('submit', event => {
                     messageError.style.display = "block"
                 }
             })
+            .catch(e=>{
+                let li = document.createElement("li");
+                li.innerHTML = e;
+                messageError.appendChild(li)
+                messageError.style.display = "block"
+                console.log(e)
+            })
     }
 })
