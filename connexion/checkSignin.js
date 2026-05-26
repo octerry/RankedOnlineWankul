@@ -80,27 +80,36 @@ form.addEventListener('submit', event => {
     }
 
     if(verified == 3) {
-        fetch("https://www.terrysegaunes.com/row-backend/src/signin.php?name=" + name.value + "&password=" + password.value)
-            .then(res=>{
-                return res.json();
-            })
-            .then(message=>{
-                if (message[0] == 1) {
-                    localStorage.setItem("id",message[1]);
-                    window.location.href = "../home.html";
-                } else {
+        try {
+            fetch("https://www.terrysegaunes.com/row-backend/src/signin.php?name=" + name.value + "&password=" + password.value)
+                .then(res=>{
+                    return res.json();
+                })
+                .then(message=>{
+                    if (message[0] == 1) {
+                        localStorage.setItem("id",message[1]);
+                        window.location.href = "../home.html";
+                    } else {
+                        let li = document.createElement("li");
+                        li.innerHTML = message[1];
+                        messageError.appendChild(li)
+                        messageError.style.display = "block"
+                    }
+                })
+                .catch(e=>{
                     let li = document.createElement("li");
-                    li.innerHTML = message[1];
+                    li.innerHTML = "Erreur côté serveur";
                     messageError.appendChild(li)
                     messageError.style.display = "block"
-                }
-            })
-            .catch(e=>{
-                let li = document.createElement("li");
-                li.innerHTML = e;
-                messageError.appendChild(li)
-                messageError.style.display = "block"
-                console.log(e)
-            })
+                    console.log(e)
+                })
+        }
+        catch(e) {
+            let li = document.createElement("li");
+            li.innerHTML = "Erreur côté serveur :/";
+            messageError.appendChild(li)
+            messageError.style.display = "block"
+            console.log(e)
+        }
     }
 })
