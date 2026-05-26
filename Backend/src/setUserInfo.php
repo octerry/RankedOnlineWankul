@@ -50,7 +50,7 @@ try {
             ]);
         } else {
             // Sinon, on ajoute la valeur
-            $stmt = $pdo->prepare("INSERT INTO :table (id, :key) VALUES (login.id, :value) JOIN login ON :table.id = login.id WHERE login.name = :name");
+            $stmt = $pdo->prepare("INSERT INTO :table (id, :key) VALUES (login.id, :value)");
             $stmt->execute([
                 "key" => $key,
                 "value" => json_encode($value),

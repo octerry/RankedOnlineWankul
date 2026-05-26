@@ -17,10 +17,13 @@ try {
     $count = $result->fetch(PDO::FETCH_NUM);
  
     if ($count[0] <= 0 && !empty($name) && !empty($password)) {
-        $stmt = $pdo->prepare("INSERT INTO login (name, password) VALUES (:name, :password)");
+        $stmt = $pdo->prepare("
+            INSERT INTO login (`name`, `password`)
+            VALUES (:name, :password)
+        ");
         $stmt->execute([
-            "name" => $name,
-            "password"=> password_hash($password, PASSWORD_DEFAULT)
+            ':name' => $name,
+            ':password' => $password
         ]);
 
         $result = $pdo->prepare("SELECT id FROM login WHERE name = :name");
@@ -29,23 +32,32 @@ try {
         ]);
         $id = $result->fetch(PDO::FETCH_NUM);
 
-        $stmt = $pdo->prepare("INSERT INTO content (id, boosters, cards, cards-search, card-fav, card-duo) VALUES (:id, :boosters, :cards, :cards-search, :card-fav, :card-duo)");
+        $stmt = $pdo->prepare("
+            INSERT INTO content
+            (`id`, `boosters`, `cards`, `cards-search`, `card-fav`, `card-duo`)
+            VALUES
+            (:id, :boosters, :cards, :cardssearch, :cardfav, 0)
+        ");
         $stmt->execute([
-            "id" => $id,
-            "boosters" => json_encode([10,10,10,10]),
-            "cards" => json_encode([]),
-            "cards-search" => json_encode([]),
-            "card-fav" => 1,
-            "card-duo" => false
+            ':id' => $id[0],
+            ':boosters' => json_encode([10,10,10,10]),
+            ':cards' => json_encode([]),
+            ':cardssearch' => json_encode([]),
+            ':cardfav' => 0
         ]);
 
-        $stmt = $pdo->prepare("INSERT INTO content (id, pseudo, description, friends, friend_requests) VALUES (:id, :pseudo, :description, :friends, :friend_requests)");
+        $stmt = $pdo->prepare("
+            INSERT INTO account
+            (`id`, `pseudo`, `description`, `friends`, `friend_requests`)
+            VALUES
+            (:id, :pseudo, :description, :friends, :friendrequests)
+        ");
         $stmt->execute([
-            "id" => $id,
-            "pseudo" => $name,
-            "description" => "Je suis nouveau !",
-            "friends" => json_encode([]),
-            "firend_request" => json_encode([])
+            ':id' => $id[0],
+            ':pseudo' => $name,
+            ':description' => "Salut, je suis nouveau !",
+            ':friends' => json_encode([]),
+            ':friendrequests' => json_encode([])
         ]);
 
         echo json_encode([1,$id[0]]);
@@ -53,7 +65,7 @@ try {
         echo json_encode([0,"Ce nom existe déjà"]);
     }
 } catch (Exception $e) {
-    echo json_encode([0,"Erreur lors de la connexion"]);
+    echo json_encode([0,"Erreur lors de la connexion",$e]);
 }
 
 ?>
