@@ -15,41 +15,6 @@ if (localStorage.getItem('userID')) {
     location.href.replace("boosterOpening.html", "connexion");
 }
 
-async function fetchAllAPI(n = 1) {
-    loadingScreen.style.opacity = "1"
-    loadingScreen.style.pointerEvents = "all"
-    try {
-        // Récupérer la page actuelle de l'API
-        const res = await fetch("https://www.terrysegaunes.com/row-backend/src/getAPIpage.php?page=" + n)
-        const data = await res.json()
-        let percentage = Math.floor(n / data.meta.totalPages * 100) + "%"
-        loadingPercentage.innerText = percentage
-        loadingLineInner.style.width = percentage
-
-        // Ne renvoyer que la page actuelle si c'est la dernière
-        if (n >= data.meta.totalPages) {
-            return data.data
-        }
-
-        // Prendre la prochaine page
-        const next = await fetchAllAPI(n+1)
-
-        // Lancer tout l'API sur le site
-        if (n == 1) {
-            startAfterFetch([...data.data, ...next])
-            loadingScreen.style.opacity = 0
-            loadingScreen.style.pointerEvents = "none"
-        }
-
-        // Mettre l'API dans le localstorage pour éviter d'aller le chercher à chaque fois
-        localStorage.setItem("cards",JSON.stringify([...data.data, ...next]))
-
-        return [...data.data, ...next]
-    }catch (e) {
-        console.error(e)
-    } 
-}
-
 document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie GSAP a chargée
     gsap.registerPlugin(ScrollTrigger)
     let root = document.documentElement
