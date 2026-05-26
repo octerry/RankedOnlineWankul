@@ -37,7 +37,7 @@ form.addEventListener('submit', event => {
     }
 
     if(verified == 1) {
-        fetch("https://terrysegaunes.com/row-backend/src/login.php?name=" + name.value + "&password=" + password.value)
+        fetch("https://www.terrysegaunes.com/row-backend/src/login.php?name=" + name.value + "&password=" + password.value)
             .then(res=>{
                 return res.json();
             })
