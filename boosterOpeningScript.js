@@ -97,6 +97,10 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
     // when the user stops scrolling, snap to the closest item.
     ScrollTrigger.addEventListener("scrollEnd", () => scrollToOffset(scrub.vars.offset));
 
+    function getImageUrl(url) {
+        let splitUrl = url.split("/");
+        return "./sources/card_images/" + splitUrl[splitUrl.length - 1]
+    }
 
     // feed in an offset (like a time on the seamlessLoop timeline, but it can exceed 0 and duration() in either direction; it'll wrap) and it'll set the scroll position accordingly. That'll call the onUpdate() on the trigger if there's a change.
     function scrollToOffset(offset) { // moves the scroll playhead to the place that corresponds to the totalTime value of the seamlessLoop, and wraps if necessary.
@@ -271,7 +275,7 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
                     swiperSlide = document.querySelectorAll('.swiper-slide');
                     
                     for(let i=0; i<swiperSwaper.children.length; i++) {
-                        swiperSlide[i].style.background = `url(${chosenCards[i].image})`
+                        swiperSlide[i].style.background = `url(${getImageUrl(chosenCards[i].imageUrl)})`
                         swiperSlide[i].style.backgroundSize = 'cover';
                     }
 
@@ -283,11 +287,11 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
                         skipButton.style.animation = "opacityAppear .5s forwards";
                         skipButton.style.pointerEvents = "all";
                         if(!clicked) {
-                            boosterPoints[selected-1] -= 1;
-                            boosterPointsOutputs[selected-1].innerHTML = boosterPoints[selected-1]
+                            boosterPoints[tempSelect-1] -= 1;
+                            boosterPointsOutputs[tempSelect-1].innerHTML = boosterPoints[selected-1]
                             localStorage.setItem('boosterPoints', JSON.stringify(boosterPoints))
                             setValue("boosters", boosterPoints);
-                            saveCards(chosenCards, cardDico)
+                            saveCards(chosenCards, cardDico);
                             clicked = true;
                         }
 
@@ -414,14 +418,13 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
         let myCardsTab = Array.from(myCards)
 
         for (const element of cards) {
-            if (!myCards.includes(cardDico.cards.indexOf(element))) {
-                myCards.push(cardDico.cards.indexOf(element));
+            if (!myCards.includes(cardDico.indexOf(element))) {
+                myCards.push(cardDico.indexOf(element));
                 myCards.sort();
             }
         }
         localStorage.setItem('myCards', JSON.stringify(myCards));
         setValue('cards', myCards);
-        console.log('bien enregistré !')
         console.log(localStorage.getItem('myCards'));
     }
 
@@ -513,14 +516,16 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
     }
 
     function setValue(key, value) {
-        if (localStorage.getItem('username')) {
-            let username = localStorage.getItem('username')
+        if (localStorage.getItem('name')) {
+            let username = localStorage.getItem('name')
             console.log("user : " + username);
-            fetch(`https://terrysegaunes.com/row-backend/src/setUserInfo.php?name=${username}&key=${key}&value=${JSON.stringify(value)}`)
+            fetch(`https://www.terrysegaunes.com/row-backend/src/setUserInfo.php?name=${username}&key=${key}&value=${JSON.stringify(value)}`)
                 .then (res=>{return res.json()})
                 .then (data=>{
-                    if (data == 0) {
-                        console.error("Erreur lors de la modification de la base de donnée");
+                    if (data[0] == 0) {
+                        console.error(data[1]);
+                    } else {
+                        console.log('bien enregistré !')
                     }
                 })
         }

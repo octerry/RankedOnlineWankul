@@ -23,7 +23,6 @@ async function fetchAllAPI(n = 1) {
     loadingScreen.style.opacity = "1"
     loadingScreen.style.pointerEvents = "all"
     try {
-        console.log(n)
         // Récupérer la page actuelle de l'API
         const res = await fetch("https://www.terrysegaunes.com/row-backend/src/getAPIpage.php?page=" + n)
         const data = await res.json()
