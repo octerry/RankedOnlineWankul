@@ -15,6 +15,41 @@ if (localStorage.getItem('userID')) {
     location.href.replace("boosterOpening.html", "connexion");
 }
 
+async function fetchAllAPI(n = 1) {
+    loadingScreen.style.opacity = "1"
+    loadingScreen.style.pointerEvents = "all"
+    try {
+        // Récupérer la page actuelle de l'API
+        const res = await fetch("https://www.terrysegaunes.com/row-backend/src/getAPIpage.php?page=" + n)
+        const data = await res.json()
+        let percentage = Math.floor(n / data.meta.totalPages * 100) + "%"
+        loadingPercentage.innerText = percentage
+        loadingLineInner.style.width = percentage
+
+        // Ne renvoyer que la page actuelle si c'est la dernière
+        if (n >= data.meta.totalPages) {
+            return data.data
+        }
+
+        // Prendre la prochaine page
+        const next = await fetchAllAPI(n+1)
+
+        // Lancer tout l'API sur le site
+        if (n == 1) {
+            startAfterFetch([...data.data, ...next])
+            loadingScreen.style.opacity = 0
+            loadingScreen.style.pointerEvents = "none"
+        }
+
+        // Mettre l'API dans le localstorage pour éviter d'aller le chercher à chaque fois
+        localStorage.setItem("cards",JSON.stringify([...data.data, ...next]))
+
+        return [...data.data, ...next]
+    }catch (e) {
+        console.error(e)
+    } 
+}
+
 document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie GSAP a chargée
     gsap.registerPlugin(ScrollTrigger)
     let root = document.documentElement
@@ -46,53 +81,53 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
     gsap.set('.cards li', {xPercent: 400, opacity: 0, scale: 0});
 
     const spacing = 0.1, // spacing of the cards (stagger)
-        snapTime = gsap.utils.snap(spacing), // we'll use this to snapTime the playhead on the seamlessLoop
-        cards = gsap.utils.toArray('.cards li'),
-        // this function will get called for each element in the buildSeamlessLoop() function, and we just need to return an animation that'll get inserted into a master timeline, spaced
-        animateFunc = element => {
-            const tl = gsap.timeline();
-            tl.fromTo(element, {scale: 0, opacity: 0}, {scale: 1, opacity: 1, zIndex: 100, duration: 0.5, yoyo: true, repeat: 1, ease: "power1.in", immediateRender: false})
-            .fromTo(element, {xPercent: 400}, {xPercent: -400, duration: 1, ease: "none", immediateRender: false}, 0);
-            return tl;
+    snapTime = gsap.utils.snap(spacing), // we'll use this to snapTime the playhead on the seamlessLoop
+    cards = gsap.utils.toArray('.cards li'),
+    // this function will get called for each element in the buildSeamlessLoop() function, and we just need to return an animation that'll get inserted into a master timeline, spaced
+    animateFunc = element => {
+        const tl = gsap.timeline();
+        tl.fromTo(element, {scale: 0, opacity: 0}, {scale: 1, opacity: 1, zIndex: 100, duration: 0.5, yoyo: true, repeat: 1, ease: "power1.in", immediateRender: false})
+        .fromTo(element, {xPercent: 400}, {xPercent: -400, duration: 1, ease: "none", immediateRender: false}, 0);
+        return tl;
+    },
+    seamlessLoop = buildSeamlessLoop(cards, spacing, animateFunc),
+    playhead = {offset: 0}, // a proxy object we use to simulate the playhead position, but it can go infinitely in either direction and we'll just use an onUpdate to convert it to the corresponding time on the seamlessLoop timeline.
+    wrapTime = gsap.utils.wrap(0, seamlessLoop.duration()), // feed in any offset (time) and it'll return the corresponding wrapped time (a safe value between 0 and the seamlessLoop's duration)
+    scrub = gsap.to(playhead, { // we reuse this tween to smoothly scrub the playhead on the seamlessLoop
+        offset: 0,
+        onUpdate() {
+            seamlessLoop.time(wrapTime(playhead.offset)); // convert the offset to a "safe" corresponding time on the seamlessLoop timeline
         },
-        seamlessLoop = buildSeamlessLoop(cards, spacing, animateFunc),
-        playhead = {offset: 0}, // a proxy object we use to simulate the playhead position, but it can go infinitely in either direction and we'll just use an onUpdate to convert it to the corresponding time on the seamlessLoop timeline.
-        wrapTime = gsap.utils.wrap(0, seamlessLoop.duration()), // feed in any offset (time) and it'll return the corresponding wrapped time (a safe value between 0 and the seamlessLoop's duration)
-        scrub = gsap.to(playhead, { // we reuse this tween to smoothly scrub the playhead on the seamlessLoop
-            offset: 0,
-            onUpdate() {
-                seamlessLoop.time(wrapTime(playhead.offset)); // convert the offset to a "safe" corresponding time on the seamlessLoop timeline
-            },
-            duration: .6,
-            ease: "power3",
-            paused: true
-        }),
-        trigger = ScrollTrigger.create({
-            start: 0,
-            onUpdate(self) {
-                let scroll = self.scroll();
-                if (scroll > self.end - 1) {
-                    wrap(1, 2);
-                } else if (scroll < 1 && self.direction < 0) {
-                    wrap(-1, self.end - 2);
-                } else {
-                    scrub.vars.offset = (iteration + self.progress) * seamlessLoop.duration();
-                    scrub.invalidate().restart(); // to improve performance, we just invalidate and restart the same tween. No need for overwrites or creating a new tween on each update.
-                }
+        duration: .6,
+        ease: "power3",
+        paused: true
+    }),
+    trigger = ScrollTrigger.create({
+        start: 0,
+        onUpdate(self) {
+            let scroll = self.scroll();
+            if (scroll > self.end - 1) {
+                wrap(1, 2);
+            } else if (scroll < 1 && self.direction < 0) {
+                wrap(-1, self.end - 2);
+            } else {
+                scrub.vars.offset = (iteration + self.progress) * seamlessLoop.duration();
+                scrub.invalidate().restart(); // to improve performance, we just invalidate and restart the same tween. No need for overwrites or creating a new tween on each update.
+            }
 
-                changeBg(scroll)
-            },
-            end: "+=3000",
-            pin: ".gallery"
-        }),
-        // converts a progress value (0-1, but could go outside those bounds when wrapping) into a "safe" scroll value that's at least 1 away from the start or end because we reserve those for sensing when the user scrolls ALL the way up or down, to wrap.
-        // (pour résumé le texte au dessus) c'est ici qui s'occupe de faire un truc continue au lieu d'avoir une limite
-        progressToScroll = progress => gsap.utils.clamp(1, trigger.end - 1, gsap.utils.wrap(0, 1, progress) * trigger.end),
-        wrap = (iterationDelta, scrollTo) => { 
-            iteration += iterationDelta;
-            trigger.scroll(scrollTo);
-            trigger.update(); // by default, when we trigger.scroll(), it waits 1 tick to update().
-        };
+            changeBg(scroll)
+        },
+        end: "+=3000",
+        pin: ".gallery"
+    }),
+    // converts a progress value (0-1, but could go outside those bounds when wrapping) into a "safe" scroll value that's at least 1 away from the start or end because we reserve those for sensing when the user scrolls ALL the way up or down, to wrap.
+    // (pour résumé le texte au dessus) c'est ici qui s'occupe de faire un truc continue au lieu d'avoir une limite
+    progressToScroll = progress => gsap.utils.clamp(1, trigger.end - 1, gsap.utils.wrap(0, 1, progress) * trigger.end),
+    wrap = (iterationDelta, scrollTo) => { 
+        iteration += iterationDelta;
+        trigger.scroll(scrollTo);
+        trigger.update(); // by default, when we trigger.scroll(), it waits 1 tick to update().
+    };
 
     // when the user stops scrolling, snap to the closest item.
     ScrollTrigger.addEventListener("scrollEnd", () => scrollToOffset(scrub.vars.offset));
@@ -265,51 +300,56 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
                     element.style.animation = "none";
                 }
                 
-                fetch("https://vps.terrysegaunes.fr/row-backend/src/getAPI.php") // Adresse de mon VPS personnel :)
-                    .then((res) => res.json())
-                    .then((cardDico) => {
-                        chosenCards = cardsChoice(tempSelect,cardDico)
-                        swiperSwaper = document.querySelector('.swiper-wrapper');
-                        swiperSlide = document.querySelectorAll('.swiper-slide');
-                        
-                        for(let i=0; i<swiperSwaper.children.length; i++) {
-                            swiperSlide[i].style.background = `url(${chosenCards[i].image})`
-                            swiperSlide[i].style.backgroundSize = 'cover';
+                function startAfterFetch(cardDico) {
+                    chosenCards = cardsChoice(tempSelect,cardDico)
+                    swiperSwaper = document.querySelector('.swiper-wrapper');
+                    swiperSlide = document.querySelectorAll('.swiper-slide');
+                    
+                    for(let i=0; i<swiperSwaper.children.length; i++) {
+                        swiperSlide[i].style.background = `url(${chosenCards[i].image})`
+                        swiperSlide[i].style.backgroundSize = 'cover';
+                    }
+
+                    quickOpeningButton.addEventListener('click', function(){
+                        booster.style.animation = "boosterOpening 2s"
+                        cardReveal.style.animation = "cardReveal 2s forwards"
+                        backButton.style.animation = "opacityDisappear .5s forwards"
+                        backButton.style.pointerEvents = "none";
+                        skipButton.style.animation = "opacityAppear .5s forwards";
+                        skipButton.style.pointerEvents = "all";
+                        if(!clicked) {
+                            boosterPoints[selected-1] -= 1;
+                            boosterPointsOutputs[selected-1].innerHTML = boosterPoints[selected-1]
+                            localStorage.setItem('boosterPoints', JSON.stringify(boosterPoints))
+                            setValue("boosters", boosterPoints);
+                            saveCards(chosenCards, cardDico)
+                            clicked = true;
                         }
 
-                        quickOpeningButton.addEventListener('click', function(){
-                            booster.style.animation = "boosterOpening 2s"
-                            cardReveal.style.animation = "cardReveal 2s forwards"
-                            backButton.style.animation = "opacityDisappear .5s forwards"
-                            backButton.style.pointerEvents = "none";
-                            skipButton.style.animation = "opacityAppear .5s forwards";
-                            skipButton.style.pointerEvents = "all";
-                            if(!clicked) {
-                                boosterPoints[selected-1] -= 1;
-                                boosterPointsOutputs[selected-1].innerHTML = boosterPoints[selected-1]
-                                localStorage.setItem('boosterPoints', JSON.stringify(boosterPoints))
-                                setValue("boosters", boosterPoints);
-                                saveCards(chosenCards, cardDico)
-                                clicked = true;
-                            }
-
-                            let temp = 5
-                            for (const element of swiperSwaper.children) {
-                                temp += 1
-                                element.style.opacity = "0"
-                                element.style.animation = "opacityAppear .3s"
-                                element.style.animationDelay = temp/10 + "s"
-                                element.style.animationFillMode = "forwards"
-                                boosterAnimation.style.backgroundColor = "#000000B0"
-                            }
-                        })
-
-                        skipButton.addEventListener('click', function() {
-                            cardReveal.style.animation = "cardDisappear 1s forwards"
-                            boosterOpening.style.transform = "rotateX(.25turn)"
-                        })
+                        let temp = 5
+                        for (const element of swiperSwaper.children) {
+                            temp += 1
+                            element.style.opacity = "0"
+                            element.style.animation = "opacityAppear .3s"
+                            element.style.animationDelay = temp/10 + "s"
+                            element.style.animationFillMode = "forwards"
+                            boosterAnimation.style.backgroundColor = "#000000B0"
+                        }
                     })
-                    .catch((e) => console.error(e));
+
+                    skipButton.addEventListener('click', function() {
+                        cardReveal.style.animation = "cardDisappear 1s forwards"
+                        boosterOpening.style.transform = "rotateX(.25turn)"
+                    })
+                }
+                
+                if (localStorage.getItem("cards")) {
+                    allAPI = JSON.parse(localStorage.getItem("cards"))
+                    startAfterFetch(allAPI)
+                }
+                else {
+                    allAPI = fetchAllAPI()
+                }
             }
             else {
                 alert(`Vous n'avez pas assez de points de saison ${selected} pour ouvrir un booster`)
@@ -375,20 +415,20 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
         .seek(99)
 
         function draw(){  
-        particles.sort( (a,b) => a.scale - b.scale ) // sort by scale to set z-indexing  
-        ctx.clearRect(0, 0, cw, ch);
-        particles.forEach((p, i) => {
-            ctx.translate(cw / 2, ch / 2);
-            ctx.rotate( p.rotate );
-            ctx.drawImage(
-            p.img,
-            p.x,
-            p.y,
-            p.img.width * p.scale,
-            p.img.height * p.scale
-            );
-            ctx.resetTransform();
-        });
+            particles.sort( (a,b) => a.scale - b.scale ) // sort by scale to set z-indexing  
+            ctx.clearRect(0, 0, cw, ch);
+            particles.forEach((p, i) => {
+                ctx.translate(cw / 2, ch / 2);
+                ctx.rotate( p.rotate );
+                ctx.drawImage(
+                p.img,
+                p.x,
+                p.y,
+                p.img.width * p.scale,
+                p.img.height * p.scale
+                );
+                ctx.resetTransform();
+            });
         }
 
         window.addEventListener("resize", () => {
@@ -492,17 +532,15 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
     }
 
     function randomCard(season, cardDico, rarity) {
-        let sortedTab = cardDico.cards.filter(element => element.rarity.name === rarity);
+        let sortedTab = cardDico.filter(element => element.rarity.name === rarity);
 
         let chosen = Math.floor(Math.random() * sortedTab.length)
         let card = sortedTab[chosen]
-        let refChar = `S0${season}`
-        if (season == 1) {refChar = "SO1"}
+        let refChar = season
         //"SO1"
         //"S02"
 
-        if (card.season.number === refChar) {
-            
+        if (card.set.id === refChar) {
             return card
         } else {
             return randomCard(season, cardDico, rarity)
@@ -513,7 +551,7 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
         if (localStorage.getItem('username')) {
             let username = localStorage.getItem('username')
             console.log("user : " + username);
-            fetch(`https://vps.terrysegaunes.fr/row-backend/src/setUserInfo.php?name=${username}&key=${key}&value=${JSON.stringify(value)}`)
+            fetch(`https://terrysegaunes.com/row-backend/src/setUserInfo.php?name=${username}&key=${key}&value=${JSON.stringify(value)}`)
                 .then (res=>{return res.json()})
                 .then (data=>{
                     if (data == 0) {
@@ -564,7 +602,7 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
         triangles.push(mesh);
     }
 
-    // reset = respawn au centre avec valeurs random
+    // respawn au centre avec valeurs random
     function resetTriangle(t) {
         t.position.set(0, 0, 0);
         t.material.color.set(colors[Math.floor(Math.random() * colors.length)]);
@@ -575,7 +613,7 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
             (Math.random() - 0.5) * 0.1
         );
 
-        // rotations random 🔥
+        // rotations random
         t.userData.rotationSpeed = {
             x: (Math.random() - 0.5) * 0.2,
             y: (Math.random() - 0.5) * 0.2,
@@ -686,3 +724,4 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
         },
     });
 });
+

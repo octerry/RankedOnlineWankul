@@ -1,3 +1,7 @@
 {
-    "liveServer.settings.port": 5501
+    "liveServer.settings.port": 5501,
+    "vscode-pets.petColor": "orange",
+    "vscode-pets.petSize": "small",
+    "vscode-pets.petType": "fox",
+    "vscode-pets.throwBallWithMouse": true
 }

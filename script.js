@@ -13,47 +13,11 @@ let displayAllButton = document.getElementById('tout');
 let displayMineButton = document.getElementById('vos_cartes');
 let onlyDisplayMine = false
 
+let loadingScreen = document.getElementById("loading_screen")
+let loadingLineInner = document.getElementById("loading_line_inner")
+let loadingPercentage = document.getElementById("loading_percentage")
+
 let allAPI = {}
-
-async function fetchAllAPI(n = 1) {
-    try {
-        // Récupérer la page actuelle de l'API
-        const res = await fetch("https://terrysegaunes.com/row-backend/src/getAPIpage.php?page=" + n)
-        const data = await res.json()
-        console.log( Math.floor(n / data.meta.totalPages * 100) + "%")
-
-        // Ne renvoyer que la page actuelle si c'est la dernière
-        if (n >= data.meta.totalPages) {
-            return data.data
-        }
-
-        // Prendre la prochaine page
-        const next = await fetchAllAPI(n+1)
-
-        // Lancer tout l'API sur le site
-        if (n == 1) startAfterFetch([...data.data, ...next])
-
-        // Mettre l'API dans le localstorage pour éviter d'aller le chercher à chaque fois
-        localStorage.setItem("cards",JSON.stringify([...data.data, ...next]))
-
-        return [...data.data, ...next]
-    }catch (e) {
-        console.error(e)
-    } 
-}
-async function loadImage(url) {
-    try {
-        // On récupère l'image (parce qu'on peut pas mettre directement l'image, l'API redirrige T_T )
-        const res = await fetch(url);
-        const blob = await res.blob(); // c'est juste ce qu'il a recu
-
-        // On récupère l'URL
-        const localURL = URL.createObjectURL(blob);
-        return localURL
-    } catch (e) {
-        console.error(e)
-    }
-}
 
 function startAfterFetch(data) {
     showCards(data)
@@ -265,7 +229,7 @@ function showCards(dico) {
         if (cards.length < n) {n = cards.length}
         for(let i=1; i<n; i++) {
             let cardName = cards[i].name
-            let cardSource = loadImage("https://wankul.fr" + cards[i].imageUrl)
+            let cardSource = "https://wankul.fr" + cards[i].imageUrl
 
             let newElement = document.createElement(`img`)
             newElement.alt = cardName
@@ -277,7 +241,7 @@ function showCards(dico) {
         let n = 20 // Nombres de cartes affichées
         for(let i=1; i<n; i++) {
             let cardName = dico[i].name
-            let cardSource = loadImage("https://wankul.fr" + dico[i].imageUrl)
+            let cardSource = "https://wankul.fr" + dico[i].imageUrl
 
             let newElement = document.createElement(`img`)
             newElement.alt = cardName
