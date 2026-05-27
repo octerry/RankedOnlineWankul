@@ -94,6 +94,10 @@ h1,h2,h3{
     transition: color 500ms ease;
 }
 
+.disabled {
+    display: none;
+}
+
 /* Barre tout en haut de la page principale */
 #top_bar{
     z-index: 5;
@@ -169,7 +173,6 @@ h1,h2,h3{
     transition: 500ms ease;
     width: 10vh;
     height: 5vh;
-    right: 4vh;
 }
 
 .light #top_bar #resizable_title_div{
@@ -197,6 +200,16 @@ h1,h2,h3{
     cursor: pointer;
 }
 
+.notification-icon {
+    fill: #fff;
+    margin-right: 2vh;
+    transition: 500ms ease;
+}
+
+.notification-icon.light {
+    fill: #191936;
+}
+
 /* Fenetre des booster sur la page principale */
 #index_main {
     display: flex;
@@ -214,6 +227,53 @@ h1,h2,h3{
 
 #index_main::-webkit-scrollbar {
     width: 0; 
+}
+
+#notification_modal {
+    position: absolute;
+    display: none; /* flex */
+    flex-direction: column;
+    align-items: center;
+    
+    top: 2vh;
+    right: 5vw;
+    padding: 1vh;
+
+    width: 30vh;
+
+    z-index: 10;
+
+    box-shadow: 2vh 2vh 4vh #00000090;
+    border-radius: 1vh;
+    border: 2px solid #f4ecff;
+
+    background-color: #d1bde7;
+    transform: translate();
+}
+
+#notification_modal h1 {
+    color: #0d0d29;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 3vh;
+}
+
+#notification_cross {
+    position: absolute;
+    right: 1vh;
+    height: 3vh;
+
+    transition: transform .2s ease;
+
+    &:hover {
+        cursor: pointer;
+        transform: scale(.9);
+    }
+}
+
+#notification_modal p {
+    color: #191936;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 2vh;
 }
 
 #fight_section {
@@ -887,11 +947,55 @@ input[type="number"]::-webkit-inner-spin-button {
     mask-image: url(sources/user.svg);
 }
 
+/*TRADE BUTTON*/
+#trade_button {
+    position: fixed;
+    bottom: 12vh;
+    right: 2vh;
+    width: 10vh;
+    height: 10vh;
+    z-index: 10;
+
+    border-radius: 2vh;
+    backdrop-filter: blur(5px);
+    background:
+        linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1) 5%,
+        rgba(255,255,255,.1) 95%, rgba(255,255,255,.2)),
+        linear-gradient(90deg, rgba(255,255,255,.2), rgba(255,255,255,.1) 5%,
+        rgba(0, 0, 0, 0) 95%, rgba(0, 0, 0, 0.2));
+
+    transition: transform .3s ease-in-out, box-shadow .3s ease-in-out;
+
+    &:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+        box-shadow: 1vh 1vh 2vh #00000030;
+    }
+}
+
+#trade_button.light {
+    background:
+        linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0) 5%,
+        rgba(0, 0, 0, 0.1) 95%, rgba(0, 0, 0, 0.2)),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1) 5%,
+        rgba(0, 0, 0, 0) 95%, rgba(0, 0, 0, 0.2));
+}
+
+#trade_logo {
+    fill: #fff;
+
+    transition: fill .3s ease-in-out;
+}
+
+#trade_logo.light {
+    fill: #8e6cb4
+}
+
 /*MENU POPUP*/
 #menu_popup {
     display: none;
     position: fixed;
-    z-index: 6;
+    z-index: 12;
     backdrop-filter: blur(2vh);
     background-color: #00000070;
     left: 0;
@@ -901,7 +1005,6 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 #inner_menu {
-    height: 70vh;
     width: 40vh;
     background-color: #352b47;
     padding: 1vh;
@@ -954,6 +1057,7 @@ input[type="number"]::-webkit-inner-spin-button {
         align-items: center;
         width: 50%;
         height: 50%;
+        margin: 2vh 0;
 
         border-radius: 10px;
         text-align: center;
@@ -1655,7 +1759,6 @@ footer div .footer_svg{
 /* Loading Screen */
 #loading_screen {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
 
@@ -1668,9 +1771,29 @@ footer div .footer_svg{
     opacity: 0;
     pointer-events: none;
 
-    background: linear-gradient(#6150AD,#282147);
-
     transition: opacity .5s ease-in-out;
+}
+
+#loading_video {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    position: fixed;
+    z-index: -1;
+
+    filter: blur(3px);
+}
+
+#loading_inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #00000070;
+    padding: 1vh;
+    border-radius: 2vh;
+    backdrop-filter: blur(10px);
 }
 
 #loading_throbber {
@@ -1678,7 +1801,7 @@ footer div .footer_svg{
     width: 10vh;
     border: #00000050 solid 5px;
     border-radius: 100vh;
-    border-top: #a68aef solid 5px;
+    border-top: #efdb8a solid 5px;
 
     animation: spinning 1s linear infinite;
 }
@@ -1697,7 +1820,7 @@ footer div .footer_svg{
     height: 100%;
     width: 10%;
 
-    background-color: #a68aef;
+    background-color: #efdb8a;
     border-radius: 5px;
 }
 

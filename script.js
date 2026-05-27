@@ -105,6 +105,11 @@ let menuPopup = document.getElementById('menu_popup');
 let amburgerButton1 = document.getElementById('amburger1');
 let amburgerButton2 = document.getElementById('amburger2');
 
+let notificationModal = document.getElementById('notification_modal')
+let notificationButton1 = document.getElementById('notification_icon')
+let notificationButton2 = document.getElementById('bell_icon')
+let notificationCloseButton = document.getElementById('notification_cross')
+
 let profilPopup = document.getElementById('profil');
 let profilButton = document.getElementById('profil_icon');
 let profilBackbutton = document.getElementById('backarrow');
@@ -258,7 +263,7 @@ friendsButton.addEventListener('click', function () {
     }
 })
 
-// Pour le menu popup
+// Pour les menus popups
 amburgerButton1.addEventListener('click', function () {
     menuPopup.style.display = 'block';
     document.body.style.overflow = 'hidden'
@@ -269,7 +274,22 @@ amburgerButton2.addEventListener('click', function () {
     document.body.style.overflow = 'visible';
 })
 
+notificationButton1.addEventListener('click', ()=>{
+    console.log("OUI")
+    notificationModal.style.display = 'flex'
+})
+
+notificationButton2.addEventListener('click', ()=>{
+    console.log("OUI2")
+    notificationModal.style.display = 'flex'
+})
+
+notificationCloseButton.addEventListener('click', ()=>{
+    notificationModal.style.display = 'none'
+})
+
 window.addEventListener('click', event => { // Si on clique en dehors du menu ça le ferme
+    console.log(event.target)
     if(!event.target.matches('#inner_menu') && event.target.matches('#menu_popup')) {
         menuPopup.style.display = 'none';
         document.body.style.overflow = 'visible'
