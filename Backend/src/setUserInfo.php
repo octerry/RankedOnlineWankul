@@ -41,15 +41,13 @@ try {
         $result->execute([
             "name" => $name
         ]);
-        $id = $result->fetch(PDO::FETCH_ASSOC);
+        $id = $result->fetch(PDO::FETCH_NUM);
 
         // Si oui, on change la valeur
-        $stmt = $pdo->prepare("UPDATE :table SET :key = :value WHERE id = :id");
+        $stmt = $pdo->prepare("UPDATE " . $table . " SET " . $key . " = :value WHERE id = :id");
         $stmt->execute([
             "id" => $id[0],
-            "key" => $key,
-            "value" => $value,
-            "table" => $table
+            "value" => $value
         ]);
 
         echo json_encode([1,""]);

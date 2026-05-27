@@ -28,7 +28,7 @@
 </head>
 <body>
     <h2>Créer un compte</h2>
-    <form action="signin.php" method="GET">
+    <form action="signinCheck.php" method="GET">
         <input type="text" name="name" required>
         <input type="password" name="password" required>
         <button type="submit">Enregistrer</button>
