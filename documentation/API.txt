@@ -1,1 +1,6 @@
-API WANKUL -> https://wankul.fr/apps/proxy/api/wankuldex/cards
+https://wankul.fr/apps/wankul/api/wankuldex/cards
+
+page= (int)
+limit= (int) -> Nombre de cartes affichées
+sort= (str) (ex: id)
+dir= (str) (ex: asc)

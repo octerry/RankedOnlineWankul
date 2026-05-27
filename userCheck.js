@@ -10,8 +10,7 @@ if (!localStorage.getItem("id")) {
     window.location.href = "./connexion/"
 } else {
     if (localStorage.getItem("id") != "-1") {
-        console.log("ouais ?")
-        fetch("https://terrysegaunes.com/row-backend/src/checkID.php?id=" + localStorage.getItem("id"))
+        fetch("https://www.terrysegaunes.com/row-backend/src/checkID.php?id=" + localStorage.getItem("id"))
             .then(res=>{
                 return res.json();
             })
@@ -29,12 +28,19 @@ if (!localStorage.getItem("id")) {
 }
 
 function setAllDataToLocal() {
-    fetch("https://terrysegaunes.com/row-backend/src/getUserInfo.php?id=" + localStorage.getItem("id"))
+    fetch("https://www.terrysegaunes.com/row-backend/src/getUserInfo.php?id=" + localStorage.getItem("id"))
         .then(res=>{return res.json()})
         .then(message=>{
-            if (message[0]) console.log(message[1]);
+            if (message[0] == 0) console.log(message[1]);
             else {
-                console.log("UserInfo : " , message[1])
+                // On enregistre en localStorage pour être sûr
+                for (const key in message[1]) {
+                    let tempKey = key
+                    if (key == "cards") tempKey = "myCards";
+                    if (key != "password") {
+                        localStorage.setItem(tempKey,message[1][key]);
+                    }
+                }
             }
         })
         .catch(e=>{console.log(e)})

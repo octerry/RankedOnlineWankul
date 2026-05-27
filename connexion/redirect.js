@@ -9,7 +9,7 @@
 if (localStorage.getItem("id")) {
     if (localStorage.getItem("id") == "-1") window.location.href = "../home.html"
     else {
-        fetch("https://terrysegaunes.com/row-backend/src/checkID.php?id=" + localStorage.getItem("id"))
+        fetch("https://www.terrysegaunes.com/row-backend/src/checkID.php?id=" + localStorage.getItem("id"))
             .then(res=>{
                 return res.json();
             })

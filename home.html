@@ -74,7 +74,7 @@ MADE ON EARTH BY HUMANS
         </div>
         <div id="section_carte"> <!-- Wankuldex où toutes les cartes sont affichées -->
             <div id="selection_categorie"> <!-- Boutons de selection pour passer de général à personnel -->
-                <h3 id="tout">TOUT</h3>
+                <h3 id="tout" class="selected">TOUT</h3>
                 <svg width="5vh" height="5vh" viewBox="0 0 49 56">
                     <circle cx="25" cy="25" r="7" />
                 </svg>
@@ -82,7 +82,7 @@ MADE ON EARTH BY HUMANS
             </div>
             <div id="filter"> <!-- Section de recherche -->
                 <div id="searchbar"> <!-- Barre de recherche -->
-                    <input type="search" placeholder="Rehercher une carte">
+                    <input type="search" placeholder="Rehercher une carte" id="card_search">
                     <svg viewBox="0 0 49 56" fill="none">
                         <circle cx="23" cy="23" r="20.5" stroke="#D0D0D0" stroke-width="5"/>
                         <line x1="35.5191" y1="39.3406" x2="46.3406" y2="52.4809" stroke="#D0D0D0" stroke-width="5" stroke-linecap="round"/>
@@ -227,9 +227,9 @@ MADE ON EARTH BY HUMANS
             <div id="profil_up_section">
                 <div id="pseudo">
                     <h1 id="username_profil">username</h1>
-                    <h3>[ROBA]</h3>
+                    <h3 id="profil_team">[0000]</h3>
                 </div>
-                <p>Default description</p>
+                <p id="profil_description">Default description</p>
             </div>
         </div>
         <div id="level_info">
@@ -256,23 +256,17 @@ MADE ON EARTH BY HUMANS
         <div class="deck_showcase">
             <div class="showcase_inner_text">
                 <h2>Sa collection</h2>
-                <h2 id="deck_size">102 cartes</h2>
+                <h2 id="deck_size">0 cartes</h2>
             </div>
-            <div class="showcased_pictures">
-                <img src="https://cdn.shopify.com/s/files/1/0683/2055/9412/files/Wankul_S4_179_bhixes4teejqeafn3v3prir1.webp?v=1740131559">
-                <img src="https://cdn.shopify.com/s/files/1/0683/2055/9412/files/Wankul_S4_179_bhixes4teejqeafn3v3prir1.webp?v=1740131559">
-                <img src="https://cdn.shopify.com/s/files/1/0683/2055/9412/files/Wankul_S4_179_bhixes4teejqeafn3v3prir1.webp?v=1740131559">
-                <img src="https://cdn.shopify.com/s/files/1/0683/2055/9412/files/Wankul_S4_179_bhixes4teejqeafn3v3prir1.webp?v=1740131559">
-                <img src="https://cdn.shopify.com/s/files/1/0683/2055/9412/files/Wankul_S4_179_bhixes4teejqeafn3v3prir1.webp?v=1740131559">
+            <div class="showcased_pictures" id="deck_pictures">
             </div>
         </div>
         <div class="deck_showcase">
             <div class="showcase_inner_text">
                 <h2>Cartes recherchées</h2>
-                <h2 id="deck_size">1 carte</h2>
+                <h2 id="search_size">0 carte</h2>
             </div>
-            <div class="showcased_pictures">
-                <img src="https://cdn.shopify.com/s/files/1/0683/2055/9412/files/Wankul_S4_062_u3yfdeq16rg10n6n030ciutm.webp?v=1740129183">
+            <div class="showcased_pictures" id="search_pictures">
             </div>
         </div>
         <button id="logout_button">Se déconnecter</button>

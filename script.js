@@ -8,17 +8,13 @@
 
 // L'API de Wankul -> https://wankul.fr/apps/proxy/api/wankuldex/cards
 
-//On récupère l'API en local pour pas avoir de problème
-let displayAllButton = document.getElementById('tout');
-let displayMineButton = document.getElementById('vos_cartes');
-let onlyDisplayMine = false
-
 let loadingScreen = document.getElementById("loading_screen")
 let loadingLineInner = document.getElementById("loading_line_inner")
 let loadingPercentage = document.getElementById("loading_percentage")
 
 let allAPI = {}
 
+//On récupère l'API en local pour pas avoir de problème
 async function fetchAllAPI(n = 1) {
     loadingScreen.style.opacity = "1"
     loadingScreen.style.pointerEvents = "all"
@@ -46,7 +42,7 @@ async function fetchAllAPI(n = 1) {
         }
 
         // Mettre l'API dans le localstorage pour éviter d'aller le chercher à chaque fois
-        localStorage.setItem("cards",JSON.stringify([...data.data, ...next]))
+        localStorage.setItem("all-cards",JSON.stringify([...data.data, ...next]))
 
         return [...data.data, ...next]
     }catch (e) {
@@ -59,15 +55,15 @@ function startAfterFetch(data) {
 
     displayMineButton.addEventListener('click', function(){
         onlyDisplayMine = true;
-        displayMineButton.style.fontWeight = "500";
-        displayAllButton.style.fontWeight = "200";
+        displayMineButton.classList.add("selected");
+        displayAllButton.classList.remove("selected");
         showCards(data)
     })
 
     displayAllButton.addEventListener('click', function(){
         onlyDisplayMine = false;
-        displayMineButton.style.fontWeight = "500";
-        displayAllButton.style.fontWeight = "200";
+        displayAllButton.classList.add("selected");
+        displayMineButton.classList.remove("selected");
         showCards(data)
     })
 }
@@ -82,10 +78,10 @@ if (localStorage.getItem('myCards')) {
     myCards = JSON.parse(localStorage.getItem('myCards'))
 }
 
-//On  prends les deux wankuls
+// On récupère tous les elements de la page et on défini les élements nécéssaires
+// On  prends les deux wankuls
 let wankuls = document.getElementsByClassName('wankul');
 
-//On récupère tous les elements de la page et on défini les élements nécéssaires
 // Pour le darkmode
 let col = document.querySelectorAll('*');
 let darkmodeButton = document.getElementById('darkmodeButton');
@@ -117,7 +113,13 @@ let fightButton = document.getElementById('fight_button');
 let fightChoices = document.getElementsByClassName('fight_choice')
 
 // Pour les cartes Wankul
+let displayAllButton = document.getElementById('tout');
+let displayMineButton = document.getElementById('vos_cartes');
+let onlyDisplayMine = false
+
 let cardDisplate = document.getElementById('card_displate')
+let maxShowedCard = 20;
+let cardSearchbar = document.getElementById('card_search')
 
 // Cheat codes
 let cheatCodeInput = document.getElementById('cheat_code_input')
@@ -128,9 +130,15 @@ let logoutButton = document.getElementById("logout_button")
 
 // Profil
 let profilUsername = document.getElementById("username_profil")
+let profilTeam = document.getElementById("profil_team")
+let profilDescription = document.getElementById("profil_description");
+let deckSizeText = document.getElementById("deck_size");
+let deckPictures = document.getElementById("deck_pictures");
+let searchSizeText = document.getElementById("search_size");
+let searchPictures = document.getElementById("search_pictures");
 
-if (localStorage.getItem("cards")) {
-    allAPI = JSON.parse(localStorage.getItem("cards"))
+if (localStorage.getItem("all-cards")) {
+    allAPI = JSON.parse(localStorage.getItem("all-cards"))
     startAfterFetch(allAPI)
 }
 else {
@@ -150,9 +158,48 @@ if (chosen === chosen2) {
 }
 wankuls[1].src = "sources/wankul" + chosen2 + ".png"
 
-if (localStorage.getItem('name')) {
-    let username = localStorage.getItem('name')
+// Changements sur la page de profil
+if (localStorage.getItem('pseudo')) {
+    let username = localStorage.getItem('pseudo')
     profilUsername.innerText = username
+}
+
+if (localStorage.getItem('team')) {
+    let team = localStorage.getItem('team')
+    profilTeam.innerText = "[" + team + "]"
+}
+
+if (localStorage.getItem('description')) {
+    let description = localStorage.getItem('description')
+    profilDescription.innerText = description
+}
+
+if (localStorage.getItem('myCards')) {
+    let myCards = JSON.parse(localStorage.getItem('myCards'))
+    deckSizeText.innerText = myCards.length + " cartes"
+
+    myCards.forEach(card => {
+        let cardInfo = allAPI[card]
+        let cardImageUrl = getImageUrl(cardInfo.imageUrl)
+        let cardImageElement = document.createElement("img")
+
+        cardImageElement.src = cardImageUrl;
+        deckPictures.append(cardImageElement); 
+    });
+}
+
+if (localStorage.getItem('cards-search')) {
+    let cardsSearch = JSON.parse(localStorage.getItem('cards-search'))
+    searchSizeText.innerText = cardsSearch.length + " cartes"
+
+    cardsSearch.forEach(card => {
+        let cardInfo = allAPI[card]
+        let cardImageUrl = getImageUrl(cardInfo.imageUrl)
+        let cardImageElement = document.createElement("img")
+
+        cardImageElement.src = cardImageUrl;
+        searchPictures.append(cardImageElement);
+    });
 }
 
 // Pour le darkmode
@@ -256,7 +303,6 @@ fightButton.addEventListener('click', function(){ // Bouton "rentrer dans l'aren
 
 function showCards(dico) {
     cardDisplate.innerHTML = "";
-    console.log(dico)
 
     if (onlyDisplayMine) {
         let cards = []
@@ -265,7 +311,7 @@ function showCards(dico) {
             cards.push(dico[element])
         }
 
-        let n = 20 // Nombres de cartes affichées
+        let n = maxShowedCard // Nombres de cartes affichées
         if (cards.length < n) {n = cards.length}
         for(let i=1; i<n; i++) {
             let cardName = cards[i].name
@@ -278,7 +324,7 @@ function showCards(dico) {
             cardDisplate.appendChild(newElement)
         }
     } else {
-        let n = 20 // Nombres de cartes affichées
+        let n = maxShowedCard // Nombres de cartes affichées
         for(let i=1; i<n; i++) {
             let cardName = dico[i].name
             let cardSource = getImageUrl(dico[i].imageUrl)
@@ -291,6 +337,60 @@ function showCards(dico) {
         }
     }
 }
+
+cardSearchbar.addEventListener("input",()=>{ // Quand quelqu'un recherche une carte
+    search = cardSearchbar.value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim()
+    console.log(search)
+    if (search == '') {
+        showCards(allAPI)
+    } else {
+        dico = allAPI;
+        cardDisplate.innerHTML = "";
+
+        if (onlyDisplayMine) {
+            let cards = []
+            let myCardsTab = Array.from(myCards)
+            for (const element of myCardsTab) {
+                if (dico[element].normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toUpperCase().includes(search.toUpperCase())) {
+                    cards.push(dico[element])
+                }
+            }
+
+            let n = maxShowedCard // Nombres de cartes affichées
+            if (cards.length < n) {n = cards.length}
+            for(let i=1; i<n; i++) {
+                let cardName = cards[i].name
+                let cardSource = getImageUrl(cards[i].imageUrl)
+
+                let newElement = document.createElement(`img`)
+                newElement.alt = cardName
+                newElement.src = cardSource
+
+                cardDisplate.appendChild(newElement)
+            }
+        } else {
+            let count = 0
+            let n = maxShowedCard // Nombres de cartes affichées
+            for(let i=1; i<dico.length; i++) {
+                let cardName = dico[i].name
+                let cardNameUppercase = cardName.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toUpperCase()
+
+                if (cardNameUppercase.includes(search.toUpperCase())) {
+                    let cardSource = getImageUrl(dico[i].imageUrl)
+
+                    let newElement = document.createElement(`img`)
+                    newElement.alt = cardName
+                    newElement.src = cardSource
+
+                    cardDisplate.appendChild(newElement)
+                    count++;
+                }
+
+                if (count >= n) break;
+            }
+        }
+    }
+})
 
 logoutButton.addEventListener("click",()=>{
     localStorage.clear()
@@ -305,10 +405,10 @@ logoutButton.addEventListener("click",()=>{
 // HS - 67
 
 function setValue(key, value) {
-    if (localStorage.getItem('username')) {
-        let username = localStorage.getItem('username')
+    if (localStorage.getItem('name')) {
+        let username = localStorage.getItem('name')
         profilUsername.innerText = username
-        fetch(`https://terrysegaunes.com/row-backend/src/setUserInfo.php?name=${username}&key=${key}&value=${JSON.stringify(value)}`)
+        fetch(`https://www.terrysegaunes.com/row-backend/src/setUserInfo.php?name=${username}&key=${key}&value=${JSON.stringify(value)}`)
             .then (res=>{return res.json()})
             .then (data=>{
                 if (data == 0) {

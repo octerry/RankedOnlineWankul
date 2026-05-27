@@ -1,35 +1,35 @@
 <?php
 
 try {
+    // Eviter le CORS
     header("Access-Control-Allow-Origin: *");
     header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
     header("Access-Control-Allow-Headers: Content-Type");
 
-    $name = isset($_GET["name"]) ? trim($_GET["name"]) : '';
-    $password = isset($_GET["password"]) ? trim($_GET["password"]) : '';
+    require "connection.php"; // pour avoir le PDO
 
-    if ($name === '' || $password === '') {
-        echo json_encode([0, "Paramètres manquants ou invalides"]);
-        exit;
-    }
+    // On récupère les trucs dans le lien
+    $name = trim($_GET["name"]);
+    $password = trim($_GET["password"]);
 
-    require "connection.php";
-
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // On vérifie si il existe déjà un compte avec ce nom
     $result = $pdo->prepare("SELECT COUNT(*) FROM login WHERE name = :name");
     $result->execute([
         "name" => $name,
     ]);
     $count = $result->fetch(PDO::FETCH_NUM);
  
+    // Si c'est pas le cas et que les paramètres sont pas vides
     if ($count[0] <= 0 && !empty($name) && !empty($password)) {
+
+        // On ajoute le compte dans les tableaux
         $stmt = $pdo->prepare("
             INSERT INTO login (`name`, `password`)
             VALUES (:name, :password)
         ");
         $stmt->execute([
             ':name' => $name,
-            ':password' => $password
+            ':password' => password_hash($password, PASSWORD_DEFAULT)
         ]);
 
         $result = $pdo->prepare("SELECT id FROM login WHERE name = :name");
@@ -54,13 +54,14 @@ try {
 
         $stmt = $pdo->prepare("
             INSERT INTO account
-            (`id`, `pseudo`, `description`, `friends`, `friend_requests`)
+            (`id`, `pseudo`, `team`, `description`, `friends`, `friend_requests`)
             VALUES
-            (:id, :pseudo, :description, :friends, :friendrequests)
+            (:id, :pseudo, :team ,:description, :friends, :friendrequests)
         ");
         $stmt->execute([
             ':id' => $id[0],
             ':pseudo' => $name,
+            ':team' => "0000",
             ':description' => "Salut, je suis nouveau !",
             ':friends' => json_encode([]),
             ':friendrequests' => json_encode([])

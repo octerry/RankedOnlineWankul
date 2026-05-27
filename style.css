@@ -490,7 +490,7 @@ h1,h2,h3{
 #section_carte #selection_categorie #tout{
     color: white;
     transition: 200ms ease;
-    font-weight: 200;
+    font-weight: 100;
 
     &:hover {
         transform: scale(1.1);
@@ -506,7 +506,7 @@ h1,h2,h3{
 #section_carte #selection_categorie #vos_cartes{
     color: white;
     transition: 200ms ease;
-    font-weight: 500;
+    font-weight: 100;
 
     &:hover {
         transform: scale(1.1);
@@ -517,6 +517,10 @@ h1,h2,h3{
 .light #section_carte #selection_categorie #vos_cartes{
     color: rgb(0, 0, 0);
     transition: 500ms ease;
+}
+
+#tout.selected, #vos_cartes.selected {
+    font-weight: 500 !important; /* J'était obligé de !important, il me faisait la gueule */
 }
 
 #section_carte #selection_categorie svg{

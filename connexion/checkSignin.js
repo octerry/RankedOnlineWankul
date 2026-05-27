@@ -101,7 +101,7 @@ form.addEventListener('submit', event => {
                     li.innerHTML = "Erreur côté serveur";
                     messageError.appendChild(li)
                     messageError.style.display = "block"
-                    console.log(e)
+                    console.error(e)
                 })
         }
         catch(e) {
@@ -109,7 +109,7 @@ form.addEventListener('submit', event => {
             li.innerHTML = "Erreur côté serveur :/";
             messageError.appendChild(li)
             messageError.style.display = "block"
-            console.log(e)
+            console.error(e)
         }
     }
 })

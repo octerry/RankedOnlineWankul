@@ -27,7 +27,6 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
     let chosenCards = Array()
     if (localStorage.getItem('boosterPoints')) {
         boosterPoints = JSON.parse(localStorage.getItem('boosterPoints'))
-        console.log(boosterPoints)
         for (let i=0; i<4; i++) {
             boosterPointsOutputs[i].innerHTML = boosterPoints[i];
         }
@@ -312,8 +311,8 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
                     })
                 }
                 
-                if (localStorage.getItem("cards")) {
-                    allAPI = JSON.parse(localStorage.getItem("cards"))
+                if (localStorage.getItem("all-cards")) {
+                    allAPI = JSON.parse(localStorage.getItem("all-cards"))
                     startAfterFetch(allAPI)
                 }
                 else {
@@ -425,16 +424,13 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
         }
         localStorage.setItem('myCards', JSON.stringify(myCards));
         setValue('cards', myCards);
-        console.log(localStorage.getItem('myCards'));
     }
 
     function cardsChoice(season, cardDico) { // Choix aléatoire des 10 cartes dans un booster
         let final = Array()
-        console.log(cardDico)
 
         if (cardDico) {
             let rarityNumbers = rarityChoser();
-            console.log(rarityNumbers)
             for (let i=0; i<10; i++) {
                 if (i === 0) {
                     actualCard = randomCard(season, cardDico, "Terrain");
@@ -518,7 +514,6 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
     function setValue(key, value) {
         if (localStorage.getItem('name')) {
             let username = localStorage.getItem('name')
-            console.log("user : " + username);
             fetch(`https://www.terrysegaunes.com/row-backend/src/setUserInfo.php?name=${username}&key=${key}&value=${JSON.stringify(value)}`)
                 .then (res=>{return res.json()})
                 .then (data=>{
@@ -659,9 +654,7 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
         grabCursor: true,
         on: {
             slideChange: function () {
-                console.log(chosenCards[swiper.activeIndex].rarity)
                 if (chosenCards[swiper.activeIndex].rarity.name == "Légendaire Or") {
-                    console.log("OR")
                     particlesNumber = 300;
                     particuleLength = 6;
                     colors = [0xdbbf8a, 0x0ffffff, 0xa88c58];
@@ -669,14 +662,12 @@ document.addEventListener("DOMContentLoaded", (event) => { // Quand la librairie
                     canvaC.style.opacity = "1";
                 }
                 else if (chosenCards[swiper.activeIndex].rarity.name == "Légendaire Argent") {
-                    console.log("ARGENT")
                     particlesNumber = 300;
                     particuleLength = 5;
                     colors = [0xbfbfbf, 0x0ffffff, 0x878686];
                     canvaC.style.animation = 'goToSilver 2s forwards';
                     canvaC.style.opacity = "1";
                 } else if (chosenCards[swiper.activeIndex].rarity.name == "Légendaire Bronze") {
-                    console.log("BRONZE")
                     particlesNumber = 300;
                     particuleLength = 4;
                     colors = [0x453631, 0x9e573f, 0x8c4022];
