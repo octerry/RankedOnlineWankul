@@ -36,8 +36,9 @@ function setAllDataToLocal() {
                 // On enregistre en localStorage pour être sûr
                 for (const key in message[1]) {
                     let tempKey = key
+                    if (key == "secret_id") tempKey = "id";
                     if (key == "cards") tempKey = "myCards";
-                    if (key != "password") {
+                    if (key != "id") {
                         localStorage.setItem(tempKey,message[1][key]);
                     }
                 }

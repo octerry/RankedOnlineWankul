@@ -44,6 +44,8 @@ async function fetchAllAPI(n = 1) {
         // Mettre l'API dans le localstorage pour éviter d'aller le chercher à chaque fois
         localStorage.setItem("all-cards",JSON.stringify([...data.data, ...next]))
 
+        console.log([...data.data, ...next])
+
         return [...data.data, ...next]
     }catch (e) {
         console.error(e)
@@ -132,6 +134,8 @@ let onlyDisplayMine = false
 let cardDisplate = document.getElementById('card_displate')
 let maxShowedCard = 20;
 let cardSearchbar = document.getElementById('card_search')
+let cardSortInput = document.getElementById('sort_selection')
+let cardSortMethod = "";
 
 // Cheat codes
 let cheatCodeInput = document.getElementById('cheat_code_input')
@@ -156,6 +160,9 @@ if (localStorage.getItem("all-cards")) {
 else {
     allAPI = fetchAllAPI()
 }
+
+
+
 
 
 
@@ -379,14 +386,64 @@ function appendNotification() {
     }
 }
 
+function sortApi(dico, method) {
+    const toSort = allAPI;
+    switch (method) {
+        case "numericOrder": 
+            toSort.sort((x, y) => x.id - y.id);
+            return toSort;
+        case "antiNumericOrder": 
+            toSort.sort((x, y) => y.id - x.id);
+            return toSort;
+        case "mostRare": 
+            toSort.sort((x, y) => y.rarity.id - x.rarity.id);
+            return toSort;
+        case "leastRare": 
+            toSort.sort((x, y) => x.rarity.id - y.rarity.id);
+            return toSort;
+        case "mostRecent": 
+            toSort.sort((x, y) => y.set.id - x.set.id);
+            return toSort;
+        case "leastRecent": 
+            toSort.sort((x, y) => x.set.id - y.set.id);
+            return toSort;
+        case "alphabeticOrder": 
+            // Je l'ai piqué à MDN
+            toSort.sort((a, b) => {
+                const nameA = a.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim(); // ignorer les majuscules/minuscules
+                const nameB = b.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim(); // ignorer les majuscules/minuscules
+                if (nameA < nameB) return -1;
+                if (nameA > nameB) return 1;
+                // les noms sont égaux
+                return 0;
+            });
+            return toSort;
+        case "antiAlphabeticOrder": 
+            // Je l'ai piqué à MDN
+            toSort.sort((a, b) => {
+                const nameA = a.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim(); // ignorer les majuscules/minuscules
+                const nameB = b.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim(); // ignorer les majuscules/minuscules
+                if (nameA < nameB) return 1;
+                if (nameA > nameB) return -1;
+                // les noms sont égaux
+                return 0;
+            });
+            return toSort;
+        default: 
+            toSort.sort((x, y) => x.id - y.id);
+            return toSort;
+    }
+}
+
 function showCards(dico) {
     cardDisplate.innerHTML = "";
+    newDico = sortApi(dico, cardSortMethod);
 
     if (onlyDisplayMine) {
         let cards = []
         let myCardsTab = Array.from(myCards)
         for (const element of myCardsTab) {
-            cards.push(dico[element])
+            cards.push(newDico[element])
         }
 
         let n = maxShowedCard // Nombres de cartes affichées
@@ -404,8 +461,8 @@ function showCards(dico) {
     } else {
         let n = maxShowedCard // Nombres de cartes affichées
         for(let i=1; i<n; i++) {
-            let cardName = dico[i].name
-            let cardSource = getImageUrl(dico[i].imageUrl)
+            let cardName = newDico[i].name
+            let cardSource = getImageUrl(newDico[i].imageUrl)
 
             let newElement = document.createElement(`img`)
             newElement.alt = cardName
@@ -418,11 +475,10 @@ function showCards(dico) {
 
 cardSearchbar.addEventListener("input",()=>{ // Quand quelqu'un recherche une carte
     search = cardSearchbar.value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim()
-    console.log(search)
     if (search == '') {
         showCards(allAPI)
     } else {
-        dico = allAPI;
+        dico = sortApi(allAPI);
         cardDisplate.innerHTML = "";
 
         if (onlyDisplayMine) {
@@ -468,6 +524,11 @@ cardSearchbar.addEventListener("input",()=>{ // Quand quelqu'un recherche une ca
             }
         }
     }
+})
+
+cardSortInput.addEventListener("input",()=>{
+    cardSortMethod = cardSortInput.value;
+    showCards(allAPI);
 })
 
 logoutButton.addEventListener("click",()=>{
