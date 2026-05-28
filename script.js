@@ -110,6 +110,13 @@ let notificationButton1 = document.getElementById('notification_icon')
 let notificationButton2 = document.getElementById('bell_icon')
 let notificationCloseButton = document.getElementById('notification_cross')
 
+let singleNotifEmpty = document.getElementById('notification_empty')
+let singleNotifRef = document.getElementById('single_notif_ref')
+let notificationList = [];
+
+let tradeButton = document.getElementById("trade_button");
+let tradeModal = document.getElementById("trade_modal");
+
 let profilPopup = document.getElementById('profil');
 let profilButton = document.getElementById('profil_icon');
 let profilBackbutton = document.getElementById('backarrow');
@@ -275,17 +282,19 @@ amburgerButton2.addEventListener('click', function () {
 })
 
 notificationButton1.addEventListener('click', ()=>{
-    console.log("OUI")
-    notificationModal.style.display = 'flex'
+    notificationModal.classList.add("open");
 })
 
 notificationButton2.addEventListener('click', ()=>{
-    console.log("OUI2")
-    notificationModal.style.display = 'flex'
+    notificationModal.classList.add("open");
 })
 
 notificationCloseButton.addEventListener('click', ()=>{
-    notificationModal.style.display = 'none'
+    notificationModal.classList.remove("open");
+})
+
+tradeButton.addEventListener('click', ()=>{
+    tradeModal.classList.toggle('open');
 })
 
 window.addEventListener('click', event => { // Si on clique en dehors du menu ça le ferme
@@ -320,6 +329,47 @@ fightButton.addEventListener('click', function(){ // Bouton "rentrer dans l'aren
     fightChoices[1].style.animationDelay = ".2s"
     fightChoices[2].style.animationDelay = ".4s"
 })
+
+function newNotification(n,accountName,team) {
+    // On cache le message de notifications vides
+    singleNotifEmpty.style.display = "none";
+
+    // On créé un clone de singleNotif
+    const singleNotifClone = singleNotifRef.cloneNode(true);
+
+    // On le rends visible
+    singleNotifClone.style.display = "flex"
+
+    // On lui mets les bons parametres
+    if (n == 0) {
+        singleNotifClone.classList.add("friend")
+        singleNotifClone.getElementsByClassName("single-notif-message")[0].innerText = "vous a envoyé une demande d'ami"
+    }
+    if (n == 1) {
+        singleNotifClone.classList.add("trade")
+        singleNotifClone.getElementsByClassName("single-notif-message")[0].innerText = "vous a envoyé une demande d'échange"
+    }
+    if (n == 2) {
+        singleNotifClone.classList.add("system")
+        singleNotifClone.getElementsByClassName("single-notif-message")[0].innerText = "cliquer ici pour tout mettre à jour"
+    }
+    
+    // On change les textes
+    singleNotifClone.getElementsByClassName("single-notif-name")[0].innerText = accountName;
+    singleNotifClone.getElementsByClassName("single-notif-team")[0].innerText = "[" + team + "]";
+
+    // On l'accroche au modal
+    notificationModal.appendChild(singleNotifClone);
+}
+
+function appendNotification() {
+    for (let i=0; i<notificationList.length; i++) {
+        let notifChoice = notificationList[i].choice;
+        let notifName = notificationList[i].name;
+        let notifTeam = notificationList[i].team;
+        newNotification(notifChoice, notifName , notifTeam)
+    }
+}
 
 function showCards(dico) {
     cardDisplate.innerHTML = "";

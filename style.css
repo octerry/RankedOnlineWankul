@@ -231,7 +231,7 @@ h1,h2,h3{
 
 #notification_modal {
     position: absolute;
-    display: none; /* flex */
+    display: flex;
     flex-direction: column;
     align-items: center;
     
@@ -239,7 +239,10 @@ h1,h2,h3{
     right: 5vw;
     padding: 1vh;
 
-    width: 30vh;
+    width: 50vh;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow-y: scroll;
 
     z-index: 10;
 
@@ -247,11 +250,30 @@ h1,h2,h3{
     border-radius: 1vh;
     border: 2px solid #f4ecff;
 
-    background-color: #d1bde7;
+    opacity: 0;
+    pointer-events: none;
+
+    /* https://www.magicpattern.design/tools/css-backgrounds */
+    background-color: #e5e5f7;
+    background-image:  radial-gradient(#602575 0.5px, transparent 0.5px), radial-gradient(#602575 0.5px, #D1BDE7 0.5px);
+    background-size: 10px 10px;
+    background-position: 0 0,10px 10px;
+
     transform: translate();
+
+    transition: opacity .2s ease-in-out;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }
 
-#notification_modal h1 {
+#notification_modal.open {
+    opacity: 1;
+    pointer-events: all;
+}
+
+#notification_title {
     color: #0d0d29;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 3vh;
@@ -270,10 +292,135 @@ h1,h2,h3{
     }
 }
 
-#notification_modal p {
+#notification_empty {
     color: #191936;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 2vh;
+}
+
+.single-notification {
+    display: none; /* flex */
+    justify-content: space-between;
+    align-items: center;
+
+    width: 48vh;
+    max-width: 85vw;
+    height: 7vh;
+
+    margin-top: 1vh;
+
+    border-radius: 1.5vh;
+
+    box-shadow: 5px 5px 10px #00000050;
+
+    transition: transform .2s ease-out;
+}
+
+/* hover quand la poubelle n'est pas hover */
+.single-notification:hover:not(:has(.single-notif-trash-icon:hover)) {
+    cursor: pointer;
+    transform: translateY(-5%);
+}
+
+.single-notification.friend {
+    border: 3px #71203B solid;
+    background-color: #FFE1F8;
+}
+
+.single-notification.trade {
+    border: 3px #203671 solid;
+    background-color: #E6F6FF;
+}
+
+.single-notification.system {
+    border: 3px #FF6161 solid;
+    background-color: #EDEDED;
+}
+
+.single-notif-inner {
+    display: flex;
+    align-items: center;
+}
+
+.single-notif-text {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.single-notification.friend .single-notif-text {
+    color: #71203B;
+}
+
+.single-notification.trade .single-notif-text {
+    color: #203671;
+}
+
+.single-notification.system .single-notif-text {
+    color: #5E5E5E;
+}
+
+.single-notif-name {
+    font-size: 3vh;
+    margin-right: 1vh;
+}
+
+.single-notif-team {
+    font-size: 2vh;
+}
+
+.single-notif-message {
+    font-size: 2vh;
+    max-width: 60vw;
+
+    /* "..." à la place de revenir à la ligne si c'est trop court */
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden
+}
+
+.single-notif-trash-icon {
+    height: 80%;
+
+    transition: transform .3s ease-out;
+
+    &:hover {
+        cursor: pointer;
+        transform: translateY(-.5vh);
+    }
+}
+
+.single-notification.friend .single-notif-trash-icon {
+    stroke: #71203B;
+}
+
+.single-notification.trade .single-notif-trash-icon {
+    stroke: #203671;
+}
+
+.single-notification.system .single-notif-trash-icon {
+    stroke: #5E5E5E;
+}
+
+.single-notif-icon {
+    height: 80%;
+}
+
+.single-notif-friend-icon, .single-notif-trade-icon, .single-notif-system-icon {
+    display: none;
+}
+
+.single-notification.friend .single-notif-friend-icon {
+    display: block;
+    fill: #71203B;
+}
+
+.single-notification.trade .single-notif-trade-icon {
+    display: block;
+    fill: #203671;
+}
+
+.single-notification.system .single-notif-system-icon {
+    display: block;
+    fill: #494949;
 }
 
 #fight_section {
@@ -989,6 +1136,117 @@ input[type="number"]::-webkit-inner-spin-button {
 
 #trade_logo.light {
     fill: #8e6cb4
+}
+
+#trade_modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    max-width: 90vw;
+    max-height: 90vh;
+    padding: 2vh;
+
+    border: 1px #fff solid;
+    border-radius: 2vh;
+    background: linear-gradient(#5C4067,#9054A8);
+    box-shadow: 2vh 2vh 4vh #00000040;
+
+    opacity: 0;
+    transform: translate(-50%, -50%);
+
+    transition: opacity .3s ease-in-out;
+}
+
+#trade_modal.open {
+    opacity: 1;
+}
+
+#trade_modal .profil-picture {
+    height: 8vh;
+}
+
+#trade_title {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 3.5vh;
+}
+
+#trade_part {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+}
+
+.trade-user-name {
+    display: flex;
+    align-items: center;
+
+    width: 30vh;
+    height: 10vh;
+
+    border-radius: 1vh;
+    background-color: #00000050;
+}
+
+.trade-user-name h2 {
+    font-size: 4vh;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.trade-card-card-part {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 30vh;
+    height: 10vh;
+
+    margin-top: 1vh;
+
+    border-radius: 1vh;
+    background-color: #00000050;
+}
+
+.trade-card-place {
+    height: 10vh;
+}
+
+#trade_modal_logo {
+    height: 8vh;
+}
+
+#trade_modal_button {
+    padding: 1vh;
+    margin-top: 1vh;
+
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 2.5vh;
+    color: #fff;
+
+    background-color: #D9D9D940;
+    border: 1px #fff solid;
+    border-radius: 1vh;
+
+    box-shadow: .5vh .5vh 1vh #00000040;
+    
+    transition: box-shadow .2s ease-out, transform .2s ease-out, background-color .2s ease-out;
+
+    &:hover {
+        cursor: pointer;
+        transform: translate(1%,1%);
+        background-color: #D9D9D960;
+        box-shadow: none;
+    }
 }
 
 /*MENU POPUP*/
