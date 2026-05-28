@@ -69,7 +69,7 @@
             echo "Amis : " . $account["friends"] . " (demandes d'amis : " . $account["friend_requests"] . " )<br>";
             echo "Cartes possédées : " . $content["cards"] . " (cartes recherchées : " . $account["cards-search"] . " )<br>";
             echo "Carte favorite : " . $content["card-fav"] . " (duo : " . $cardDuo . " )<br>";
-            echo "Boosters restants : " . $content["boosters"];
+            echo "Boosters restants : " . $content["boosters"] . "<br>";
         }
 
         if ($login->rowCount() <= 0) echo "La base de donnée est vide";

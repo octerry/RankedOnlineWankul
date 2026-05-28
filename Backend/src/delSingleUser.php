@@ -10,15 +10,15 @@ try {
     $id = $_GET["id"];
     
     if (!empty($id)) {
-        $result = $pdo->prepare("DELETE FROM login WHERE id = :id");
+        $result = $pdo->prepare("DELETE FROM login WHERE secret_id = :id");
         $result->execute([
             "id" => $id
         ]);
-        $result = $pdo->prepare("DELETE FROM content WHERE id = :id");
+        $result = $pdo->prepare("DELETE FROM content WHERE secret_id = :id");
         $result->execute([
             "id" => $id
         ]);
-        $result = $pdo->prepare("DELETE FROM account WHERE id = :id");
+        $result = $pdo->prepare("DELETE FROM account WHERE secret_id = :id");
         $result->execute([
             "id" => $id
         ]);

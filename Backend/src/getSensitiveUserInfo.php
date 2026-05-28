@@ -16,21 +16,23 @@ try {
     ]);
     $infos = $result->fetch(PDO::FETCH_ASSOC);
 
-    echo $infos["password"];
+    if (password_verify($password, $infos["password"])) {
+        $content = $pdo->prepare("SELECT * FROM content WHERE id = :id");
+        $content->execute([
+            "id" => $id
+        ]);
+        $infos = array_merge($infos, $content->fetch(PDO::FETCH_ASSOC));
 
-    $content = $pdo->prepare("SELECT * FROM content WHERE id = :id");
-    $content->execute([
-        "id" => $id
-    ]);
-    $infos = array_merge($infos, $content->fetch(PDO::FETCH_ASSOC));
+        $account = $pdo->prepare("SELECT * FROM account WHERE id = :id");
+        $account->execute([
+            "id" => $id
+        ]);
+        $infos = array_merge($infos, $account->fetch(PDO::FETCH_ASSOC));
 
-    $account = $pdo->prepare("SELECT * FROM account WHERE id = :id");
-    $account->execute([
-        "id" => $id
-    ]);
-    $infos = array_merge($infos, $account->fetch(PDO::FETCH_ASSOC));
-
-    echo json_encode([1,$infos]);
+        echo json_encode([1,$infos]);
+    } else {
+        echo json_encode([0,"Informations incorrectes"]);
+    }
 } catch (PDOException $e) {
     echo json_encode([0,$e]);
 }

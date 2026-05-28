@@ -81,7 +81,7 @@ form.addEventListener('submit', event => {
 
     if(verified == 3) {
         try {
-            fetch("https://www.terrysegaunes.com/row-backend/src/signinCheck.php?name=" + name.value + "&password=" + password.value)
+            fetch("https://www.terrysegaunes.com/row-backend/src/signin.php?name=" + name.value + "&password=" + password.value)
                 .then(res=>{
                     return res.json();
                 })

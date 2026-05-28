@@ -18,7 +18,7 @@ try {
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     if (password_verify($password, $result[0]["password"])){
-        echo json_encode([1,$result[0]["id"]]);
+        echo json_encode([1,$result[0]["secret_id"]]);
     } else {
         echo json_encode([0,"Nom ou mot de passe incorrect"]);
     }

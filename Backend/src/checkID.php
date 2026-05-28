@@ -9,7 +9,7 @@ $id = $_GET["id"];
 try {
     require "connection.php";
 
-    $stmt = $pdo->prepare("SELECT * FROM login WHERE id = :id");
+    $stmt = $pdo->prepare("SELECT * FROM login WHERE secret_id = :id");
     $stmt->execute([
         "id" => $id
     ]);

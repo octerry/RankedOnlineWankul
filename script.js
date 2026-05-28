@@ -196,7 +196,7 @@ if (localStorage.getItem('myCards')) {
         let cardImageElement = document.createElement("img")
 
         cardImageElement.src = cardImageUrl;
-        deckPictures.append(cardImageElement); 
+        deckPictures.append(cardImageElement);
     });
 }
 
@@ -298,10 +298,18 @@ tradeButton.addEventListener('click', ()=>{
 })
 
 window.addEventListener('click', event => { // Si on clique en dehors du menu ça le ferme
-    console.log(event.target)
     if(!event.target.matches('#inner_menu') && event.target.matches('#menu_popup')) {
         menuPopup.style.display = 'none';
         document.body.style.overflow = 'visible'
+    }
+
+    event.target
+    if(!notificationModal.contains(event.target) && !notificationButton1.contains(event.target) && !notificationButton2.contains(event.target)) {
+        notificationModal.classList.remove('open');
+    }
+
+    if(!tradeModal.contains(event.target) && !tradeButton.contains(event.target)) {
+        tradeModal.classList.remove('open');
     }
 
     if(!event.target.matches('.fight_choice') && !event.target.matches('h2')) {
@@ -485,6 +493,12 @@ function setValue(key, value) {
                     console.error("Erreur lors de la modification de la base de donnée");
                 }
             })
+    }
+}
+
+function getAllUser() {
+    if (localStorage.getItem('accounts')) {
+        
     }
 }
 
