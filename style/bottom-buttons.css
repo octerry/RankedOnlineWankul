@@ -17,10 +17,7 @@
     transition: 500ms ease;
     border-radius: 2vh 2vh 0 0 ;
 
-    animation: bottomAppear .8s;
-
     transform: translateX(-50%);
-    transition: 500ms ease;
 }
 
 .light .bottom_buttons{
@@ -35,6 +32,7 @@
     width: 5vh;
     height: 5vh;
     margin: 0 5vh;
+    transition: background-color 500ms ease;
 }
 
 .light #home_button,.light #deck_button,.light #friends_button{
