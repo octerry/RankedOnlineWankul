@@ -14,7 +14,7 @@ if (localStorage.getItem("id")) {
                 return res.json();
             })
             .then(message=>{
-                if (message[0] == 1) {
+                if (message == 1) {
                     window.location.href = "../home.html"
                 }
             })

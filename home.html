@@ -175,75 +175,18 @@ MADE ON EARTH BY HUMANS
                 </div>
             </div>
             <div id="content_list">
-                <div class="friends_list_element">
+                <div id="show_friend_ref" class="friends_list_element">
                     <div class="left_elements">
                         <div class="friend_profil_picture"></div>
-                        <h2>Quenouille</h2>
-                        <div class="level_icon">
-                            <h1>13</h1>
-                        </div>
+                        <h2 class="show-friend-name">Nom</h2>
                     </div>
                     <div class="right_elements">
                         <div class="fist_svg"></div>
                         <div class="cross_svg"></div>
                     </div>
                 </div>
-                <!-- A SUPPRIMER PLUS TARD !!!! -->
-                <div class="friends_list_element">
-                    <div class="left_elements">
-                        <div class="friend_profil_picture"></div>
-                        <h2>Quenouille</h2>
-                        <div class="level_icon">
-                            <h1>13</h1>
-                        </div>
-                    </div>
-                    <div class="right_elements">
-                        <div class="fist_svg"></div>
-                        <div class="cross_svg"></div>
-                    </div>
-                </div>
-                <div class="friends_list_element">
-                    <div class="left_elements">
-                        <div class="friend_profil_picture"></div>
-                        <h2>Quenouille</h2>
-                        <div class="level_icon">
-                            <h1>13</h1>
-                        </div>
-                    </div>
-                    <div class="right_elements">
-                        <div class="fist_svg"></div>
-                        <div class="cross_svg"></div>
-                    </div>
-                </div>
-                <div class="friends_list_element">
-                    <div class="left_elements">
-                        <div class="friend_profil_picture"></div>
-                        <h2>Quenouille</h2>
-                        <div class="level_icon">
-                            <h1>13</h1>
-                        </div>
-                    </div>
-                    <div class="right_elements">
-                        <div class="fist_svg"></div>
-                        <div class="cross_svg"></div>
-                    </div>
-                </div>
-                <div class="friends_list_element">
-                    <div class="left_elements">
-                        <div class="friend_profil_picture"></div>
-                        <h2>Quenouille</h2>
-                        <div class="level_icon">
-                            <h1>13</h1>
-                        </div>
-                    </div>
-                    <div class="right_elements">
-                        <div class="fist_svg"></div>
-                        <div class="cross_svg"></div>
-                    </div>
-                </div>
-                <!-- A SUPPRIMER PLUS TARD !!!! -->
-            </div>
-            <div id="private_party_input">
+        </div>
+        <div id="private_party_input">
                 <h3>Rentrer un code de partie</h3>
                 <div id="code_input">
                     <input type="number"  maxlength="1" class="digit_input">
@@ -255,7 +198,6 @@ MADE ON EARTH BY HUMANS
                 <h3>ou</h3>
                 <div id="create_party_button"><h2>Créer une partie privée</h2></div>
             </div>
-        </div>
     </main>
     <div id="notification_modal">
         <img id="notification_cross" src="sources/notif-cross.svg" alt="cross">
@@ -297,7 +239,7 @@ MADE ON EARTH BY HUMANS
                         <path d="M9.85672 9.88537C10.0521 9.69021 10.0523 9.37363 9.85711 9.17826C9.66196 8.98289 9.34538 8.98271 9.15001 9.17787L6.14664 12.1779C6.05275 12.2717 6 12.3989 6 12.5316C6 12.6643 6.05276 12.7916 6.14665 12.8854L9.15001 15.8854C9.34538 16.0805 9.66196 16.0803 9.85711 15.885C10.0523 15.6896 10.0521 15.373 9.85672 15.1779L7.2075 12.5316L9.85672 9.88537Z"></path>
                     </g>
                 </svg>
-                <div class="singel-notif-text-part">
+                <div class="single-notif-text-part">
                     <div class="single-notif-inner">
                         <h1 class="single-notif-name single-notif-text">Mise à jour</h1>
                         <h2 class="single-notif-team single-notif-text"></h2>
@@ -355,7 +297,17 @@ MADE ON EARTH BY HUMANS
             <div id="friend_trade_part" class="trade-card-part">
                 <div class="trade-user-name">
                     <img class="profil-picture" src="sources/wankul1.png" alt="profil_icon">
-                    <h2>Nom de la personne en face</h2>
+                    <h2 id="friend_trade_name">Nom</h2>
+                </div>
+                <div id="trade_friend_select_modal">
+                    <div id="trade_friend_select_ref" class="trade-friend-select">
+                        <img class="profil-picture" src="sources/wankul1.png" alt="profil_icon">
+                        <h2>Nom1</h2>
+                    </div>
+                    <div id="trade_friend_select_ref" class="trade-friend-select">
+                        <img class="profil-picture" src="sources/wankul1.png" alt="profil_icon">
+                        <h2>Nom1</h2>
+                    </div>
                 </div>
                 <div class="trade-card-card-part">
                     <h3>Carte(s) à récupérer</h3>

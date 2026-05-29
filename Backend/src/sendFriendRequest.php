@@ -10,7 +10,7 @@ $id = $_GET["id"];
 try {
     require "connection.php";
 
-    $result = $pdo->prepare("SELECT `id`, `friend_requests` FROM account WHERE pseudo = :pseudo");
+    $result = $pdo->prepare("SELECT `id`, `friend_requests`, `friends` FROM account WHERE pseudo = :pseudo");
     $result->execute([
         "pseudo" => $pseudo,
     ]);
@@ -25,16 +25,20 @@ try {
     // On vérifie si l'ID n'est pas déjà dans friend_requests
     if ($receiver["id"] && $senderID) {
         if (!in_array((int)$senderID,json_decode($receiver["friend_requests"]))) {
-            $requests = json_decode($receiver["friend_requests"]);
-            array_push($requests, (int)$senderID);
-        
-            $stmt = $pdo->prepare("UPDATE account SET friend_requests = :value WHERE id = :id");
-            $stmt->execute([
-                "id" => (int)$receiver["id"],
-                "value" => json_encode($requests)
-            ]);
+            // Et si ils sont pas déjà amis
+            if (!in_array((int)$senderID,json_decode($receiver["friends"]))) {
+                
+                $requests = json_decode($receiver["friend_requests"]);
+                array_push($requests, (int)$senderID);
+            
+                $stmt = $pdo->prepare("UPDATE account SET friend_requests = :value WHERE id = :id");
+                $stmt->execute([
+                    "id" => (int)$receiver["id"],
+                    "value" => json_encode($requests)
+                ]);
 
-            echo json_encode([1,$requests]);
+                echo json_encode([1,$requests]);
+                }
         } else {
             echo json_encode([2,"Une demande a déjà été envoyé"]);
         }

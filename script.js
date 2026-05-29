@@ -39,12 +39,10 @@ async function fetchAllAPI(n = 1) {
             startAfterFetch([...data.data, ...next])
             loadingScreen.style.opacity = 0
             loadingScreen.style.pointerEvents = "none"
+
+            // Mettre l'API dans le localstorage pour éviter d'aller le chercher à chaque fois
+            localStorage.setItem("all-cards",JSON.stringify([...data.data, ...next]))
         }
-
-        // Mettre l'API dans le localstorage pour éviter d'aller le chercher à chaque fois
-        localStorage.setItem("all-cards",JSON.stringify([...data.data, ...next]))
-
-        console.log([...data.data, ...next])
 
         return [...data.data, ...next]
     }catch (e) {
@@ -113,11 +111,13 @@ let notificationButton2 = document.getElementById('bell_icon')
 let notificationCloseButton = document.getElementById('notification_cross')
 
 let singleNotifEmpty = document.getElementById('notification_empty')
-let singleNotifRef = document.getElementById('single_notif_ref')
+let singleNotifList = document.getElementById('notification_list')
+const singleNotifRef = document.getElementById('single_notif_ref')
 let notificationList = [];
 
 let tradeButton = document.getElementById("trade_button");
 let tradeModal = document.getElementById("trade_modal");
+let tradeFriendName = document.getElementById("friend_trade_name")
 
 let profilPopup = document.getElementById('profil');
 let profilButton = document.getElementById('profil_icon');
@@ -131,6 +131,18 @@ let searchFriendList = document.getElementById("search_friend_list")
 let searchFriendButton = document.getElementById("friends_add_button")
 const singleFriendRef = document.getElementById("single_friend_ref")
 let usersTab = [];
+
+let friendRequests;
+let friendsTab;
+if (localStorage.getItem("friend_requests")) {
+    friendRequests = JSON.parse(localStorage.getItem("friend_requests"))
+}
+if (localStorage.getItem("friends")) {
+    friendsTab = JSON.parse(localStorage.getItem("friends"))
+}
+
+const showFriendsRef = document.getElementById("show_friend_ref");
+let showFriendsList = document.getElementById("content_list");
 
 // Pour les cartes Wankul
 let displayAllButton = document.getElementById('tout');
@@ -368,7 +380,40 @@ fightButton.addEventListener('click', function(){ // Bouton "rentrer dans l'aren
     fightChoices[2].style.animationDelay = ".4s"
 })
 
-function newNotification(n,accountName,team) {
+function showFriends(users) {
+    showFriendsList.innerHTML = "";
+
+    for (friend of friendsTab) {
+        const friendClone = showFriendsRef.cloneNode(true);
+
+        let friendName = users[users.findIndex(item => item.id === friend)].pseudo;
+        friendClone.getElementsByClassName("show-friend-name")[0].innerText = friendName;
+
+        showFriendsList.appendChild(friendClone);
+    }
+}
+
+function acceptFriend(id) {
+    fetch("https://www.terrysegaunes.com/row-backend/src/setFriends.php?myId=" + localStorage.getItem("id") + "&theirId=" + id)
+        .then(r=>{return r.json()})
+        .then(res=>{
+            if (res[0] == 1) {
+                if (!friendsTab.includes(id)) friendsTab.push(id)
+                localStorage.setItem("friends", friendsTab)
+
+                let index = friendRequests.indexOf(id);
+                friendRequests.splice(index,1);
+                localStorage.setItem("friend_requests",JSON.stringify(Array.from(friendRequests)));
+                setValue("friend_requests",Array.from(friendRequests));
+            }
+        })
+}
+
+function acceptTrade(id) {
+    console.log(id, "Fonction trade")
+}
+
+function newNotification(n, accountName, team, execute, id) {
     // On cache le message de notifications vides
     singleNotifEmpty.style.display = "none";
 
@@ -396,21 +441,86 @@ function newNotification(n,accountName,team) {
     singleNotifClone.getElementsByClassName("single-notif-name")[0].innerText = accountName;
     singleNotifClone.getElementsByClassName("single-notif-team")[0].innerText = "[" + team + "]";
 
+    trashButton = singleNotifClone.getElementsByClassName("single-notif-trash-icon")[0]
+        
+    // On ajoute l'evenement au clique
+    singleNotifClone.addEventListener("click", event=>{
+        // On check avant qu'on a pas cliqué sur la poubelle
+        if (!trashButton.contains(event.target)) {
+            execute(id);
+            singleNotifClone.remove();
+        }
+    })
+
+    trashButton.addEventListener("click",()=>{
+        let index = friendRequests.indexOf(id);
+        friendRequests.splice(index,1);
+
+        localStorage.setItem("friend_requests",JSON.stringify(Array.from(friendRequests)));
+        setValue("friend_requests",Array.from(friendRequests));
+        
+        let notifIndex = notificationList.findIndex(item => item.id = id);
+        notificationList.splice(notifIndex,1)
+        singleNotifClone.remove();
+
+        if (singleNotifList.children.length <= 1) {
+            singleNotifEmpty.style.display = "block";
+            notificationButton2.classList.remove("disabled")
+            notificationButton1.classList.add("disabled")
+        }
+    })
+
     // On l'accroche au modal
-    notificationModal.appendChild(singleNotifClone);
+    singleNotifList.appendChild(singleNotifClone);
 }
 
 function appendNotification() {
+    singleNotifList.innerHTML = "";
+    singleNotifList.appendChild(singleNotifEmpty)
+
     for (let i=0; i<notificationList.length; i++) {
         let notifChoice = notificationList[i].choice;
         let notifName = notificationList[i].name;
         let notifTeam = notificationList[i].team;
-        newNotification(notifChoice, notifName , notifTeam)
+        let notifExecute = notificationList[i].execute;
+        let notifId = notificationList[i].id;
+        newNotification(notifChoice, notifName , notifTeam, notifExecute, notifId)
+    }
+
+    if (notificationList.length > 0) {
+        notificationButton2.classList.add("disabled")
+        notificationButton1.classList.remove("disabled")
     }
 }
 
+function showNotifications(users) {
+    let notifications = [];
+
+    if (friendRequests) {
+        // Demandes d'amis
+        for (request of friendRequests) {
+            indexOfId = users.findIndex(item => item.id === request);
+
+            let currentNotif = {
+                "choice": 0,
+                "name": users[indexOfId].pseudo,
+                "team": users[indexOfId].team,
+                "execute": acceptFriend,
+                "id": request
+            }
+
+            notifications.push(currentNotif)
+        };
+    }
+
+
+    notificationList = notifications
+    appendNotification()
+}
+
 function sortApi(dico, method) {
-    const toSort = allAPI;
+    const toSort = dico;
+
     switch (method) {
         case "numericOrder": 
             toSort.sort((x, y) => x.id - y.id);
@@ -498,16 +608,19 @@ function showCards(dico) {
                 } else {
                     favCards.delete(cards[i].id);
                 }
+                localStorage.setItem("fav-list",JSON.stringify(Array.from(favCards)))
                 setValue("fav-list",Array.from(favCards));
             })
 
             prefMarker.addEventListener("click",()=>{
                 if (prefMarker.classList.contains("checked")) {
                     favUniqueCard = 0;
+                    localStorage.setItem("card-fav",favUniqueCard)
                     setValue("card-fav",0);
                     prefMarker.classList.remove("checked");
                 } else {
                     favUniqueCard = cards[i].id;
+                    localStorage.setItem("card-fav",favUniqueCard)
                     setValue("card-fav",favUniqueCard);
 
                     for (const element of document.getElementsByClassName("pref-marker")) {
@@ -600,32 +713,38 @@ logoutButton.addEventListener("click",()=>{
 
 function sendFriendRequest(pseudo) {
     if (localStorage.getItem('id')) {
-        fetch("https://www.terrysegaunes.com/row-backend/src/sendFriendRequest.php?pseudo=" + pseudo + "&id=" + localStorage.getItem('id'))
+        return fetch("https://www.terrysegaunes.com/row-backend/src/sendFriendRequest.php?pseudo=" + pseudo + "&id=" + localStorage.getItem('id'))
             .then(r=>{return r.json()})
             .then(res=>{
-                console.log(res)
-                if (res[0] != 1) {
+                if (res[0] == 0) {
                     console.log(res[1])
+                    return false;
+                }
+                else {
+                    return true;
                 }
             })
             .catch(e=>{
                 console.log(e);
+                return false;
             })
     }
 }
 
 function showUsersInFriendSearch(users, username) {
     // On trouve l'index de notre compte
-    const index = users.findIndex(item => item.name === username);
+    let newUsers = structuredClone(users)
+    const index = newUsers.findIndex(item => item.pseudo === username);
 
     // On le retire
     if (index > -1) { 
-        users.splice(index, 1);
+        newUsers.splice(index, 1);
     }
+
     
     searchFriendList.innerHTML = "";
 
-    users.forEach(singleUser => {
+    newUsers.forEach(singleUser => {
         // On clone la ref
         const cardClone = singleFriendRef.cloneNode(true);
         cardClone.getElementsByClassName("single-friend-name")[0].innerText = singleUser.pseudo;
@@ -634,7 +753,10 @@ function showUsersInFriendSearch(users, username) {
         cardClone.id = "";
 
         cardClone.getElementsByClassName("single-friend-add-button")[0].addEventListener("click",()=>{
-            sendFriendRequest(cardClone.getElementsByClassName("single-friend-name")[0].innerText)
+            let response = sendFriendRequest(cardClone.getElementsByClassName("single-friend-name")[0].innerText)
+            if (response) {
+                cardClone.getElementsByClassName("single-friend-add-button")[0].src = "sources/friend_added.svg";
+            }
         })
 
         searchFriendList.appendChild(cardClone);
@@ -646,7 +768,9 @@ function getAllAccounts() {
         .then(r=>{return r.json()})
         .then(res=>{
             if (res[0] == 1) {
-                showUsersInFriendSearch(res[1]);
+                showUsersInFriendSearch(res[1], localStorage.getItem("pseudo"));
+                showNotifications(res[1]);
+                showFriends(res[1])
             } else {
                 console.log(res[1])
             }
@@ -674,12 +798,6 @@ function setValue(key, value) {
                     console.error("Erreur lors de la modification de la base de donnée");
                 }
             })
-    }
-}
-
-function getAllUser() {
-    if (localStorage.getItem('accounts')) {
-        
     }
 }
 

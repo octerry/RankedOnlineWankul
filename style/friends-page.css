@@ -51,10 +51,7 @@
     overflow-x: auto;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
-    -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0)));
-}
+    justify-content: center;}
 
 #section_friends #content_list::-webkit-scrollbar {
     width: 0;

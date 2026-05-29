@@ -76,6 +76,44 @@
     text-overflow: ellipsis;
 }
 
+#trade_friend_select_modal {
+    position: absolute;
+
+    border: 1px #fff solid;
+    border-radius: 1vh;
+
+    background-color: #71487e;
+
+    box-shadow: 1vh 1vh 2vh #00000080;
+    z-index: 1;
+}
+
+#trade_friend_select_modal h2 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 3vh;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.trade-friend-select {
+    display: flex;
+    align-items: center;
+
+    width: 40vh;
+    height: 8vh;
+
+    border-radius: 1vh;
+
+    border-bottom: 1px #fff solid;
+
+    &:hover {
+        cursor: pointer;
+        background-color: #835591;
+    }
+}
+
 .trade-card-card-part {
     display: flex;
     justify-content: center;
