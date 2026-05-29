@@ -1,0 +1,50 @@
+
+/*FOOTER*/
+footer{
+    display: flex;
+    bottom: 0;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: #101010A0;
+    backdrop-filter: blur(.5vw);
+    height: 50vh;
+    padding-top: 3vh;
+    padding-bottom: 20vh;
+    z-index: 1;
+    transition: 500ms ease;
+}
+
+.light footer{
+    background-color: #ffffff;
+    transition: 500ms ease;
+}
+
+footer h1{
+    font-family: "Barlow";
+    font-weight: 400;
+    font-size: clamp(1vw,2.5vh,6vh);
+}
+
+footer h2{
+    font-family: "Barlow";
+    font-weight: 400;
+    font-size: clamp(1vw,1.8vh,2vh);
+    color: #fff;
+    margin-top: 1vh;
+    padding-left: 5vw;
+    padding-right: 5vw;
+    transition: 500ms ease;
+}
+
+.light footer h2{
+    color: #000;
+    transition: 500ms ease;
+}
+
+footer div .footer_svg{
+    width: calc(10vh - 2vw);
+    margin: 1vh;
+    margin-top: 0;
+    fill: #6c4f80;
+}

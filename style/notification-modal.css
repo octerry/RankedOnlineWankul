@@ -1,0 +1,192 @@
+
+#notification_modal {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    top: 2vh;
+    right: 5vw;
+    padding: 1vh;
+
+    width: 50vh;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow-y: scroll;
+
+    z-index: 10;
+
+    box-shadow: 2vh 2vh 4vh #00000090;
+    border-radius: 1vh;
+    border: 2px solid #f4ecff;
+
+    opacity: 0;
+    pointer-events: none;
+
+    /* https://www.magicpattern.design/tools/css-backgrounds */
+    background-color: #e5e5f7;
+    background-image:  radial-gradient(#602575 0.5px, transparent 0.5px), radial-gradient(#602575 0.5px, #D1BDE7 0.5px);
+    background-size: 10px 10px;
+    background-position: 0 0,10px 10px;
+
+    transition: opacity .2s ease-in-out;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+#notification_modal.open {
+    opacity: 1;
+    pointer-events: all;
+}
+
+#notification_title {
+    color: #0d0d29;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 3vh;
+}
+
+#notification_cross {
+    position: absolute;
+    right: 1vh;
+    height: 3vh;
+
+    transition: transform .2s ease;
+
+    &:hover {
+        cursor: pointer;
+        transform: scale(.9);
+    }
+}
+
+#notification_empty {
+    color: #191936;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 2vh;
+}
+
+.single-notification {
+    display: none; /* flex */
+    justify-content: space-between;
+    align-items: center;
+
+    width: 48vh;
+    max-width: 85vw;
+    height: 7vh;
+
+    margin-top: 1vh;
+
+    border-radius: 1.5vh;
+
+    box-shadow: 5px 5px 10px #00000050;
+
+    transition: transform .2s ease-out;
+}
+
+/* hover quand la poubelle n'est pas hover */
+.single-notification:hover:not(:has(.single-notif-trash-icon:hover)) {
+    cursor: pointer;
+    transform: translateY(-5%);
+}
+
+.single-notification.friend {
+    border: 3px #71203B solid;
+    background-color: #FFE1F8;
+}
+
+.single-notification.trade {
+    border: 3px #203671 solid;
+    background-color: #E6F6FF;
+}
+
+.single-notification.system {
+    border: 3px #FF6161 solid;
+    background-color: #EDEDED;
+}
+
+.single-notif-inner {
+    display: flex;
+    align-items: center;
+}
+
+.single-notif-text {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.single-notification.friend .single-notif-text {
+    color: #71203B;
+}
+
+.single-notification.trade .single-notif-text {
+    color: #203671;
+}
+
+.single-notification.system .single-notif-text {
+    color: #5E5E5E;
+}
+
+.single-notif-name {
+    font-size: 3vh;
+    margin-right: 1vh;
+}
+
+.single-notif-team {
+    font-size: 2vh;
+}
+
+.single-notif-message {
+    font-size: 2vh;
+    max-width: 60vw;
+
+    /* "..." à la place de revenir à la ligne si c'est trop court */
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden
+}
+
+.single-notif-trash-icon {
+    height: 80%;
+
+    transition: transform .3s ease-out;
+
+    &:hover {
+        cursor: pointer;
+        transform: translateY(-.5vh);
+    }
+}
+
+.single-notification.friend .single-notif-trash-icon {
+    stroke: #71203B;
+}
+
+.single-notification.trade .single-notif-trash-icon {
+    stroke: #203671;
+}
+
+.single-notification.system .single-notif-trash-icon {
+    stroke: #5E5E5E;
+}
+
+.single-notif-icon {
+    height: 80%;
+}
+
+.single-notif-friend-icon, .single-notif-trade-icon, .single-notif-system-icon {
+    display: none;
+}
+
+.single-notification.friend .single-notif-friend-icon {
+    display: block;
+    fill: #71203B;
+}
+
+.single-notification.trade .single-notif-trade-icon {
+    display: block;
+    fill: #203671;
+}
+
+.single-notification.system .single-notif-system-icon {
+    display: block;
+    fill: #494949;
+}

@@ -132,6 +132,7 @@ let displayMineButton = document.getElementById('vos_cartes');
 let onlyDisplayMine = false
 
 let cardDisplate = document.getElementById('card_displate')
+const singleCardRef = document.getElementById('card_ref')
 let maxShowedCard = 20;
 let cardSearchbar = document.getElementById('card_search')
 let cardSortInput = document.getElementById('sort_selection')
@@ -436,7 +437,7 @@ function sortApi(dico, method) {
 }
 
 function showCards(dico) {
-    cardDisplate.innerHTML = "";
+    cardDisplate.innerHTML = '';
     newDico = sortApi(dico, cardSortMethod);
 
     if (onlyDisplayMine) {
@@ -452,11 +453,14 @@ function showCards(dico) {
             let cardName = cards[i].name
             let cardSource = getImageUrl(cards[i].imageUrl)
 
-            let newElement = document.createElement(`img`)
-            newElement.alt = cardName
-            newElement.src = cardSource
+            // On clone la ref
+            const cardClone = singleCardRef.cloneNode(true);
+            cardClone.classList.add("showed-card")
+            cardClone.getElementsByClassName("image-ref")[0].src = cardSource;
+            cardClone.getElementsByClassName("image-ref")[0].alt = cardName
+            cardClone.id = "";
 
-            cardDisplate.appendChild(newElement)
+            cardDisplate.appendChild(cardClone)
         }
     } else {
         let n = maxShowedCard // Nombres de cartes affichées

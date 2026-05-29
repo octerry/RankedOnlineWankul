@@ -1,0 +1,241 @@
+
+/*PROFIL*/
+#profil{
+    position: fixed;
+    z-index: 10;
+    width: clamp(100px,100vw,48vh);
+    height: 100vh;
+    top: 0;
+    right: 0;
+    background-color: #1B1927;
+    overflow-y: auto;
+    margin-right: -50vh;
+    transition: 300ms ease;
+    box-shadow: -1vh 0 2vh #00000060;
+}
+
+#profil.open{
+    transform: translateX(-50vh);
+}
+
+#profil::-webkit-scrollbar {
+    width: 0;
+}
+
+#profil #backarrow {
+    transform: rotate(.5turn);
+    height: 5vh;
+    top: 2vh;
+    left: 0;
+    z-index: 2;
+    position: absolute;
+    transition: 200ms;
+}
+
+#profil.open #backarrow {
+    transform: rotate(1turn);;
+}
+
+#profil #backarrow:hover {
+    cursor: pointer;
+}
+
+#profil #bannier{
+    height: 17vh;
+    width: 100%;
+    background-position: top;
+    background-size: cover;
+    background-image: url(../sources/card_images/f15735ef-02bc-4c0d-b9a8-69aafbebd33a_main.jpg);
+    filter: brightness(.5);
+}
+
+#profil #rank_under_bannier {
+    display: flex;
+    justify-content: end;
+    padding-right: 1vh;
+    height: 2vh;
+    width: 100%;
+    background-image: linear-gradient(.25turn, #705F3F, #D6B678); 
+    font-size: 1vh;
+    font-family: 'Hind';
+}
+
+#profil #profil_info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    position: absolute;
+    width: 100%;
+    top: 16vh;
+    right: 0;
+}
+
+#profil #profil_picture {
+    border-radius: 100vh;
+    height: 13vh;
+    width: 13vh;
+    background-position: center;
+    background-size: cover;
+    background-image: url(../sources/wankul1.png);
+}
+
+#profil #profil_up_section {
+    margin-top: 3vh;
+    margin-left: 2vh;
+}
+
+#profil #pseudo{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: -1vh;
+}
+
+#profil h1 {
+    font-size: 4vh;
+    font-family: 'Jost';
+    font-weight: 400;
+}
+
+#profil h3 {
+    font-family: 'Hind';
+    font-weight: 100;
+    font-size: 2vh;
+    margin-left: 1vh;
+    align-self: center;
+}
+
+#profil p {
+    color: white;
+    font-size: 2.4vh;
+    font-family: 'Hind';
+    font-weight: 200;
+}
+
+#profil #level_info {
+    margin-top: 12vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#profil #level_info #level_section {
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+#profil #level_info #level_section div {
+    background-image: linear-gradient(#5A5576,#1E1B31);
+    border-radius: 2vh;
+}
+
+#profil #level_info #level_section .inner_text{
+    font-family: 'Hammersmith One';
+    font-size: 1.8vh;
+    margin: 1vh 2vh;
+}
+
+#profil #level_info #level_section h1 {
+    margin: 2vh;
+    font-size: 3vh;
+    font-family: 'Hammersmith One';
+}
+
+#profil #level_info #win_rate {
+    display: flex;
+    margin-top: -1vh;
+}
+
+#profil #level_info #win_rate .win_word {
+    font-family: "Hammersmith One";
+    font-size: 1.8vh;
+    margin: .7vh;
+}
+
+#profil a {
+    color: #fff;
+}
+
+.light_red {
+    color: #EE9E9E;
+}
+
+.red {
+    color: #D47979;
+}
+
+.green {
+    color: #5FCE50;
+}
+
+.light_green {
+    color: #A9FF9E;
+}
+
+#profil #fav_card {
+    margin-top: 5vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#profil #fav_card #fav_card_picture {
+    height: calc(15vh * 1.397);
+    width: 15vh;
+    border-radius: 1vh;
+    background-position: center;
+    background-size: cover;
+    background-image: url(https://cdn.shopify.com/s/files/1/0683/2055/9412/files/Wankul_S2_149.webp?v=1718447900);
+    filter: drop-shadow(1vh 1vh 2vh #00000060);
+}
+
+#profil #fav_card #banner {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    z-index: -1;
+    width: 36vh;
+    margin-left: 4vh;
+    padding: 0 .6vh;
+    background-color: #2A2B40;
+}
+
+#profil #fav_card #banner .banner_inner_text {
+    font-family: 'Hammersmith One';
+    font-size: 2.5vh;
+    font-weight: bold;
+    color: #58596E;
+}
+
+#profil .deck_showcase {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 15vh;
+    margin: 3vh 2vh;
+    padding: 1.2vh;
+    border-radius: 1vh;
+    background-color: #D9D9D918;
+}
+
+#profil .deck_showcase .showcase_inner_text {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.3vh;
+    font-family: 'Barlow';
+    font-weight: 100;
+    width: 100%;
+}
+
+#profil .deck_showcase .showcased_pictures {
+    margin-top: 1vh;
+    display: flex;
+    overflow: hidden;
+}
+
+#profil .deck_showcase .showcased_pictures img{
+    height: 11vh;
+    margin-right: 1vh;
+}

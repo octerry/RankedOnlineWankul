@@ -1,0 +1,241 @@
+
+/* Section referencement des cartes sur la page principale*/
+#section_carte{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #00000080;
+    margin-top: 12vh;
+    padding-bottom: 10vh;
+    left: -10px;
+    border-top-left-radius: 5vh;
+    border-top-right-radius: 5vh;
+    transition: 500ms ease;
+}
+
+.light #section_carte{
+    background-color: #05050520;
+    transition: 500ms ease;
+}
+
+#section_carte #selection_categorie{
+    display: flex;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+}
+
+#section_carte #selection_categorie h3{
+    font-size: 3vh;
+    font-family: "Barlow";
+    font-weight: 100;
+}
+
+#section_carte #selection_categorie #tout{
+    color: white;
+    transition: 200ms ease;
+    font-weight: 100;
+
+    &:hover {
+        transform: scale(1.1);
+        cursor: pointer;
+    }
+}
+
+.light #section_carte #selection_categorie #tout{
+    color: black;
+    transition: 500ms ease;
+}
+
+#section_carte #selection_categorie #vos_cartes{
+    color: white;
+    transition: 200ms ease;
+    font-weight: 100;
+
+    &:hover {
+        transform: scale(1.1);
+        cursor: pointer;
+    }
+}
+
+.light #section_carte #selection_categorie #vos_cartes{
+    color: rgb(0, 0, 0);
+    transition: 500ms ease;
+}
+
+#tout.selected, #vos_cartes.selected {
+    font-weight: 500 !important; /* J'était obligé de !important, il me faisait la gueule */
+}
+
+#section_carte #selection_categorie svg{
+    margin-top: -4px;
+    fill: #ffffff;
+    transition: 500ms ease;
+}
+
+.light #section_carte #selection_categorie svg{
+    fill: black;
+    transition: 500ms ease;
+}
+
+#section_carte #filter{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: -1vh;
+}
+
+#section_carte #filter #searchbar{
+    display: flex;
+    background-color: #FFFFFF20;
+    border-radius: 1.5vh;
+    transition: 500ms ease;
+}
+
+.light #section_carte #filter #searchbar{
+    background-color: #5c5c5c60;
+    transition: 500ms ease;
+}
+
+#section_carte #filter #searchbar svg{
+    width: 2vh;
+    height: auto;
+    margin-right: 1vh;
+}
+
+#section_carte #filter #searchbar input{
+    border: none;
+    background-color: #00000000;
+    font-family: "Barlow";
+    font-weight: 300;
+    color: white;
+    font-size: 3vh;
+    margin-top: .2vh;
+    margin-bottom: .2vh;
+    margin-left: 1vh;
+}
+
+#section_carte #filter #searchbar input::placeholder{
+    color: #F0F0F0;
+}
+
+#section_carte #filter #sort_bar{
+    display: flex;
+    align-items: center;
+    margin-left: 2vw;
+    height: 4vh;
+    background-color: #FFFFFF40;
+    border-radius: 2vh;
+}
+
+#section_carte #filter #sort_bar h3{
+    font-family: "Barlow";
+    font-weight: 100;
+    font-size: 2vh;
+    margin-left: 1vh;
+    color: white;
+    transition: 500ms ease;
+}
+
+.light #section_carte #filter #sort_bar h3{
+    color: black;
+    font-weight: 300;
+    transition: 500ms ease;
+}
+
+#section_carte #filter #sort_bar #sort_selection{
+    background-color: #D0D0D000;
+    color: white;
+    font-family: "Barlow";
+    font-weight: 200;
+    font-size: 2vh;
+    border: none;
+    margin-right: 1vh;
+    margin-left: .5vh;
+    transition: 500ms ease;
+}
+
+.light #section_carte #filter #sort_bar #sort_selection{
+    color: #000000;
+    transition: 500ms ease;
+}
+
+#section_carte #filter #sort_bar #sort_selection:focus{
+    background-color: #121822;
+    outline: 2px solid #5b9dd9;
+}
+
+#card_displate{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 20px;
+}
+
+#card_displate img{
+    padding: 1vh;
+    width: 43vh;
+    border-radius: 3vh;
+}
+
+#card_ref {
+    display: none;
+}
+
+.showed-card {
+    /* 43 x 60 */
+    border: 1px #fff solid;
+    width: 43vh;
+    height: 60vh;
+}
+
+.showed-card img {
+    padding: 0 !important;
+    width: 43vh;
+    height: 60vh;
+}
+
+.card-markers {
+    display: flex;
+
+    position: relative;
+    top: 10%;
+    left: 2%;
+    
+    z-index: 10;
+}
+
+.fav-marker {
+    width: 10%;
+    fill: #fff;
+    stroke: #fff;
+}
+
+.check-fav {
+    display: none;
+}
+
+.fav-marker.checked .uncheck-fav{
+    display: none;
+}
+
+.fav-marker.cheked .check-fav{
+    display: block;
+}
+
+.pref-marker {
+    width: 10%;
+    fill: #fff;
+    stroke: #fff;
+}
+
+.check-pref {
+    display: none;
+}
+.pref-marker.checked .uncheck-pref{
+    display: none;
+}
+
+.pref-marker.cheked .check-pref{
+    display: block;
+}

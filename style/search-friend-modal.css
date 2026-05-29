@@ -1,0 +1,26 @@
+#search_friend_modal {
+    display: none;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    max-height: 80vh;
+
+    transform: translate(-50%,-50%);
+
+    /* https://www.magicpattern.design/tools/css-backgrounds */
+    background-color: #e5e5f7;
+    background-image:  radial-gradient(#602575 0.5px, transparent 0.5px), radial-gradient(#602575 0.5px, #D1BDE7 0.5px);
+    background-size: 10px 10px;
+    background-position: 0 0,10px 10px;
+}
+
+#search_friend_title {
+    color: #0d0d29;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 3vh;
+}
+
+.single-search-friend-picture {
+    height: 5vh;
+}

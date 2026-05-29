@@ -1,0 +1,43 @@
+/*TRADE BUTTON*/
+#trade_button {
+    position: fixed;
+    bottom: clamp(2vh,calc(12vh - 5vw),12vh);
+    right: 2vh;
+    width: 10vh;
+    height: 10vh;
+    z-index: 10;
+
+    border-radius: 2vh;
+    backdrop-filter: blur(5px);
+    background:
+        linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1) 5%,
+        rgba(255,255,255,.1) 95%, rgba(255,255,255,.2)),
+        linear-gradient(90deg, rgba(255,255,255,.2), rgba(255,255,255,.1) 5%,
+        rgba(0, 0, 0, 0) 95%, rgba(0, 0, 0, 0.2));
+
+    transition: transform .3s ease-in-out, box-shadow .3s ease-in-out;
+
+    &:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+        box-shadow: 1vh 1vh 2vh #00000030;
+    }
+}
+
+#trade_button.light {
+    background:
+        linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0) 5%,
+        rgba(0, 0, 0, 0.1) 95%, rgba(0, 0, 0, 0.2)),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1) 5%,
+        rgba(0, 0, 0, 0) 95%, rgba(0, 0, 0, 0.2));
+}
+
+#trade_logo {
+    fill: #fff;
+
+    transition: fill .3s ease-in-out;
+}
+
+#trade_logo.light {
+    fill: #8e6cb4
+}

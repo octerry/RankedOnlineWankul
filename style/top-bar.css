@@ -1,0 +1,112 @@
+
+/* Barre tout en haut de la page principale */
+#top_bar{
+    z-index: 5;
+    display: flex;
+    position: fixed;
+    width: 100%;
+    align-items:center;
+    justify-content: space-between;
+    padding-top: 2vh;
+    padding-left: 4vw;
+    padding-right: 4vw;
+    padding-bottom: 2vh;
+    backdrop-filter: blur(15px);
+    background-color: #00001040;
+
+    animation: topAppear 1s;
+}
+
+.light #top_bar {
+    background-color: #ffffff80;
+}
+
+#top_bar #left_bar{
+    display: flex;
+    align-items: center;
+}
+
+.amburger_menu{
+    margin-top: 0;
+    height: 4vh;
+    width: auto;
+    fill: #fff;
+    transition: 500ms ease;
+}
+
+.amburger_menu:hover{
+    cursor: pointer;
+}
+
+.light .amburger_menu{
+    fill: #191936;
+    transition: 500ms ease;
+}
+
+#darkmodeButton{
+    width: 4vh;
+    height: 4vh;
+    margin-left: 3vh;
+    background-color: #ffffff;
+    mask-image: url(../sources/darkTheme.svg);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    transition: 500ms ease;
+}
+
+.light #darkmodeButton {
+    background-color: #191936;
+    transition: 500ms ease;
+}
+
+#darkmodeButton:hover{
+    cursor: pointer; 
+}
+
+#top_bar #resizable_title_div{
+    position: relative;
+    background-color: #ffffff;
+    -webkit-mask-image: url(../sources/Logo.svg);
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: bottom;
+    mask-image: url(../sources/Logo.svg);
+    transition: 500ms ease;
+    width: 10vh;
+    height: 5vh;
+}
+
+.light #top_bar #resizable_title_div{
+    background-color: #191936;
+}
+
+#top_bar .logo{
+    opacity: 0;
+}
+
+.light #top_bar .logo{
+    background-color: #191936;
+    transition: 500ms ease;
+}
+
+#top_bar .icon{
+    margin-top: 0;
+    height: 4vh;
+    width: 4vh;
+    object-fit: cover;
+    border-radius: 100%;
+}
+
+#top_bar .icon:hover{
+    cursor: pointer;
+}
+
+.notification-icon {
+    fill: #fff;
+    margin-right: 2vh;
+    transition: 500ms ease;
+}
+
+.notification-icon.light {
+    fill: #191936;
+}

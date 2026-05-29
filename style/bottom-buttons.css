@@ -1,0 +1,59 @@
+
+/*BOTTOM BUTTONS*/
+.bottom_buttons{
+    display: flex;
+    position: fixed;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-around;
+    z-index: 5;
+    bottom: 0;
+    left: 50%;
+    width: 30vw;
+    min-width: 50vh;
+    height: 10vh;
+    background-color: #302d5a90;
+    backdrop-filter: blur(.5vw);
+    transition: 500ms ease;
+    border-radius: 2vh 2vh 0 0 ;
+
+    animation: bottomAppear .8s;
+
+    transform: translateX(-50%);
+    transition: 500ms ease;
+}
+
+.light .bottom_buttons{
+    background-color: #D9DCF590;
+}
+
+#home_button,#deck_button,#friends_button {
+    background-color: #9f84c2;
+    mask-size: contain;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    width: 5vh;
+    height: 5vh;
+    margin: 0 5vh;
+}
+
+.light #home_button,.light #deck_button,.light #friends_button{
+    background-color: #495CA8;
+}
+
+#home_button:hover,#deck_button:hover,#friends_button:hover{
+    filter: brightness(1.5);
+    cursor: pointer;
+}
+
+#home_button{
+    mask-image: url(../sources/fist.svg);
+}
+
+#deck_button{
+    mask-image: url(../sources/deck.svg);
+}
+
+#friends_button{
+    mask-image: url(../sources/user.svg);
+}

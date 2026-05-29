@@ -1,0 +1,26 @@
+
+/* Media */
+@media (max-width: 400px) { /* Ne modifie que pour ceux qui sont trop petit */
+    
+    #section_carte #filter #sort_bar{
+        margin-top: 10px;
+        margin-left: 0;
+    }
+    
+}
+
+@media (max-width: 600px) { /* Ne modifie que les éléments sur telephone */
+    #onglet_booster{
+        top: 25vw;
+    }
+
+    .wankul{
+        display: none;
+    }
+
+    
+    #fight_selection {
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+}

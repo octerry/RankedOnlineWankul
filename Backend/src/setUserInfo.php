@@ -17,7 +17,7 @@ try {
     // On trouve la table dans laquelle est rangée la valeur
     $table = "";
 
-    if (in_array($key,["boosters","cards","cards-search","card-fav","card-duo"])) {
+    if (in_array($key,["boosters","cards","cards-search","card-fav","card-duo","fav-list"])) {
         $table = "content";
     }
     else if (in_array($key,["pseudo","description","friends","friend_requests"])) {

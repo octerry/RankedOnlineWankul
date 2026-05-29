@@ -1,0 +1,88 @@
+/*MENU POPUP*/
+#menu_popup {
+    display: none;
+    position: fixed;
+    z-index: 12;
+    backdrop-filter: blur(2vh);
+    background-color: #00000070;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+}
+
+#inner_menu {
+    width: 40vh;
+    background-color: #352b47;
+    padding: 1vh;
+    margin-top: 1.5vh;
+    margin-left: 3.2vw;
+    border-radius: 2vh;
+    transition: left 500ms ease;
+}
+
+.light #inner_menu {
+    background-color: #e1daec;
+}
+
+#cheat_code {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    top: 5%;
+    right: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 14%;
+    width: 90%;
+
+
+    input {
+        width: 100%;
+        height: 40%;
+
+        border-radius: 10px;
+        text-align: center;
+        background-color: #605470;
+        border: none;
+        box-shadow: inset 4px 4px 1px #00000050;
+        font-size: 20px;
+        color: #fff;
+        font-family: "Hammersmith One";
+
+        &::placeholder {
+            color: #b2a4c7;
+            font-size: 20px;
+        }
+    }
+
+    div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+        height: 50%;
+        margin: 2vh 0;
+
+        border-radius: 10px;
+        text-align: center;
+        background-color: #5c94aa;
+        border: 1px solid #3a4b6e;
+        box-shadow: 4px 4px 1px #00000050;
+        font-size: 20px;
+        color: #2e3f5a;
+        font-family: "Hammersmith One";
+
+        transition: transform .3s, box-shadow .3s, background-color .3s, color .3s;
+
+        &:hover {
+            cursor: pointer;
+            box-shadow: none;
+            transform: translate(4px, 4px);
+            background-color: #75adc4;
+            color: #485d7e;
+        }
+    }
+}
