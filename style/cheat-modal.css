@@ -13,11 +13,20 @@
 
 #inner_menu {
     width: 40vh;
-    background-color: #352b47;
+
+    /* https://www.magicpattern.design/tools/css-backgrounds */
+    background-color: #e5e5f7;
+    background-image:  radial-gradient(#602575 0.5px, transparent 0.5px), radial-gradient(#602575 0.5px, #D1BDE7 0.5px);
+    background-size: 10px 10px;
+    background-position: 0 0,10px 10px;
+
     padding: 1vh;
     margin-top: 1.5vh;
     margin-left: 3.2vw;
+
+    border: 3px #fff solid;
     border-radius: 2vh;
+    
     transition: left 500ms ease;
 }
 

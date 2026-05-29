@@ -94,6 +94,7 @@ form.addEventListener('submit', event => {
                         li.innerHTML = message[1];
                         messageError.appendChild(li)
                         messageError.style.display = "block"
+                        console.log(message[2])
                     }
                 })
                 .catch(e=>{

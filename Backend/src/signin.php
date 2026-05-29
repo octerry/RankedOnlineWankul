@@ -31,7 +31,7 @@ try {
             ':secret_id' => $secretID
         ]);
         if ($stmt->fetch(PDO::FETCH_NUM)>0) {
-            $secretID = random_int(1000,65535);
+            $secretID = random_int(1024,65535);
         }
 
         // On ajoute le compte dans les tableaux
@@ -45,7 +45,7 @@ try {
             ':secret_id' => $secretID
         ]);
 
-        $result = $pdo->prepare("SELECT (id,secret_id) FROM login WHERE name = :name");
+        $result = $pdo->prepare("SELECT id,secret_id FROM login WHERE name = :name");
         $result->execute([
             "name" => $name,
         ]);
@@ -53,16 +53,17 @@ try {
 
         $stmt = $pdo->prepare("
             INSERT INTO content
-            (`id`, `boosters`, `cards`, `cards-search`, `card-fav`, `card-duo`)
+            (`id`, `boosters`, `cards`, `cards-search`, `card-fav`, `card-duo`, `fav-list`)
             VALUES
-            (:id, :boosters, :cards, :cardssearch, :cardfav, 0)
+            (:id, :boosters, :cards, :cardssearch, :cardfav, 0, :favlist)
         ");
         $stmt->execute([
-            ':id' => $id[0]["id"],
+            ':id' => $id["id"],
             ':boosters' => json_encode([10,10,10,10]),
             ':cards' => json_encode([]),
             ':cardssearch' => json_encode([]),
-            ':cardfav' => 0
+            ':cardfav' => 0,
+            ':favlist' => json_encode([])
         ]);
 
         $stmt = $pdo->prepare("
@@ -72,7 +73,7 @@ try {
             (:id, :pseudo, :team ,:description, :friends, :friendrequests)
         ");
         $stmt->execute([
-            ':id' => $id[0]["id"],
+            ':id' => $id["id"],
             ':pseudo' => $name,
             ':team' => "0000",
             ':description' => "Salut, je suis nouveau !",
@@ -80,7 +81,7 @@ try {
             ':friendrequests' => json_encode([])
         ]);
 
-        echo json_encode([1,$id[0]["secret_id"]]);
+        echo json_encode([1,$id["secret_id"]]);
     } else {
         echo json_encode([0,"Ce nom existe déjà"]);
     }

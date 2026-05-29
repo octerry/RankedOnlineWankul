@@ -9,22 +9,24 @@ $id = $_GET["id"];
 try {
     require "connection.php";
 
-    $result = $pdo->prepare("SELECT `id`, `name` FROM login WHERE `secret_id` = :id");
-    $result->execute([
-        "id" => $id
+    $stmt = $pdo->prepare("SELECT `id`, `name` FROM login WHERE `secret_id` = :id");
+    $stmt->execute([
+        "id" => (int) $id
     ]);
-    $infos = $result->fetch(PDO::FETCH_ASSOC);
+    $infos = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($infos) {
         $content = $pdo->prepare("SELECT * FROM content WHERE `id` = :id");
         $content->execute([
             "id" => $infos["id"]
         ]);
-        $infos = array_merge($infos, $content->fetch(PDO::FETCH_ASSOC));
+        $result = $content->fetch(PDO::FETCH_ASSOC);
+
+        $infos = array_merge($infos, $result);
 
         $account = $pdo->prepare("SELECT * FROM account WHERE `id` = :id");
         $account->execute([
-            "id" => $infos["id"]
+            "id" => (int) $infos["id"]
         ]);
         $infos = array_merge($infos, $account->fetch(PDO::FETCH_ASSOC));
 

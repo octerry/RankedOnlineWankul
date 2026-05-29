@@ -142,7 +142,7 @@ const singleCardRef = document.getElementById('card_ref')
 let maxShowedCard = 20;
 let cardSearchbar = document.getElementById('card_search')
 let cardSortInput = document.getElementById('sort_selection')
-let cardSortMethod = "";
+let cardSortMethod = "numericOrder";
 let favCards = new Set();
 if (localStorage.getItem("fav-list")) {
     favCards = JSON.parse(localStorage.getItem("fav-list"));
@@ -338,7 +338,6 @@ window.addEventListener('click', event => { // Si on clique en dehors du menu ç
         tradeModal.classList.remove('open');
     }
 
-    console.log(searchFriendModal.contains(event.target))
     if(!searchFriendModal.contains(event.target) && !searchFriendButton.contains(event.target)) {
         searchFriendModal.classList.remove('open');
     }
@@ -454,8 +453,8 @@ function sortApi(dico, method) {
             });
             return toSort;
         default: 
-            toSort.sort((x, y) => x.id - y.id);
-            return toSort;
+            console.log(method + " is not a valid sort method");
+            break;
     }
 }
 
@@ -604,7 +603,8 @@ function sendFriendRequest(pseudo) {
         fetch("https://www.terrysegaunes.com/row-backend/src/sendFriendRequest.php?pseudo=" + pseudo + "&id=" + localStorage.getItem('id'))
             .then(r=>{return r.json()})
             .then(res=>{
-                if (res[0] == 0) {
+                console.log(res)
+                if (res[0] != 1) {
                     console.log(res[1])
                 }
             })
@@ -629,7 +629,7 @@ function showUsersInFriendSearch(users, username) {
         // On clone la ref
         const cardClone = singleFriendRef.cloneNode(true);
         cardClone.getElementsByClassName("single-friend-name")[0].innerText = singleUser.pseudo;
-        cardClone.getElementsByClassName("single-friend-team")[0].innerText = singleUser.team;
+        cardClone.getElementsByClassName("single-friend-team")[0].innerText = "[" + singleUser.team + "]";
         cardClone.getElementsByClassName("single-friend-description")[0].innerText = singleUser.description;
         cardClone.id = "";
 
