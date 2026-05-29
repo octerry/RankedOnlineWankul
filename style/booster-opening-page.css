@@ -82,34 +82,37 @@
     border-radius: 5px;
     padding: 5px;
     margin-bottom: 5px;
+}
 
-    div {
-        padding: 0 3px;
-        border-radius: 4px;
+#booster_points div {
+    padding: 0 3px;
+    border-radius: 4px;
 
-        color: #fff;
-        font-family: "Hammersmith One";
-        font-size: 20px;
+    color: #fff;
+    font-family: "Hammersmith One";
+    font-size: 20px;
 
-        margin: 0 3px;
-    }
+    margin: 0 3px;
+}
 
-    div:nth-child(1) {
-        background-color: #0777aa;
-        border: 1px #fff solid;
-    }
-    div:nth-child(2) {
-        background-color: #0f772f;
-        border: 1px #fff solid;
-    }
-    div:nth-child(3) {
-        background-color: #961212;
-        border: 1px #fff solid;
-    }
-    div:nth-child(4) {
-        background-color: #7f2ba7;
-        border: 1px #fff solid;
-    }
+#booster_points div:nth-child(1) {
+    background-color: #0777aa;
+    border: 1px #fff solid;
+}
+
+#booster_points div:nth-child(2) {
+    background-color: #0f772f;
+    border: 1px #fff solid;
+}
+
+#booster_points div:nth-child(3) {
+    background-color: #961212;
+    border: 1px #fff solid;
+}
+
+#booster_points div:nth-child(4) {
+    background-color: #7f2ba7;
+    border: 1px #fff solid;
 }
 
 #open_button {

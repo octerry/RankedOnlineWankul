@@ -56,6 +56,10 @@
     width: 100%;
 }
 
+#trade_friend_name_part:hover {
+    cursor: pointer;
+}
+
 .trade-user-name {
     display: flex;
     align-items: center;
@@ -82,10 +86,18 @@
     border: 1px #fff solid;
     border-radius: 1vh;
 
+    opacity: 0;
+    pointer-events: none;
+
     background-color: #71487e;
 
     box-shadow: 1vh 1vh 2vh #00000080;
     z-index: 1;
+}
+
+#trade_friend_select_modal.open {
+    opacity: 1;
+    pointer-events: all;
 }
 
 #trade_friend_select_modal h2 {

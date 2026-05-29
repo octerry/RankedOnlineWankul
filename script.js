@@ -118,6 +118,10 @@ let notificationList = [];
 let tradeButton = document.getElementById("trade_button");
 let tradeModal = document.getElementById("trade_modal");
 let tradeFriendName = document.getElementById("friend_trade_name")
+let tradeFriendSelectModal = document.getElementById("trade_friend_select_modal")
+let tradeFriendNameButton = document.getElementById("trade_friend_name_part");
+let tradeFriendSelectedId = 0;
+const tradeFriendSelectRef = document.getElementById("trade_friend_select_ref")
 
 let profilPopup = document.getElementById('profil');
 let profilButton = document.getElementById('profil_icon');
@@ -332,6 +336,10 @@ tradeButton.addEventListener('click', ()=>{
     tradeModal.classList.toggle('open');
 })
 
+tradeFriendNameButton.addEventListener('click', ()=>{
+    tradeFriendSelectModal.classList.toggle("open");
+})
+
 searchFriendButton.addEventListener('click', ()=>{
     searchFriendModal.classList.toggle("open");
 })
@@ -348,6 +356,10 @@ window.addEventListener('click', event => { // Si on clique en dehors du menu ç
 
     if(!tradeModal.contains(event.target) && !tradeButton.contains(event.target)) {
         tradeModal.classList.remove('open');
+    }
+
+    if(!tradeFriendSelectModal.contains(event.target) && !tradeFriendNameButton.contains(event.target)) {
+        tradeFriendSelectModal.classList.remove('open')
     }
 
     if(!searchFriendModal.contains(event.target) && !searchFriendButton.contains(event.target)) {
@@ -382,14 +394,30 @@ fightButton.addEventListener('click', function(){ // Bouton "rentrer dans l'aren
 
 function showFriends(users) {
     showFriendsList.innerHTML = "";
+    tradeFriendSelectModal.innerHTML = "";
+
+    // On mets par default le premier pseudo
+    tradeFriendName.innerText = users[users.findIndex(item => item.id === friendsTab[0])].pseudo;
 
     for (friend of friendsTab) {
         const friendClone = showFriendsRef.cloneNode(true);
+        const tradeFriendSelectClone = tradeFriendSelectRef.cloneNode(true);
 
         let friendName = users[users.findIndex(item => item.id === friend)].pseudo;
         friendClone.getElementsByClassName("show-friend-name")[0].innerText = friendName;
+        friendClone.id = ""
+
+        tradeFriendSelectClone.getElementsByClassName("trade-friend-select-name")[0].innerText = friendName;
+        tradeFriendSelectClone.id = ""
+
+        tradeFriendSelectClone.addEventListener("click",()=>{
+            tradeFriendName.innerText = friendName;
+            tradeFriendSelectedId = friend;
+            tradeFriendSelectModal.classList.remove("open");
+        })
 
         showFriendsList.appendChild(friendClone);
+        tradeFriendSelectModal.appendChild(tradeFriendSelectClone)
     }
 }
 
