@@ -121,7 +121,7 @@
     height: 5vh;
     width: 5vh;
     background-color: #fff;
-    mask-image: url(sources/friendly_fight.svg);
+    mask-image: url(../sources/friendly_fight.svg);
     mask-size: contain;
     mask-repeat: no-repeat;
     mask-position: center;
@@ -131,7 +131,7 @@
     height: 3vh;
     width: 3vh;
     background-color: #fff;
-    mask-image: url(sources/cross.svg);
+    mask-image: url(../sources/cross.svg);
     mask-size: contain;
     mask-repeat: no-repeat;
     mask-position: center;

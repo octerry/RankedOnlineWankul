@@ -137,6 +137,14 @@ let maxShowedCard = 20;
 let cardSearchbar = document.getElementById('card_search')
 let cardSortInput = document.getElementById('sort_selection')
 let cardSortMethod = "";
+let favCards = new Set();
+if (localStorage.getItem("fav-list")) {
+    favCards = JSON.parse(localStorage.getItem("fav-list"));
+}
+let favUniqueCard = 0;
+if (localStorage.getItem("card-fav")) {
+    favUniqueCard = JSON.parse(localStorage.getItem("card-fav"));
+}
 
 // Cheat codes
 let cheatCodeInput = document.getElementById('cheat_code_input')
@@ -459,6 +467,42 @@ function showCards(dico) {
             cardClone.getElementsByClassName("image-ref")[0].src = cardSource;
             cardClone.getElementsByClassName("image-ref")[0].alt = cardName
             cardClone.id = "";
+
+            /* Pour les pref/fav */
+            let favMarker = cardClone.getElementsByClassName("fav-marker")[0]
+            let prefMarker = cardClone.getElementsByClassName("pref-marker")[0] 
+            
+            favCards = new Set(favCards);
+
+            if (favCards.has(cards[i].id)) favMarker.classList.add("checked");
+            if (favUniqueCard == cards[i].id) prefMarker.classList.add("checked");
+
+            favMarker.addEventListener("click",()=>{
+                favMarker.classList.toggle("checked");
+                if (favMarker.classList.contains("checked")) {
+                    favCards.add(cards[i].id);
+                } else {
+                    favCards.delete(cards[i].id);
+                }
+                setValue("fav-list",Array.from(favCards));
+            })
+
+            prefMarker.addEventListener("click",()=>{
+                if (prefMarker.classList.contains("checked")) {
+                    favUniqueCard = 0;
+                    setValue("card-fav",0);
+                    prefMarker.classList.remove("checked");
+                } else {
+                    favUniqueCard = cards[i].id;
+                    setValue("card-fav",favUniqueCard);
+
+                    for (const element of document.getElementsByClassName("pref-marker")) {
+                        element.classList.remove("checked");
+                    }
+
+                    prefMarker.classList.add("checked");
+                }
+            })
 
             cardDisplate.appendChild(cardClone)
         }

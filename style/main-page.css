@@ -258,3 +258,26 @@
     transform: scale(1.03);
     transition: transform 200ms ease;
 }
+
+#iot_redirect {
+    width: 100%;
+    text-align: center;
+    margin-top: 2vh;
+
+    transition: transform .3s ease-out;
+
+    &:hover {
+        transform: scaleX(1.2) scaleY(.9);
+    }
+}
+
+#iot_redirect a {
+    color: #fff;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 3vh;
+
+    background-color: #ffffff40;
+    border: 1px #fff solid;
+    border-radius: 1vh;
+    padding: 1vh;
+}

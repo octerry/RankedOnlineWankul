@@ -184,42 +184,59 @@
 
 .showed-card {
     /* 43 x 60 */
-    border: 1px #fff solid;
     width: 43vh;
     height: 60vh;
 }
 
-.showed-card img {
-    padding: 0 !important;
-    width: 43vh;
-    height: 60vh;
+.showed-card:hover .uncheck-fav, .showed-card:hover .uncheck-pref {
+    opacity: 1;
+    background-color: #00000030;
+    border-radius: 1vh;
+    backdrop-filter: blur(6px);
 }
 
 .card-markers {
     display: flex;
 
     position: relative;
-    top: 10%;
-    left: 2%;
-    
-    z-index: 10;
+    top: 6%;
+    left: 6%;
+
+    height: 0%;
+
+    z-index: 5;
+
+    transition: opacity .2s ease-out, background-color .2s ease-out;
 }
 
 .fav-marker {
     width: 10%;
-    fill: #fff;
     stroke: #fff;
+
+    height: 4vh;
+
+    transition: background-color .2s ease-out;
+
+    &:hover {
+        cursor: pointer;
+        background-color: #be28eb30;
+    }
 }
 
-.check-fav {
+.check-fav, .check-pref {
+    fill: #fff;
     display: none;
+}
+
+.uncheck-fav, .uncheck-pref {
+    opacity: 0;
 }
 
 .fav-marker.checked .uncheck-fav{
     display: none;
 }
 
-.fav-marker.cheked .check-fav{
+.fav-marker.checked .check-fav{
     display: block;
 }
 
@@ -227,15 +244,21 @@
     width: 10%;
     fill: #fff;
     stroke: #fff;
+
+    height: 4vh;
+
+    transition: background-color .2s ease-out;
+
+    &:hover {
+        cursor: pointer;
+        background-color: #ffea0030;
+    }
 }
 
-.check-pref {
-    display: none;
-}
 .pref-marker.checked .uncheck-pref{
     display: none;
 }
 
-.pref-marker.cheked .check-pref{
+.pref-marker.checked .check-pref{
     display: block;
 }

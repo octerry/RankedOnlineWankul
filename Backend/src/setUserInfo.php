@@ -12,7 +12,9 @@ try {
     require "connection.php";
 
     // Si la valeur est une liste on la convertie en string
-    if (in_array($key,["boosters","cards","cards-search","friends","friend_requests"])) $value = json_encode($value);
+    if (in_array($key,["boosters","cards","cards-search","fav-list","friends","friend_requests",])) {
+        $value = json_encode($value);
+    } 
 
     // On trouve la table dans laquelle est rangée la valeur
     $table = "";
@@ -43,10 +45,15 @@ try {
         ]);
         $id = $result->fetch(PDO::FETCH_NUM);
 
-        // Si oui, on change la valeur
-        $stmt = $pdo->prepare("UPDATE " . $table . " SET " . $key . " = :value WHERE id = :id");
+        if ($id === false) {
+            echo json_encode([0, "Aucun identifiant trouvé pour ce nom"]);
+            exit;
+        }
+
+        // Use backticks to escape identifiers and avoid syntax errors
+        $stmt = $pdo->prepare("UPDATE `" . $table . "` SET `" . $key . "` = :value WHERE id = :id");
         $stmt->execute([
-            "id" => $id[0],
+            "id" => (int) $id[0],
             "value" => $value
         ]);
 
@@ -55,7 +62,7 @@ try {
         echo json_encode([0,"Le nom " . $name . " n'existe pas"]);
     }
 } catch (Exception $e) {
-    echo json_encode([0,$e]);
+    echo json_encode([0,$e->getMessage()]);
 }
 
 ?>
