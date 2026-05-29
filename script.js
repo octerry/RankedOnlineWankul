@@ -126,6 +126,12 @@ let profilBackbutton = document.getElementById('backarrow');
 let fightButton = document.getElementById('fight_button');
 let fightChoices = document.getElementsByClassName('fight_choice')
 
+let searchFriendModal = document.getElementById("search_friend_modal")
+let searchFriendList = document.getElementById("search_friend_list")
+let searchFriendButton = document.getElementById("friends_add_button")
+const singleFriendRef = document.getElementById("single_friend_ref")
+let usersTab = [];
+
 // Pour les cartes Wankul
 let displayAllButton = document.getElementById('tout');
 let displayMineButton = document.getElementById('vos_cartes');
@@ -155,6 +161,7 @@ let logoutButton = document.getElementById("logout_button")
 
 // Profil
 let profilUsername = document.getElementById("username_profil")
+let username = "";
 let profilTeam = document.getElementById("profil_team")
 let profilDescription = document.getElementById("profil_description");
 let deckSizeText = document.getElementById("deck_size");
@@ -188,7 +195,7 @@ wankuls[1].src = "sources/wankul" + chosen2 + ".png"
 
 // Changements sur la page de profil
 if (localStorage.getItem('pseudo')) {
-    let username = localStorage.getItem('pseudo')
+    username = localStorage.getItem('pseudo')
     profilUsername.innerText = username
 }
 
@@ -313,19 +320,27 @@ tradeButton.addEventListener('click', ()=>{
     tradeModal.classList.toggle('open');
 })
 
+searchFriendButton.addEventListener('click', ()=>{
+    searchFriendModal.classList.toggle("open");
+})
+
 window.addEventListener('click', event => { // Si on clique en dehors du menu ça le ferme
     if(!event.target.matches('#inner_menu') && event.target.matches('#menu_popup')) {
         menuPopup.style.display = 'none';
         document.body.style.overflow = 'visible'
     }
 
-    event.target
     if(!notificationModal.contains(event.target) && !notificationButton1.contains(event.target) && !notificationButton2.contains(event.target)) {
         notificationModal.classList.remove('open');
     }
 
     if(!tradeModal.contains(event.target) && !tradeButton.contains(event.target)) {
         tradeModal.classList.remove('open');
+    }
+
+    console.log(searchFriendModal.contains(event.target))
+    if(!searchFriendModal.contains(event.target) && !searchFriendButton.contains(event.target)) {
+        searchFriendModal.classList.remove('open');
     }
 
     if(!event.target.matches('.fight_choice') && !event.target.matches('h2')) {
@@ -583,6 +598,63 @@ logoutButton.addEventListener("click",()=>{
     localStorage.clear()
     window.location.href = "./connexion/"
 })
+
+function sendFriendRequest(pseudo) {
+    if (localStorage.getItem('id')) {
+        fetch("https://www.terrysegaunes.com/row-backend/src/sendFriendRequest.php?pseudo=" + pseudo + "&id=" + localStorage.getItem('id'))
+            .then(r=>{return r.json()})
+            .then(res=>{
+                if (res[0] == 0) {
+                    console.log(res[1])
+                }
+            })
+            .catch(e=>{
+                console.log(e);
+            })
+    }
+}
+
+function showUsersInFriendSearch(users, username) {
+    // On trouve l'index de notre compte
+    const index = users.findIndex(item => item.name === username);
+
+    // On le retire
+    if (index > -1) { 
+        users.splice(index, 1);
+    }
+    
+    searchFriendList.innerHTML = "";
+
+    users.forEach(singleUser => {
+        // On clone la ref
+        const cardClone = singleFriendRef.cloneNode(true);
+        cardClone.getElementsByClassName("single-friend-name")[0].innerText = singleUser.pseudo;
+        cardClone.getElementsByClassName("single-friend-team")[0].innerText = singleUser.team;
+        cardClone.getElementsByClassName("single-friend-description")[0].innerText = singleUser.description;
+        cardClone.id = "";
+
+        cardClone.getElementsByClassName("single-friend-add-button")[0].addEventListener("click",()=>{
+            sendFriendRequest(cardClone.getElementsByClassName("single-friend-name")[0].innerText)
+        })
+
+        searchFriendList.appendChild(cardClone);
+    });
+}
+
+function getAllAccounts() {
+    fetch("https://www.terrysegaunes.com/row-backend/src/getAllAccounts.php")
+        .then(r=>{return r.json()})
+        .then(res=>{
+            if (res[0] == 1) {
+                showUsersInFriendSearch(res[1]);
+            } else {
+                console.log(res[1])
+            }
+        })
+        .catch(e=>{console.log(e)})
+}
+
+getAllAccounts()
 
 // NOMBRE DE CARTES PAR SAISONS
 // S1 - 180

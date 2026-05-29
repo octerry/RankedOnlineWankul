@@ -1,18 +1,38 @@
-#search_friend_modal {
-    display: none;
+#search_friend_modal {  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
     position: absolute;
     left: 50%;
     top: 50%;
 
     max-height: 80vh;
+    padding: 2vh;
 
-    transform: translate(-50%,-50%);
+    border: 3px #fff solid;
+    border-radius: 2vh;
+
+    box-shadow: 1vh 1vh 2vh #00000080;
+
+    opacity: 0;
+    pointer-events: none;
 
     /* https://www.magicpattern.design/tools/css-backgrounds */
     background-color: #e5e5f7;
     background-image:  radial-gradient(#602575 0.5px, transparent 0.5px), radial-gradient(#602575 0.5px, #D1BDE7 0.5px);
     background-size: 10px 10px;
     background-position: 0 0,10px 10px;
+
+    transform: translate(-50%,-40%);
+
+    transition: opacity .3s ease-out, transform .3s ease-out;
+}
+
+#search_friend_modal.open {
+    opacity: 1;
+    pointer-events: all;
+    transform: translate(-50%,-50%);
 }
 
 #search_friend_title {
@@ -21,6 +41,85 @@
     font-size: 3vh;
 }
 
+#friend_searchbar {
+    padding: .5vh; 
+    margin-bottom: 1vh;
+    background-color: #3b3b60;
+    
+    border: 1px #000 solid;
+    border-radius: 1vh;
+
+    &::placeholder {
+        color: #9090bf;
+    }
+}
+
+#single_friend_ref {
+    display: none;   
+}
+
+.single-friend {
+    display: flex;
+    align-items: center;
+
+    padding: .5vh;
+    margin-top: .5vh;
+
+    border: 1px #000 solid;
+    border-radius: 1vh;
+
+    box-shadow: .5vh .5vh 1vh #00000080;
+
+    background: linear-gradient(.25turn, #155174, #2899DA)
+}
+
 .single-search-friend-picture {
     height: 5vh;
+}
+
+.single-friend-inner {
+    display: flex;
+    align-items: center;
+}
+
+.single-friend-name {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 3vh;
+}
+
+.single-friend-team {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 2vh;
+    margin-left: 1vh;
+    margin-right: 5vh;
+}
+
+.single-friend-description {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1.5vh;
+    color: #fff;
+}
+
+.single-friend-add-button {
+    height: 3vh;
+    margin-right: 1vh;
+
+    transition: transform .3s ease-out;
+
+    &:hover {
+        cursor: pointer;
+        transform: scale(1.2)
+    }
+}
+
+.single-friend-trash-button {
+    height: 4vh;
+    margin-right: 1vh;
+
+    transition: transform .3s ease-out;
+
+    &:hover {
+        cursor: pointer;
+        transform: scale(1.2);
+    }
 }

@@ -3,7 +3,8 @@
 try {
     require "connection.php";
 
-    $result = $pdo->query("SELECT name FROM login");
+    $stmt = $pdo->query("SELECT name FROM login");
+    $result = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
     echo json_encode([1,$result]);
 } catch (Exception $e) {

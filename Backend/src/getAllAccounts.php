@@ -8,7 +8,7 @@ try {
     require "connection.php";
 
     $result = $pdo->query("SELECT * FROM account");
-    $infos = $result->fetch(PDO::FETCH_ASSOC);
+    $infos = $result->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode([1,$infos]);
 } catch (PDOException $e) {
