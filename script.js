@@ -69,8 +69,13 @@ function startAfterFetch(data) {
 }
 
 function getImageUrl(url) {
-    let splitUrl = url.split("/");
-    return "./sources/card_images/" + splitUrl[splitUrl.length - 1]
+    try {
+        let splitUrl = url.split("/");
+        return "./sources/card_images/" + splitUrl[splitUrl.length - 1]
+    }
+    catch (e) {
+        console.error(url, e)
+    }
 }
 
 let myCards = new Set();
@@ -121,6 +126,25 @@ let tradeFriendName = document.getElementById("friend_trade_name")
 let tradeFriendSelectModal = document.getElementById("trade_friend_select_modal")
 let tradeFriendNameButton = document.getElementById("trade_friend_name_part");
 let tradeFriendSelectedId = 0;
+
+let tradeFriendCard = null;
+let tradeMyCard = null;
+let tradeFriendCardElement = document.getElementsByClassName("trade-friend-card")
+let tradeMyCardElement = document.getElementsByClassName("trade-my-card")
+
+let tradeFriendCardPlace = document.getElementById("trade_friend_card_card_part")
+let tradeMyCardPlace = document.getElementById("trade_my_card_card_part")
+
+let tradeFriendCardModal = document.getElementById("trade_friend_card_modal")
+let tradeMyCardModal = document.getElementById("trade_my_card_modal")
+
+let tradeMyCardImage = document.getElementById("trade-my-card")
+let tradeFriendCardImage = document.getElementById("trade-friend-card")
+
+let shareTradeButton = document.getElementById("trade_modal_button")
+
+let tradeMyCardFill = document.getElementById("trade_card_my_fill_section")
+let tradeFriendCardFill = document.getElementById("trade_card_friend_fill_section")
 const tradeFriendSelectRef = document.getElementById("trade_friend_select_ref")
 
 let profilPopup = document.getElementById('profil');
@@ -143,6 +167,10 @@ if (localStorage.getItem("friend_requests")) {
 }
 if (localStorage.getItem("friends")) {
     friendsTab = JSON.parse(localStorage.getItem("friends"))
+}
+let tradeRequests;
+if (localStorage.getItem("trade_requests")) {
+    tradeRequests = JSON.parse(localStorage.getItem("trade_requests"))
 }
 
 const showFriendsRef = document.getElementById("show_friend_ref");
@@ -228,6 +256,7 @@ if (localStorage.getItem('description')) {
 if (localStorage.getItem('myCards')) {
     let myCards = JSON.parse(localStorage.getItem('myCards'))
     deckSizeText.innerText = myCards.length + " cartes"
+    showCardsInTradeFill(myCards, true);
 
     myCards.forEach(card => {
         let cardInfo = allAPI[card]
@@ -344,6 +373,44 @@ searchFriendButton.addEventListener('click', ()=>{
     searchFriendModal.classList.toggle("open");
 })
 
+tradeMyCardPlace.addEventListener("click", ()=>{
+    tradeMyCardModal.classList.toggle("open")
+})
+
+tradeFriendCardPlace.addEventListener("click", ()=>{
+    tradeFriendCardModal.classList.toggle("open")
+})
+
+shareTradeButton.addEventListener("click", ()=>{
+    if (!tradeMyCard && !tradeFriendCard) {
+        alert("Vous devez choisir au moins une carte d'un des deux côté pour effectuer un échange")
+    } else {
+        let confirmation = true;
+        if (!tradeMyCard) confirmation = confirm("Vous n'avez pas mis de carte de votre côté, celà veut dire que votre ami ne recevra rien, ètes vous sûr de continuer cet échange ?")
+        if (!tradeFriendCard) confirmation = confirm("Vous n'avez pas mis de carte à recevoir, celà veut dire que vous envoyer votre carte contre rien, ètes vous sûr de continuer cet échange ?")
+        
+        if (confirmation) {
+            let param = ""
+            if (tradeMyCard) param += "&mycard=" + tradeMyCard
+            if (tradeFriendCard) param += "&theircard=" + tradeFriendCard
+            fetch("https://www.terrysegaunes.com/row-backend/src/sendTradeRequest.php?myid=" + localStorage.getItem("id") + "&theirid=" + tradeFriendSelectedId + param)
+                .then(r=>{return r.json()})
+                .then(res=>{
+                    if (res[0] == 1) alert("Proposition d'échange envoyé !")
+                    else {
+                        alert("Erreur lors de l'envoie")
+                        console.log(res[1])
+                    }
+                })
+                .catch(e=>{
+                    console.log(e)
+                })
+        } else {
+            alert("L'échange a été annulé !")
+        }
+    }
+})
+
 window.addEventListener('click', event => { // Si on clique en dehors du menu ça le ferme
     if(!event.target.matches('#inner_menu') && event.target.matches('#menu_popup')) {
         menuPopup.style.display = 'none';
@@ -360,6 +427,14 @@ window.addEventListener('click', event => { // Si on clique en dehors du menu ç
 
     if(!tradeFriendSelectModal.contains(event.target) && !tradeFriendNameButton.contains(event.target)) {
         tradeFriendSelectModal.classList.remove('open')
+    }
+
+    if(!tradeFriendCardModal.contains(event.target) && !tradeFriendCardPlace.contains(event.target)) {
+        tradeFriendCardModal.classList.remove("open")
+    }
+
+    if(!tradeMyCardModal.contains(event.target) && !tradeMyCardPlace.contains(event.target)) {
+        tradeMyCardModal.classList.remove("open")
     }
 
     if(!searchFriendModal.contains(event.target) && !searchFriendButton.contains(event.target)) {
@@ -398,6 +473,8 @@ function showFriends(users) {
 
     // On mets par default le premier pseudo
     tradeFriendName.innerText = users[users.findIndex(item => item.id === friendsTab[0])].pseudo;
+    tradeFriendSelectedId = friendsTab[0];
+    showCardsInFriendTradeFill(tradeFriendSelectedId)
 
     for (friend of friendsTab) {
         const friendClone = showFriendsRef.cloneNode(true);
@@ -414,6 +491,7 @@ function showFriends(users) {
             tradeFriendName.innerText = friendName;
             tradeFriendSelectedId = friend;
             tradeFriendSelectModal.classList.remove("open");
+            showCardsInFriendTradeFill(tradeFriendSelectedId)
         })
 
         showFriendsList.appendChild(friendClone);
@@ -437,8 +515,33 @@ function acceptFriend(id) {
         })
 }
 
-function acceptTrade(id) {
-    console.log(id, "Fonction trade")
+function acceptTrade(id, theirCard, myCard, name) {
+    theirCardName = allAPI[allAPI.findIndex(item => item.id == theirCard)].name
+    myCardName = allAPI[allAPI.findIndex(item => item.id == myCard)].name
+    
+    let confirmation = confirm(name + " veut échanger votre " + myCardName + " contre son " + theirCardName)
+
+    if (confirmation) {
+        fetch("https://www.terrysegaunes.com/row-backend/src/acceptTrade.php?id=" + localStorage.getItem("id") + "&offer=[" + id + ",[" + theirCard + "," + myCard + "]]")
+            .then(r=>{return r.json()})
+            .then(res=>{
+                if (res[0] == 1) {
+                    let index = tradeRequests.findIndex(item => item[0] == id)
+                    if (index > -1) {
+                        tradeRequests.splice(index, 1);
+                    }
+                    localStorage.setItem("trade_requests",JSON.stringify(Array.from(tradeRequests)));
+                    setValue("trade_requests",Array.from(tradeRequests));
+                    alert("Echange accepté !")
+                } else {
+                    console.log(res[1])
+                    alert("Erreur lors de la connexion")
+                }
+            })
+            .catch(e=>{
+                console.log(e);
+            })
+    }
 }
 
 function newNotification(n, accountName, team, execute, id) {
@@ -475,19 +578,33 @@ function newNotification(n, accountName, team, execute, id) {
     singleNotifClone.addEventListener("click", event=>{
         // On check avant qu'on a pas cliqué sur la poubelle
         if (!trashButton.contains(event.target)) {
-            execute(id);
+            if(n == 0) execute(id);
+            if(n == 1) execute(id[0], id[1], id[2], accountName)
+            const index = notificationList.findIndex(item => item.id = id);
+            if (index > -1) {
+                notificationList.splice(index, 1);
+            }
             singleNotifClone.remove();
         }
     })
 
     trashButton.addEventListener("click",()=>{
-        let index = friendRequests.indexOf(id);
-        friendRequests.splice(index,1);
+        if (n == 0) {
+            let index = friendRequests.indexOf(id);
+            friendRequests.splice(index,1);
 
-        localStorage.setItem("friend_requests",JSON.stringify(Array.from(friendRequests)));
-        setValue("friend_requests",Array.from(friendRequests));
-        
-        let notifIndex = notificationList.findIndex(item => item.id = id);
+            localStorage.setItem("friend_requests",JSON.stringify(Array.from(friendRequests)));
+            setValue("friend_requests",Array.from(friendRequests));
+        }
+        if (n == 1) {
+            let index = tradeRequests.indexOf(id);
+            tradeRequests.splice(index,1);
+
+            localStorage.setItem("trade_requests",JSON.stringify(Array.from(tradeRequests)));
+            setValue("trade_requests",Array.from(tradeRequests));
+        }
+            
+        let notifIndex = notificationList.findIndex(item => item.id == id);
         notificationList.splice(notifIndex,1)
         singleNotifClone.remove();
 
@@ -541,6 +658,22 @@ function showNotifications(users) {
         };
     }
 
+    if (tradeRequests) {
+        // Demandes d'amis
+        for (request of tradeRequests) {
+            indexOfId = users.findIndex(item => item.id === request[0]);
+
+            let currentNotif = {
+                "choice": 1,
+                "name": users[indexOfId].pseudo,
+                "team": users[indexOfId].team,
+                "execute": acceptTrade,
+                "id": [request[0], request[1][0], request[1][1]]
+            }
+
+            notifications.push(currentNotif)
+        };
+    }
 
     notificationList = notifications
     appendNotification()
@@ -549,50 +682,53 @@ function showNotifications(users) {
 function sortApi(dico, method) {
     const toSort = dico;
 
-    switch (method) {
-        case "numericOrder": 
-            toSort.sort((x, y) => x.id - y.id);
-            return toSort;
-        case "antiNumericOrder": 
-            toSort.sort((x, y) => y.id - x.id);
-            return toSort;
-        case "mostRare": 
-            toSort.sort((x, y) => y.rarity.id - x.rarity.id);
-            return toSort;
-        case "leastRare": 
-            toSort.sort((x, y) => x.rarity.id - y.rarity.id);
-            return toSort;
-        case "mostRecent": 
-            toSort.sort((x, y) => y.set.id - x.set.id);
-            return toSort;
-        case "leastRecent": 
-            toSort.sort((x, y) => x.set.id - y.set.id);
-            return toSort;
-        case "alphabeticOrder": 
-            // Je l'ai piqué à MDN
-            toSort.sort((a, b) => {
-                const nameA = a.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim(); // ignorer les majuscules/minuscules
-                const nameB = b.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim(); // ignorer les majuscules/minuscules
-                if (nameA < nameB) return -1;
-                if (nameA > nameB) return 1;
-                // les noms sont égaux
-                return 0;
-            });
-            return toSort;
-        case "antiAlphabeticOrder": 
-            // Je l'ai piqué à MDN
-            toSort.sort((a, b) => {
-                const nameA = a.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim(); // ignorer les majuscules/minuscules
-                const nameB = b.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim(); // ignorer les majuscules/minuscules
-                if (nameA < nameB) return 1;
-                if (nameA > nameB) return -1;
-                // les noms sont égaux
-                return 0;
-            });
-            return toSort;
-        default: 
-            console.log(method + " is not a valid sort method");
-            break;
+    if (toSort) {
+        console.log(toSort)
+        switch (method) {
+            case "numericOrder": 
+                toSort.sort((x, y) => x.id - y.id);
+                return toSort;
+            case "antiNumericOrder": 
+                toSort.sort((x, y) => y.id - x.id);
+                return toSort;
+            case "mostRare": 
+                toSort.sort((x, y) => y.rarity.id - x.rarity.id);
+                return toSort;
+            case "leastRare": 
+                toSort.sort((x, y) => x.rarity.id - y.rarity.id);
+                return toSort;
+            case "mostRecent": 
+                toSort.sort((x, y) => y.set.id - x.set.id);
+                return toSort;
+            case "leastRecent": 
+                toSort.sort((x, y) => x.set.id - y.set.id);
+                return toSort;
+            case "alphabeticOrder": 
+                // Je l'ai piqué à MDN
+                toSort.sort((a, b) => {
+                    const nameA = a.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim(); // ignorer les majuscules/minuscules
+                    const nameB = b.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim(); // ignorer les majuscules/minuscules
+                    if (nameA < nameB) return -1;
+                    if (nameA > nameB) return 1;
+                    // les noms sont égaux
+                    return 0;
+                });
+                return toSort;
+            case "antiAlphabeticOrder": 
+                // Je l'ai piqué à MDN
+                toSort.sort((a, b) => {
+                    const nameA = a.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim(); // ignorer les majuscules/minuscules
+                    const nameB = b.name.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim(); // ignorer les majuscules/minuscules
+                    if (nameA < nameB) return 1;
+                    if (nameA > nameB) return -1;
+                    // les noms sont égaux
+                    return 0;
+                });
+                return toSort;
+            default: 
+                console.log(method + " is not a valid sort method");
+                break;
+        }
     }
 }
 
@@ -670,10 +806,64 @@ function showCards(dico) {
             let newElement = document.createElement(`img`)
             newElement.alt = cardName
             newElement.src = cardSource
-
+            
             cardDisplate.appendChild(newElement)
         }
     }
+}
+
+function showCardsInTradeFill(dico, mine) {
+
+    if (dico.length > 0) {
+        if (mine) {
+            tradeMyCardFill.innerHTML = ""
+        } else {
+            tradeFriendCardFill.innerHTML = ""
+        }
+
+        let newCards = [];
+        cards = JSON.parse(localStorage.getItem("all-cards"))
+        for (const element of dico) {
+            console.log(cards[element])
+            newCards.push(cards[element])
+        }
+
+        let n = newCards.length;
+        for(let i=1; i<n; i++) {
+            let cardName = newCards[i].name
+            let cardSource = getImageUrl(newCards[i].imageUrl)
+
+            let newElement = document.createElement(`img`)
+            newElement.alt = cardName
+            newElement.src = cardSource
+            
+            if (mine) {
+                newElement.addEventListener('click', ()=>{
+                    tradeMyCard = newCards[i].id;
+                    tradeMyCardModal.classList.remove("open")
+                    tradeMyCardImage.src = cardSource;
+                })
+
+                tradeMyCardFill.appendChild(newElement)
+            } else {
+                newElement.addEventListener('click', ()=>{
+                    tradeFriendCard = newCards[i].id;
+                    tradeFriendCardModal.classList.remove("open");
+                    tradeFriendCardImage.src = cardSource;
+                })
+
+                tradeFriendCardFill.appendChild(newElement)
+            }
+        }
+    } 
+}
+
+function showCardsInFriendTradeFill(id) {
+    fetch("https://www.terrysegaunes.com/row-backend/src/getUserContent.php?id=" + id)
+        .then(r=>{return r.json()})
+        .then(res=>{
+            showCardsInTradeFill(JSON.parse(res[1]["cards"]), false)
+        })
 }
 
 cardSearchbar.addEventListener("input",()=>{ // Quand quelqu'un recherche une carte

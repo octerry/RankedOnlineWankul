@@ -3,5 +3,8 @@
     "vscode-pets.petColor": "orange",
     "vscode-pets.petSize": "small",
     "vscode-pets.petType": "fox",
-    "vscode-pets.throwBallWithMouse": true
+    "vscode-pets.throwBallWithMouse": true,
+    "ridiculousCoding.explosions": true,
+    "ridiculousCoding.shake": false,
+    "ridiculousCoding.reducedEffects": false
 }

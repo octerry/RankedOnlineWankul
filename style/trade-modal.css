@@ -128,6 +128,7 @@
 
 .trade-card-card-part {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 
@@ -137,10 +138,24 @@
 
     border-radius: 1vh;
     background-color: #00000050;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.trade-card-card-part h3 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .trade-card-place {
+    display: flex;
+    flex-direction: column;
+}
+
+.trade-card-place img {
     height: 10vh;
+    margin: 1vh;
 }
 
 #trade_modal_logo {
@@ -168,5 +183,71 @@
         transform: translate(1%,1%);
         background-color: #2a1bc840;
         box-shadow: none;
+    }
+}
+
+.trade-card-modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    padding: 1vh;
+    border-radius: 1vh;
+
+    max-width: 80vw;
+    max-height: 80vh;
+
+    opacity: 0;
+    pointer-events: none;
+
+    background-color: #e5e5f7;
+
+    z-index: 2;
+
+    transform: translate(-50%, -40%);
+
+    transition: transform .2s ease-out, opacity .1s ease-out;
+}
+
+.trade-card-modal.open {
+    opacity: 1;
+    pointer-events: all;
+    transform: translate(-50%, -50%);
+}
+
+.trade-card-modal h1 {
+    color: #602575;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.trade-card-modal p {
+    color: #602575;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.trade-fill-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    overflow-y: scroll;
+}
+
+.trade-fill-section img {
+    height: 30vh;
+    margin-top: 1vh;
+    width: auto;
+    border-radius: 1vh;
+
+    transition: transform .2s ease-in;
+
+    &:hover {
+        cursor: pointer;
+        transform: scale(0.95)
     }
 }
